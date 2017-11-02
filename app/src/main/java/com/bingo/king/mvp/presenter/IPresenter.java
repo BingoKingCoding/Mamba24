@@ -15,4 +15,7 @@ public interface IPresenter
      * 在框架中 Activity#onDestroy() 时会默认调用 {@link IPresenter#onDestroy()}
      */
     void onDestroy();
+
+
+    void setLoadingDialog(boolean isLoadingDialog);
 }

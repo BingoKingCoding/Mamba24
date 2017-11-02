@@ -20,10 +20,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
-import com.jess.arms.base.BaseFragment;
-import com.jess.arms.di.component.AppComponent;
 
-import org.simple.eventbus.EventBus;
 
 public interface IActivity
 {

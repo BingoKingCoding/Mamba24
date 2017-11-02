@@ -3,4 +3,21 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="transparent">#00000000</color>
+        <color name="black">#000000</color>
+        <color name="white">#FFffffff</color>
+    <color name="bgB8000000">#B8000000</color>
+    <!-- 系统背景色 -->
+    <color name="base_window_background">#f9f9f9</color>
+    <!-- 系统操作栏背景色 -->
+    <color name="base_navigation_bar">@color/black</color>
+    <!-- 系统ToolBar字体颜色 -->
+    <color name="base_text_color_primary">@color/white</color>
+    <!-- CheckBox, 光标等背景色 -->
+    <color name="base_color_accent">@color/colorAccent</color>
+    <!--对话框背景色-->
+    <color name="dialog_bg">#a6000000</color>
+
+
 </resources>

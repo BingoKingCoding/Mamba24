@@ -5,6 +5,8 @@ package com.bingo.king.app.utils;
  * Created by wang on 2017/11/2 16:31.
  */
 
-public class Utils
+public class CommonUtils
 {
+
+
 }
