@@ -5,8 +5,6 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="transparent">#00000000</color>
-        <color name="black">#000000</color>
-        <color name="white">#FFffffff</color>
     <color name="bgB8000000">#B8000000</color>
     <!-- 系统背景色 -->
     <color name="base_window_background">#f9f9f9</color>
@@ -18,6 +16,42 @@
     <color name="base_color_accent">@color/colorAccent</color>
     <!--对话框背景色-->
     <color name="dialog_bg">#a6000000</color>
+
+
+    <color name="white">#FFFFFF</color>
+    <color name="C1">#2dbc6d</color>
+    <color name="C2">#FFFEFE</color>
+    <color name="C3">#e2e2e2</color>
+    <color name="C4">#d1d1d1</color>
+    <color name="C5">#2f3641</color>main
+    <color name="C6">#333333</color>
+    <color name="C7">#8E8E93</color>
+    <color name="C8">#FFB142</color>
+    <color name="C9">#B00905</color>
+    <color name="C10">#3dfc92</color>
+    <color name="C11">#f2f2f2</color>
+    <color name="C12">#666666</color>
+    <color name="C13">#999999</color>
+    <color name="C14">#cc140f</color>
+    <color name="C15">#f4504c</color>
+    <color name="C16">#3daba5</color>
+    <color name="C17">#cccccc</color>
+    <color name="bg_translucence">#66000000</color>
+
+    <!--item的分割线-->
+    <color name="colorLineItem">@color/C4</color>
+
+    <color name="black">#000</color>
+    <!--item的水波纹颜色-->
+    <color name="itemBackgroundWhite">#cfff</color>
+    <!--item的水波纹颜色-->
+    <color name="itemBackground">#DD7D7D7D</color>
+    <!--水波纹或5.0以下选择器颜色-->
+    <color name="tabBackground">#777D7D7D</color>
+    <!--item的5.0一下版本选择器颜色-->
+    <color name="itemLowBackground">#d9d9d9</color>
+    <!--页面背景的颜色-->
+    <color name="colorPageBg">#f2f4f5</color>
 
 
 </resources>

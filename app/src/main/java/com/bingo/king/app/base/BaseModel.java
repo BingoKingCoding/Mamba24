@@ -1,4 +1,6 @@
-package com.bingo.king.mvp.model;
+package com.bingo.king.app.base;
+
+import com.bingo.king.mvp.model.http.IRepository;
 
 /**
  * <请描述这个类是干什么的>
@@ -7,7 +9,6 @@ package com.bingo.king.mvp.model;
 
 public class BaseModel implements IModel
 {
-
     protected IRepository mRepository;//用于管理网络请求层,以及数据缓存层
 
     public BaseModel(IRepository repository)

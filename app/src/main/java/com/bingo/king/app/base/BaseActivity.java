@@ -6,24 +6,30 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.bingo.king.mvp.presenter.IPresenter;
+import com.bingo.king.app.App;
+import com.bingo.king.app.EventBusTags;
+import com.bingo.king.di.component.AppComponent;
 import com.bingo.king.mvp.ui.widget.LoadingDialogListener;
 import com.bingo.king.mvp.ui.widget.ProgressDialog;
 import com.blankj.utilcode.util.AppUtils;
+import com.jakewharton.rxbinding2.view.RxView;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
 import org.simple.eventbus.ThreadMode;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.Observable;
 
 import static com.bingo.king.app.utils.ThirdViewUtil.convertAutoView;
 
@@ -31,7 +37,7 @@ import static com.bingo.king.app.utils.ThirdViewUtil.convertAutoView;
  * Created by wang on 2017/11/1 16:55.
  */
 
-public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements IActivity, LoadingDialogListener
+public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActivity implements IActivity, LoadingDialogListener
 {
     protected final String TAG = this.getClass().getSimpleName();
     private Unbinder mUnbinder;
@@ -41,7 +47,6 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
      */
     protected boolean mIsExitApp = false;
     protected long mExitTime = 0;
-    public static final String EXITAPP_MESSAGE = "exitapp_message";
 
     @Inject
     protected P mPresenter;
@@ -104,6 +109,11 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         mProgressDialog = null;
 
 
+    }
+
+    protected AppComponent getAppComponent()
+    {
+        return App.getApplication().getAppComponent();
     }
 
     /**
@@ -169,7 +179,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         } else
         {
             //发送事件,参考下面的方法onExitAppReceive
-            EventBus.getDefault().post(new Message(), EXITAPP_MESSAGE);
+            EventBus.getDefault().post(new Message(), EventBusTags.EXITAPP_MESSAGE);
             AppUtils.exitApp();
         }
         mExitTime = System.currentTimeMillis();
@@ -178,7 +188,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     /**
      * 通过eventbus post事件,远程遥控执行对应方法
      */
-    @Subscriber(tag = EXITAPP_MESSAGE, mode = ThreadMode.MAIN)
+    @Subscriber(tag = EventBusTags.EXITAPP_MESSAGE, mode = ThreadMode.MAIN)
     public void onExitAppReceive(Message message)
     {
         //可以在工具类或者其他类中做相应的退出逻辑
@@ -189,12 +199,24 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     @Override
     public void showLoadingDialog()
     {
+        showLoadingDialog(false, "正在加载中...");
+    }
+
+    public void showLoadingDialog(String msg)
+    {
+        showLoadingDialog(false, msg);
+    }
+
+    public void showLoadingDialog(boolean cancelAble, String msg)
+    {
         if (mProgressDialog == null)
         {
-            mProgressDialog = ProgressDialog.show(this);
+            mProgressDialog = new ProgressDialog(this);
         }
         if (!mProgressDialog.isShowing())
         {
+            mProgressDialog.setTextMsg(msg);
+            mProgressDialog.setCancelable(cancelAble);
             mProgressDialog.show();
         }
         setLoadingState(true);
@@ -252,5 +274,15 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         Snackbar.make(view, message, isLong ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
     }
 
+
+    public Observable<Object> clicks(int viewId)
+    {
+        return clicks(findViewById(viewId));
+    }
+
+    public Observable<Object> clicks(View view)
+    {
+        return RxView.clicks(view).throttleFirst(500, TimeUnit.MILLISECONDS).compose(bindToLifecycle());
+    }
 
 }

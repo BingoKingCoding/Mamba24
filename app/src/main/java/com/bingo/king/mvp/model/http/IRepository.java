@@ -1,6 +1,6 @@
-package com.bingo.king.mvp.model;
+package com.bingo.king.mvp.model.http;
 
-import com.bingo.king.mvp.model.entity.TestBean;
+import com.bingo.king.mvp.model.entity.GankEntity;
 
 import io.reactivex.Observable;
 
@@ -10,5 +10,5 @@ import io.reactivex.Observable;
  */
 public interface IRepository
 {
-    Observable<TestBean> requestPraiseMovie();
+    Observable<GankEntity> getRandomGirl();
 }

@@ -21,16 +21,13 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
 
-
 public interface IActivity
 {
 
     /**
-     * 提供 AppComponent(提供所有的单例对象)给实现类,进行 Component 依赖
      *
-     * @param appComponent
      */
-    void setupActivityComponent(AppComponent appComponent);
+    void setupActivityComponent();
 
     /**
      * 是否使用EventBus

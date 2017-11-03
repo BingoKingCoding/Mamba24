@@ -1,8 +1,5 @@
 package com.bingo.king.app.base;
 
-import com.bingo.king.mvp.model.IModel;
-import com.bingo.king.mvp.presenter.IPresenter;
-
 import org.simple.eventbus.EventBus;
 
 import io.reactivex.disposables.CompositeDisposable;

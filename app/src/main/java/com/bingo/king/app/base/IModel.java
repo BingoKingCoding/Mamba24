@@ -1,4 +1,4 @@
-package com.bingo.king.mvp.model;
+package com.bingo.king.app.base;
 
 /**
  * <请描述这个类是干什么的>

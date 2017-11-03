@@ -4,6 +4,10 @@ import android.app.Application;
 import android.content.Context;
 
 import com.bingo.king.BuildConfig;
+import com.bingo.king.di.component.AppComponent;
+import com.bingo.king.di.component.DaggerAppComponent;
+import com.bingo.king.di.module.AppModule;
+import com.bingo.king.di.module.NetworkModule;
 import com.blankj.utilcode.util.Utils;
 import com.squareup.leakcanary.LeakCanary;
 
@@ -17,14 +21,19 @@ import timber.log.Timber;
 
 public class App extends Application
 {
+    private static App instance;
+    private AppComponent mAppComponent;
+
     @Override
     public void onCreate()
     {
         super.onCreate();
+        instance = this;
         Utils.init(this);
         initDebug();
         initTimber();
         initLeakCanary();
+        setupInjector();
     }
 
     private void initDebug()
@@ -74,4 +83,22 @@ public class App extends Application
     {
         super.onTerminate();
     }
+
+    private void setupInjector()
+    {
+        mAppComponent = DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
+                .networkModule(new NetworkModule(this)).build();
+    }
+
+    public static App getApplication()
+    {
+        return instance;
+    }
+
+    public AppComponent getAppComponent()
+    {
+        return mAppComponent;
+    }
+
 }
