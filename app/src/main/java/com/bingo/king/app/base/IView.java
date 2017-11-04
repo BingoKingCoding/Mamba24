@@ -6,6 +6,17 @@ package com.bingo.king.app.base;
 
 public interface IView
 {
+
+    /**
+     * 显示加载
+     */
+    void showLoading();
+
+    /**
+     * 隐藏加载
+     */
+    void hideLoading();
+
     /**
      * 显示信息
      */

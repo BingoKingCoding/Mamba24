@@ -88,7 +88,8 @@ public class App extends Application
     {
         mAppComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
-                .networkModule(new NetworkModule(this)).build();
+                .networkModule(new NetworkModule(this))
+                .build();
     }
 
     public static App getApplication()

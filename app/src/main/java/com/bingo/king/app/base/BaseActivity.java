@@ -79,6 +79,7 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
         {
             EventBus.getDefault().register(this);
         }
+        setupActivityComponent();
         initData(savedInstanceState);
     }
 
@@ -215,7 +216,7 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
         }
         if (!mProgressDialog.isShowing())
         {
-            mProgressDialog.setTextMsg(msg);
+//            mProgressDialog.setTextMsg(msg);
             mProgressDialog.setCancelable(cancelAble);
             mProgressDialog.show();
         }

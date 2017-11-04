@@ -1,6 +1,7 @@
 package com.bingo.king.mvp.presenter;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.bingo.king.app.base.BasePresenter;
 import com.bingo.king.di.scope.ActivityScope;
@@ -66,6 +67,20 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                             public void onNext(@NonNull GankEntity gankEntity)
                             {
                                 super.onNext(gankEntity);
+                                Log.d(TAG, "onNext:"+gankEntity.results);
+                            }
+
+                            @Override
+                            public void onError(@NonNull Throwable e)
+                            {
+                                super.onError(e);
+                            }
+
+                            @Override
+                            public void onComplete()
+                            {
+                                super.onComplete();
+                                mRootView.hideLoading();
                             }
                         }
 

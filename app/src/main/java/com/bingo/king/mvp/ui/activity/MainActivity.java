@@ -21,6 +21,18 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
 
     @Override
+    public void showLoading()
+    {
+        showLoadingDialog();
+    }
+
+    @Override
+    public void hideLoading()
+    {
+        closeLoadingDialog();
+    }
+
+    @Override
     public void showMessage(String message)
     {
         showSnackbar(message);
@@ -45,6 +57,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     public void initData(Bundle savedInstanceState)
     {
+        showLoading();
         mPresenter.requestData(true);
     }
 }

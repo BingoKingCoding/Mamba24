@@ -1,7 +1,10 @@
 package com.bingo.king.app.base;
 
+import com.bingo.king.mvp.model.http.rxerrorhandler.HttpCallback;
+
 import org.simple.eventbus.EventBus;
 
+import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -91,4 +94,17 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
     {
 
     }
+
+
+    protected <T> void requestData(Observable<T> observable, HttpCallback<T> httpCallback){
+
+
+
+
+    }
+
+
+
+
+
 }

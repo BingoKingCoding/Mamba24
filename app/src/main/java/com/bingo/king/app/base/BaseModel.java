@@ -13,7 +13,7 @@ public class BaseModel implements IModel
 
     public BaseModel(IRepository repository)
     {
-        this.mRepository = mRepository;
+        this.mRepository = repository;
     }
 
     @Override

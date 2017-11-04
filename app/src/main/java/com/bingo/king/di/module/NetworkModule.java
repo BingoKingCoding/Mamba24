@@ -5,8 +5,6 @@ import com.bingo.king.app.Constants;
 import com.bingo.king.app.utils.FileUtil;
 import com.bingo.king.mvp.model.http.IRepository;
 import com.bingo.king.mvp.model.http.RepositoryImpl;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.concurrent.TimeUnit;
 
@@ -19,7 +17,7 @@ import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -46,23 +44,9 @@ public class NetworkModule
 
     @Singleton
     @Provides
-    Retrofit.Builder provideRetrofitBuilder()
-    {
-        return new Retrofit.Builder();
-    }
-
-    @Singleton
-    @Provides
     OkHttpClient.Builder provideOkHttpBuilder()
     {
         return new OkHttpClient.Builder();
-    }
-
-    @Singleton
-    @Provides
-    public Gson provideGson()
-    {
-        return new GsonBuilder().create();
     }
 
 
@@ -88,15 +72,15 @@ public class NetworkModule
     @Provides
     @Named("one")
     @Singleton
-    Retrofit provideOneRetrofit(OkHttpClient client, Retrofit.Builder builder, Gson gson)
+    Retrofit provideOneRetrofit(OkHttpClient client)
     {
         String baseUrl = Constants.BASE_API_URL_ONE;
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .client(client)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         return retrofit;
     }
@@ -104,15 +88,15 @@ public class NetworkModule
     @Provides
     @Named("two")
     @Singleton
-    Retrofit provideTwoRetrofit(OkHttpClient client, Retrofit.Builder builder, Gson gson)
+    Retrofit provideTwoRetrofit(OkHttpClient client)
     {
         String baseUrl = Constants.BASE_API_URL_TWO;
 
-        Retrofit retrofit = builder
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .client(client)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         return retrofit;
     }

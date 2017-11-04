@@ -7,7 +7,6 @@ import com.bingo.king.di.scope.ActivityScope;
 import com.bingo.king.mvp.contract.MainContract;
 import com.bingo.king.mvp.model.entity.GankEntity;
 import com.bingo.king.mvp.model.http.IRepository;
-import com.google.gson.Gson;
 
 import javax.inject.Inject;
 
@@ -19,14 +18,12 @@ import io.reactivex.Observable;
 @ActivityScope
 public class MainModel extends BaseModel implements MainContract.Model
 {
-    private Gson mGson;
     private Application mApplication;
 
     @Inject
-    public MainModel(IRepository repository, Gson gson, Application application)
+    public MainModel(IRepository repository,Application application)
     {
         super(repository);
-        this.mGson = gson;
         this.mApplication = application;
     }
 
@@ -34,7 +31,6 @@ public class MainModel extends BaseModel implements MainContract.Model
     public void onDestroy()
     {
         super.onDestroy();
-        this.mGson = null;
         this.mApplication = null;
     }
 

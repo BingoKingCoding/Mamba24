@@ -6,7 +6,6 @@ import com.bingo.king.app.App;
 import com.bingo.king.di.module.AppModule;
 import com.bingo.king.di.module.NetworkModule;
 import com.bingo.king.mvp.model.http.IRepository;
-import com.google.gson.Gson;
 
 import javax.inject.Singleton;
 
@@ -26,8 +25,6 @@ public interface AppComponent
     App MVPLearnApplication();
 
     OkHttpClient okHttpClient();
-    //gson
-    Gson gson();
 
     IRepository repository();
 }
