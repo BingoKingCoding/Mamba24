@@ -13,8 +13,6 @@ import android.view.View;
 import com.bingo.king.app.App;
 import com.bingo.king.app.EventBusTags;
 import com.bingo.king.di.component.AppComponent;
-import com.bingo.king.mvp.ui.widget.LoadingDialogListener;
-import com.bingo.king.mvp.ui.widget.ProgressDialog;
 import com.blankj.utilcode.util.AppUtils;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -37,7 +35,7 @@ import static com.bingo.king.app.utils.ThirdViewUtil.convertAutoView;
  * Created by wang on 2017/11/1 16:55.
  */
 
-public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActivity implements IActivity, LoadingDialogListener
+public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActivity implements IActivity
 {
     protected final String TAG = this.getClass().getSimpleName();
     private Unbinder mUnbinder;
@@ -102,13 +100,6 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
             mPresenter.onDestroy();
         }//释放资源
         this.mPresenter = null;
-
-        if (mProgressDialog != null)
-        {
-            mProgressDialog.dismiss();
-        }
-        mProgressDialog = null;
-
 
     }
 
@@ -193,52 +184,6 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
     public void onExitAppReceive(Message message)
     {
         //可以在工具类或者其他类中做相应的退出逻辑
-    }
-
-    private ProgressDialog mProgressDialog;
-
-    @Override
-    public void showLoadingDialog()
-    {
-        showLoadingDialog(false, "正在加载中...");
-    }
-
-    public void showLoadingDialog(String msg)
-    {
-        showLoadingDialog(false, msg);
-    }
-
-    public void showLoadingDialog(boolean cancelAble, String msg)
-    {
-        if (mProgressDialog == null)
-        {
-            mProgressDialog = new ProgressDialog(this);
-        }
-        if (!mProgressDialog.isShowing())
-        {
-//            mProgressDialog.setTextMsg(msg);
-            mProgressDialog.setCancelable(cancelAble);
-            mProgressDialog.show();
-        }
-        setLoadingState(true);
-    }
-
-    @Override
-    public void closeLoadingDialog()
-    {
-        if (mProgressDialog != null)
-        {
-            mProgressDialog.dismiss();
-        }
-        setLoadingState(false);
-    }
-
-    private void setLoadingState(boolean isLoading)
-    {
-        if (mPresenter != null)
-        {
-            mPresenter.setLoadingDialog(isLoading);
-        }
     }
 
 

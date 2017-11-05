@@ -1,5 +1,6 @@
 package com.bingo.king.app.base;
 
+import com.bingo.king.mvp.model.http.HttpUtils;
 import com.bingo.king.mvp.model.http.rxerrorhandler.HttpCallback;
 
 import org.simple.eventbus.EventBus;
@@ -20,6 +21,8 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
     protected M mModel;
     protected V mRootView;
 
+
+    private HttpCallback mHttpCallback;
 
     public BasePresenter(M model, V rootView)
     {
@@ -58,6 +61,10 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
         this.mModel = null;
         this.mRootView = null;
         this.mCompositeDisposable = null;
+        if (mHttpCallback != null)
+        {
+            mHttpCallback.detachView();
+        }
     }
 
 
@@ -96,15 +103,17 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
     }
 
 
-    protected <T> void requestData(Observable<T> observable, HttpCallback<T> httpCallback){
-
-
-
-
+    protected <T> void requestData(Observable<T> observable, HttpCallback<T> httpCallback)
+    {
+        this.mHttpCallback = httpCallback;
+        HttpUtils.requestData(mRootView, observable, httpCallback);
     }
 
-
-
+    protected <T> void requestDataOnPullToRefresh(boolean pullToRefresh, Observable<T> observable, HttpCallback<T> httpCallback)
+    {
+        this.mHttpCallback = httpCallback;
+        HttpUtils.requestDataOnPullToRefresh(pullToRefresh,mRootView, observable, httpCallback);
+    }
 
 
 }

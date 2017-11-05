@@ -40,7 +40,8 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
         this.mApplication = null;
     }
 
-    public void requestData(boolean pullToRefresh){
+    public void requestData(boolean pullToRefresh)
+    {
         mModel.getRandomGirl()
                 .subscribeOn(Schedulers.io())
 //                .retryWhen(new RetryWithDelay(3,2))
@@ -62,12 +63,13 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                 })
 //                .compose(RxUtils.bindToLifecycle(mRootView))
                 .subscribe(
-                        new HttpCallback<GankEntity>(){
+                        new HttpCallback<GankEntity>()
+                        {
                             @Override
                             public void onNext(@NonNull GankEntity gankEntity)
                             {
                                 super.onNext(gankEntity);
-                                Log.d(TAG, "onNext:"+gankEntity.results);
+                                Log.d(TAG, "onNext:" + gankEntity.results);
                             }
 
                             @Override
@@ -99,5 +101,46 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
 //                }
                 );
     }
+
+
+    public void requestDataOnPullToRefresh(boolean pullToRefresh)
+    {
+//        requestData(mModel.getRandomGirl(), new HttpCallback<GankEntity>()
+//        {
+//            @Override
+//            public void onSuccess(GankEntity gankEntity)
+//            {
+//                super.onSuccess(gankEntity);
+//                Log.d(TAG, "onNext:"+gankEntity.results);
+//            }
+//        });
+
+        requestDataOnPullToRefresh(pullToRefresh, mModel.getRandomGirl(), new HttpCallback<GankEntity>()
+                {
+                    @Override
+                    public void onSuccess(GankEntity gankEntity)
+                    {
+                        if (pullToRefresh)
+                        {
+//                            mRootView.setNewData(gankEntity.results);
+                        } else
+                        {
+//                            mRootView.setAddData(gankEntity.results);
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e)
+                    {
+
+
+                    }
+                }
+
+        );
+
+    }
+
 
 }
