@@ -17,11 +17,10 @@ import io.reactivex.disposables.Disposable;
 public class HttpCallback<T> implements Observer<T>
 {
 
-    private IView<T> mView;
+    private Stateful mStateful;
 
-    public void setTarget(IView<T> view)
-    {
-        this.mView = view;
+    public void setTarget(Stateful target) {
+        this.mStateful = target;
     }
 
     @Override
@@ -35,7 +34,7 @@ public class HttpCallback<T> implements Observer<T>
     {
         // TODO: 2017/3/22 这边网络请求成功返回都不一样所以不能在这里统一写了（如果是自己公司需要规定一套返回方案）
         // TODO: 2017/3/22 这里先统一处理为成功   我们要是想检查返回结果的集合是否是空，只能去子类回掉中完成了。
-        mView.setState(LoadingPage.STATE_SUCCESS);
+        mStateful.setState(LoadingPage.STATE_SUCCESS);
         onSuccess(data);
     }
 
@@ -43,7 +42,7 @@ public class HttpCallback<T> implements Observer<T>
     public void onError(@NonNull Throwable e)
     {
         e.printStackTrace();
-        onfail();
+        onFail();
     }
 
     @Override
@@ -59,35 +58,35 @@ public class HttpCallback<T> implements Observer<T>
          * 不过获取到的数据都是不规则的，理论上来说需要判断该数据是否为null或者list.size()是否为0
          * 只有不成立的情况下，才能调用成功方法refreshView/()。如果统一处理就放在每个refreshView中处理。
          */
-        mView.refreshView(data);
+        ((IView)mStateful).refreshView(data);
     }
 
 
-    private void onfail()
+    private void onFail()
     {
         if (!NetworkUtils.isAvailableByPing())
         {
 //            mView.showMessage("你连接的网络有问题，请检查路由器");
             ToastUtils.showShort("你连接的网络有问题，请检查路由器");
-            if (mView != null)
+            if (mStateful != null)
             {
-                mView.setState(LoadingPage.STATE_ERROR);
+                mStateful.setState(LoadingPage.STATE_ERROR);
             }
             return;
         }
 //        mView.showMessage("程序员哥哥偷懒去了，快去举报他");
         ToastUtils.showShort("程序员哥哥偷懒去了，快去举报他");
-        if (mView != null)
+        if (mStateful != null)
         {
-            mView.setState(LoadingPage.STATE_EMPTY);
+            mStateful.setState(LoadingPage.STATE_EMPTY);
         }
     }
 
     public void detachView()
     {
-        if (mView != null)
+        if (mStateful != null)
         {
-            mView = null;
+            mStateful = null;
         }
     }
 

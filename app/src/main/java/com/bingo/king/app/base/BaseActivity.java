@@ -38,7 +38,7 @@ import static com.bingo.king.app.utils.ThirdViewUtil.convertAutoView;
 public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActivity implements IActivity
 {
     protected final String TAG = this.getClass().getSimpleName();
-    private Unbinder mUnbinder;
+    protected Unbinder mUnbinder;
 
     /**
      * 触摸返回键是否退出App

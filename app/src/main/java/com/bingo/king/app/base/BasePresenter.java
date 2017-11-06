@@ -96,12 +96,6 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
         }
     }
 
-    @Override
-    public void setLoadingDialog(boolean isLoadingDialog)
-    {
-
-    }
-
 
     protected <T> void requestData(Observable<T> observable, HttpCallback<T> httpCallback)
     {

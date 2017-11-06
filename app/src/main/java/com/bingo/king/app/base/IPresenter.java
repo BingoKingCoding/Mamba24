@@ -16,6 +16,4 @@ public interface IPresenter
      */
     void onDestroy();
 
-
-    void setLoadingDialog(boolean isLoadingDialog);
 }

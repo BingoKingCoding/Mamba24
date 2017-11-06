@@ -39,8 +39,6 @@ public interface IView<T>
     void showMessage(String message);
 
 
-    void setState(int state);
-
 
     void refreshView(T data);
 }

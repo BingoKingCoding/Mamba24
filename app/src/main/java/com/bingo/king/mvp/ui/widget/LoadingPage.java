@@ -104,7 +104,7 @@ public abstract class LoadingPage extends FrameLayout
             public void onClick(View view) {
                 state = STATE_LOADING;
                 showPage();
-                loadData();
+                retryRequestData();
             }
         });
         return errorView;
@@ -150,7 +150,7 @@ public abstract class LoadingPage extends FrameLayout
 
         if (state == STATE_SUCCESS) {
             if (contentView == null) {
-                contentView = LayoutInflater.from(mContext).inflate(getLayoutId(), null);
+                contentView = LayoutInflater.from(mContext).inflate(getContentLayoutId(), null);
                 addView(contentView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
                 initView();
             }
@@ -166,7 +166,7 @@ public abstract class LoadingPage extends FrameLayout
      * 1、
      * @Description 初始化布局，当网络请求成功时显示
      */
-    protected abstract int getLayoutId();
+    protected abstract int getContentLayoutId();
 
     /**
      * 2、
@@ -179,7 +179,7 @@ public abstract class LoadingPage extends FrameLayout
      * 当网络获取失败 点击进行网络请求时调用
      * 根据网络获取的数据返回状态，每一个子类的获取网络返回的都不一样，所以要交给子类去完成
      */
-    protected abstract void loadData();
+    protected abstract void retryRequestData();
 
 
 

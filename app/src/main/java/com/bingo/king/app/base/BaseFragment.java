@@ -6,9 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bingo.king.mvp.model.http.rxerrorhandler.Stateful;
+import com.bingo.king.mvp.ui.widget.LoadingPage;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import javax.inject.Inject;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * <请描述这个类是干什么的>
@@ -17,17 +22,24 @@ import javax.inject.Inject;
  * @Email:634051075@qq.com
  */
 
-public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements IFragment
+public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements IFragment,Stateful
 {
     protected final String TAG = this.getClass().getSimpleName();
-    private boolean isFragmentVisible;
-    private boolean isReuseView;
-    private boolean isFirstVisible;
-    private View rootView;
+
+
+    public LoadingPage mLoadingPage;
+
+    private boolean mIsVisible = false;     // fragment是否显示了
+
+    private boolean isPrepared = false;
+
+    private boolean isFirst = true; //只加载一次界面
+
+    protected View contentView;
+    private Unbinder bind;
+
     @Inject
     protected P mPresenter;
-
-
     private BaseActivity mActivity;
 
     public BaseFragment()
@@ -40,55 +52,105 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        return initView(inflater, container, savedInstanceState);
+        if (mLoadingPage == null)
+        {
+            mLoadingPage = new LoadingPage(getContext())
+            {
+                @Override
+                protected int getContentLayoutId()
+                {
+                    return BaseFragment.this.getContentLayoutId();
+                }
+
+                @Override
+                protected void initView()
+                {
+                    if (isFirst)
+                    {
+                        BaseFragment.this.contentView = this.contentView;
+                        bind = ButterKnife.bind(BaseFragment.this, contentView);
+                        BaseFragment.this.initView();
+                        isFirst = false;
+                    }
+                }
+
+                @Override
+                protected void retryRequestData()
+                {
+                    BaseFragment.this.retryRequestData();
+                }
+            };
+        }
+        isPrepared = true;
+        loadBaseData();
+        return mLoadingPage;
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser)
+    {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (getUserVisibleHint())
+        {//fragment可见
+            mIsVisible = true;
+            onVisible();
+        } else
+        {//fragment不可见
+            mIsVisible = false;
+            onInvisible();
+        }
+
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState)
+    public void setState(int state) {
+        mLoadingPage.state = state;
+        mLoadingPage.showPage();
+    }
+
+
+    protected void onInvisible()
     {
-        super.onCreate(savedInstanceState);
-        initVariable();
+    }
+
+    /**
+     * 显示时加载数据,需要这样的使用
+     * 注意声明 isPrepared，先初始化
+     * 生命周期会先执行 setUserVisibleHint 再执行onActivityCreated
+     * 在 onActivityCreated 之后第一次显示加载数据，只加载一次
+     */
+    protected void onVisible()
+    {
+        if (isFirst)
+        {
+            initInject();
+        }
+        loadBaseData();//根据获取的数据来调用showView()切换界面
+    }
+
+    public void loadBaseData()
+    {
+        if (!mIsVisible || !isPrepared || !isFirst)
+        {
+            return;
+        }
+        loadData();
     }
 
 
     @Override
-    public void onDestroy()
+    public void onDetach()
     {
-        super.onDestroy();
-        initVariable();
+        super.onDetach();
+        if (bind != null) {
+            bind.unbind();
+        }
         if (mPresenter != null)
         {
             mPresenter.onDestroy();
         }
         this.mPresenter = null;
-    }
-
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
-    {
-        //如果setUserVisibleHint()在rootView创建前调用时，那么
-        //就等到rootView创建完后才回调onFragmentVisibleChange(true)
-        //保证onFragmentVisibleChange()的回调发生在rootView创建完成之后，以便支持ui操作
-        if (rootView == null)
-        {
-            rootView = view;
-        }
-        super.onViewCreated(isReuseView ? rootView : view, savedInstanceState);
-    }
-
-    @Override
-    public void onStart()
-    {
-        super.onStart();
-        if (getUserVisibleHint())
-        {
-            if (isFirstVisible)
-            {
-                onFragmentFirstVisible();
-                isFirstVisible = false;
-            }
-            onFragmentVisibleChange(true);
-            isFragmentVisible = true;
-        }
     }
 
 
@@ -101,87 +163,6 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     public boolean useEventBus()
     {
         return true;
-    }
-
-
-    private void initVariable()
-    {
-        isFirstVisible = true;
-        isFragmentVisible = false;
-        rootView = null;
-        isReuseView = true;
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser)
-    {
-        super.setUserVisibleHint(isVisibleToUser);
-        //setUserVisibleHint()有可能在fragment的生命周期外被调用
-        if (rootView == null)
-        {
-            return;
-        }
-        if (isFirstVisible && isVisibleToUser)
-        {
-            onFragmentFirstVisible();
-            isFirstVisible = false;
-        }
-        if (isVisibleToUser)
-        {
-            onFragmentVisibleChange(true);
-            isFragmentVisible = true;
-            return;
-        }
-        if (isFragmentVisible)
-        {
-            isFragmentVisible = false;
-            onFragmentVisibleChange(false);
-        }
-
-    }
-
-    /**
-     * 设置是否使用 view 的复用，默认开启
-     * view 的复用是指，ViewPager 在销毁和重建 Fragment 时会不断调用 onCreateView() -> onDestroyView()
-     * 之间的生命函数，这样可能会出现重复创建 view 的情况，导致界面上显示多个相同的 Fragment
-     * view 的复用其实就是指保存第一次创建的 view，后面再 onCreateView() 时直接返回第一次创建的 view
-     *
-     * @param isReuse
-     */
-    protected void reuseView(boolean isReuse)
-    {
-        isReuseView = isReuse;
-    }
-
-    /**
-     * 去除setUserVisibleHint()多余的回调场景，保证只有当fragment可见状态发生变化时才回调
-     * 回调时机在view创建完后，所以支持ui操作，解决在setUserVisibleHint()里进行ui操作有可能报null异常的问题
-     * <p>
-     * 可在该回调方法里进行一些ui显示与隐藏，比如加载框的显示和隐藏
-     *
-     * @param isVisible true  不可见 -> 可见
-     *                  false 可见  -> 不可见
-     */
-    protected void onFragmentVisibleChange(boolean isVisible)
-    {
-
-    }
-
-    /**
-     * 在fragment首次可见时回调，可在这里进行加载数据，保证只在第一次打开Fragment时才会加载数据，
-     * 这样就可以防止每次进入都重复加载数据
-     * 该方法会在 onFragmentVisibleChange() 之前调用，所以第一次打开时，可以用一个全局变量表示数据下载状态，
-     * 然后在该方法内将状态设置为下载状态，接着去执行下载的任务
-     * 最后在 onFragmentVisibleChange() 里根据数据下载状态来控制下载进度ui控件的显示与隐藏
-     */
-    protected void onFragmentFirstVisible()
-    {
-
-    }
-
-    protected boolean isFragmentVisible()
-    {
-        return isFragmentVisible;
     }
 
 
@@ -209,40 +190,33 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         return (isAdded() && !isRemoving());
     }
 
-    protected void showLoadingDialog()
-    {
-        if (getStatus())
-        {
-            BaseActivity activity = getBaseActivity();
-            if (activity != null)
-            {
-                activity.showLoadingDialog();
-            }
-        }
-    }
+    protected abstract void loadData();
 
-    protected void showLoadingDialog(String msg)
-    {
-        if (getStatus())
-        {
-            BaseActivity activity = getBaseActivity();
-            if (activity != null)
-            {
-                activity.showLoadingDialog(msg);
-            }
-        }
-    }
+    /**
+     * 1
+     * 根据网络获取的数据返回状态，每一个子类的获取网络返回的都不一样，所以要交给子类去完成
+     */
+    protected abstract void retryRequestData();
 
-    public void closeLoadingDialog()
-    {
-        if (getStatus())
-        {
-            BaseActivity activity = getBaseActivity();
-            if (activity != null)
-            {
-                activity.closeLoadingDialog();
-            }
-        }
-    }
+    /**
+     * 2
+     * 网络请求成功在去加载布局
+     *
+     * @return
+     */
+    protected abstract int getContentLayoutId();
+
+    /**
+     * 3
+     * 子类关于View的操作(如setAdapter)都必须在这里面，会因为页面状态不为成功，而binding还没创建就引用而导致空指针。
+     * loadData()和initView只执行一次，如果有一些请求需要二次的不要放到loadData()里面。
+     */
+    protected abstract void initView();
+
+    /**
+     * dagger2注入
+     */
+    protected abstract void initInject();
+
 
 }

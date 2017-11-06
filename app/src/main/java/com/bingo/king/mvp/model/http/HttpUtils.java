@@ -4,6 +4,7 @@ package com.bingo.king.mvp.model.http;
 import com.bingo.king.app.base.IView;
 import com.bingo.king.app.utils.RxUtils;
 import com.bingo.king.mvp.model.http.rxerrorhandler.HttpCallback;
+import com.bingo.king.mvp.model.http.rxerrorhandler.Stateful;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -24,7 +25,12 @@ public class HttpUtils
     public static <T> void requestData(IView<T> mView, Observable<T> observable, HttpCallback<T> httpCallback)
     {
 
-        httpCallback.setTarget(mView);
+        Stateful target;
+        if (mView instanceof Stateful)
+        {
+            target = (Stateful) mView;
+            httpCallback.setTarget(target);
+        }
         /**
          * 先判断网络连接状态和网络是否可用，放在回调那里好呢，还是放这里每次请求都去判断下网络是否可用好呢？
          * 如果放在请求前面太耗时了，如果放回掉提示的速度慢，要10秒钟请求超时后才提示。
@@ -35,22 +41,24 @@ public class HttpUtils
             ToastUtils.showShort("网络连接已断开");
             if (mView != null)
             {
-                mView.setState(LoadingPage.STATE_ERROR);
+                if (mView instanceof Stateful)
+                {
+                    ((Stateful) mView).setState(LoadingPage.STATE_ERROR);
+                }
             }
             return;
         }
 
-        //doOnSubscribe、doAfterTerminate可以用于上拉加载下来刷新
         observable.subscribeOn(Schedulers.io())
                 .doOnSubscribe(disposable ->
                 {
-                    //显示进度条
-//                    mView.showLoading();
-                    mView.setState(LoadingPage.STATE_LOADING);
+                    if (mView instanceof Stateful)
+                    {
+                        ((Stateful) mView).setState(LoadingPage.STATE_LOADING);
+                    }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-//                .doAfterTerminate(view::hideLoading)
                 .compose(RxUtils.bindToLifecycle(mView))
                 .subscribe(httpCallback);
 
@@ -64,9 +72,12 @@ public class HttpUtils
      */
     public static <T> void requestDataOnPullToRefresh(boolean pullToRefresh, IView<T> mView, Observable<T> observable, HttpCallback<T> httpCallback)
     {
-
-
-        httpCallback.setTarget(mView);
+        Stateful target;
+        if (mView instanceof Stateful)
+        {
+            target = (Stateful) mView;
+            httpCallback.setTarget(target);
+        }
         /**
          * 先判断网络连接状态和网络是否可用，放在回调那里好呢，还是放这里每次请求都去判断下网络是否可用好呢？
          * 如果放在请求前面太耗时了，如果放回掉提示的速度慢，要10秒钟请求超时后才提示。
@@ -77,7 +88,10 @@ public class HttpUtils
             ToastUtils.showShort("网络连接已断开");
             if (mView != null)
             {
-                mView.setState(LoadingPage.STATE_ERROR);
+                if (mView instanceof Stateful)
+                {
+                    ((Stateful) mView).setState(LoadingPage.STATE_ERROR);
+                }
             }
             return;
         }

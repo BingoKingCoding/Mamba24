@@ -13,12 +13,39 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public int initView(Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        return R.layout.activity_main;
     }
 
+    @Override
+    public void setupActivityComponent()
+    {
+        DaggerMainComponent.builder()
+                .appComponent(getAppComponent())
+                .mainModule(new MainModule(this))
+                .build()
+                .inject(this);
+    }
+
+    @Override
+    public void initData(Bundle savedInstanceState)
+    {
+
+    }
+
+
+    @Override
+    public void showMessage(String message)
+    {
+        showSnackbar(message);
+    }
+
+    @Override
+    public void refreshView(Object data)
+    {
+
+    }
 
     @Override
     public void showLoading()
@@ -44,43 +71,5 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     }
 
-    @Override
-    public void showMessage(String message)
-    {
-        showSnackbar(message);
-    }
 
-    @Override
-    public void refreshView(Object data)
-    {
-
-    }
-
-    @Override
-    public void setupActivityComponent()
-    {
-        DaggerMainComponent.builder()
-                .appComponent(getAppComponent())
-                .mainModule(new MainModule(this))
-                .build()
-                .inject(this);
-    }
-
-    @Override
-    public int initView(Bundle savedInstanceState)
-    {
-        return R.layout.activity_main;
-    }
-
-    @Override
-    public void initData(Bundle savedInstanceState)
-    {
-        mPresenter.requestDataOnPullToRefresh(true);
-    }
-
-    @Override
-    public void setState(int state)
-    {
-
-    }
 }
