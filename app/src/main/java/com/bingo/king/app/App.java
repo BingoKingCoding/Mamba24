@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.bingo.king.BuildConfig;
+import com.bingo.king.app.greendao.GreenDaoHelper;
 import com.bingo.king.di.component.AppComponent;
 import com.bingo.king.di.component.DaggerAppComponent;
 import com.bingo.king.di.module.AppModule;
@@ -34,6 +35,7 @@ public class App extends Application
         initTimber();
         initLeakCanary();
         setupInjector();
+        GreenDaoHelper.getInstance().initDatabase(this);
     }
 
     private void initDebug()

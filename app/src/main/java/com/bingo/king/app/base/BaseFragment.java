@@ -2,10 +2,14 @@ package com.bingo.king.app.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.util.Preconditions;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bingo.king.app.App;
+import com.bingo.king.di.component.AppComponent;
 import com.bingo.king.mvp.model.http.rxerrorhandler.Stateful;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
 import com.trello.rxlifecycle2.components.support.RxFragment;
@@ -22,7 +26,7 @@ import butterknife.Unbinder;
  * @Email:634051075@qq.com
  */
 
-public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements IFragment,Stateful
+public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements IFragment, Stateful
 {
     protected final String TAG = this.getClass().getSimpleName();
 
@@ -104,7 +108,8 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     }
 
     @Override
-    public void setState(int state) {
+    public void setState(int state)
+    {
         mLoadingPage.state = state;
         mLoadingPage.showPage();
     }
@@ -124,7 +129,8 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     {
         if (isFirst)
         {
-            initInject();
+            setupComponent();
+            onFragmentFirstVisible();
         }
         loadBaseData();//根据获取的数据来调用showView()切换界面
     }
@@ -135,7 +141,17 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         {
             return;
         }
-        loadData();
+        initData();
+    }
+
+
+    /**
+     * 在fragment首次可见时回调，可在这里进行加载数据，保证只在第一次打开Fragment时才会加载数据，
+     * 这样就可以防止每次进入都重复加载数据
+     */
+    protected void onFragmentFirstVisible()
+    {
+
     }
 
 
@@ -143,7 +159,8 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     public void onDetach()
     {
         super.onDetach();
-        if (bind != null) {
+        if (bind != null)
+        {
             bind.unbind();
         }
         if (mPresenter != null)
@@ -156,8 +173,6 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
 
     /**
      * 是否使用eventBus,默认为使用(true)，
-     *
-     * @return
      */
     @Override
     public boolean useEventBus()
@@ -168,8 +183,6 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
 
     /**
      * 获取Activity
-     *
-     * @return
      */
     public BaseActivity getBaseActivity()
     {
@@ -179,6 +192,41 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         }
         return mActivity;
     }
+
+
+    protected AppComponent getAppComponent()
+    {
+        return App.getApplication().getAppComponent();
+    }
+
+
+    /**
+     * 用snackbar显示
+     */
+    protected void showSnackbar(String message)
+    {
+        showSnackbar(message, false);
+    }
+
+    /**
+     * 用snackbar显示
+     */
+    protected void showSnackbarWithLong(String message)
+    {
+        showSnackbar(message, true);
+    }
+
+
+    /**
+     * 使用snackbar显示内容
+     */
+    protected void showSnackbar(String message, boolean isLong)
+    {
+        Preconditions.checkNotNull(message);
+        View view = getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+        Snackbar.make(view, message, isLong ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
+    }
+
 
     /**
      * 获取当前Fragment状态
@@ -190,7 +238,6 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         return (isAdded() && !isRemoving());
     }
 
-    protected abstract void loadData();
 
     /**
      * 1
@@ -201,8 +248,6 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     /**
      * 2
      * 网络请求成功在去加载布局
-     *
-     * @return
      */
     protected abstract int getContentLayoutId();
 
@@ -212,11 +257,6 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
      * loadData()和initView只执行一次，如果有一些请求需要二次的不要放到loadData()里面。
      */
     protected abstract void initView();
-
-    /**
-     * dagger2注入
-     */
-    protected abstract void initInject();
 
 
 }

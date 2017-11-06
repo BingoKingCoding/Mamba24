@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.util.Preconditions;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
@@ -216,6 +217,7 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
      */
     protected void showSnackbar(String message, boolean isLong)
     {
+        Preconditions.checkNotNull(message);
         View view = getWindow().getDecorView().findViewById(android.R.id.content);
         Snackbar.make(view, message, isLong ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
     }

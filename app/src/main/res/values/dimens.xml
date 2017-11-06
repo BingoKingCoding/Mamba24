@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    ources>
+        <!-- text size -->
+        <dimen name="f0">10sp</dimen>
+        <dimen name="f1">11sp</dimen>
+        <dimen name="f2">12sp</dimen>
+        <dimen name="f3">13sp</dimen>
+        <dimen name="f4">14sp</dimen>
+        <dimen name="f5">15sp</dimen>
+        <dimen name="f6">16sp</dimen>
+        <dimen name="f7">17sp</dimen>
+        <dimen name="f8">18sp</dimen>
+        <dimen name="f9">19sp</dimen>
+        <dimen name="f10">20sp</dimen>
+        <dimen name="f11">21sp</dimen>
+        <dimen name="f12">22sp</dimen>
+        <dimen name="f13">23sp</dimen>
+        <dimen name="f14">24sp</dimen>
+        <dimen name="f15">25sp</dimen>
+
+        <!--Common margin and padding-->
+        <dimen name="m1">1dp</dimen>
+        <dimen name="m2">2dp</dimen>
+        <dimen name="m3">3dp</dimen>
+        <dimen name="m4">4dp</dimen>
+        <dimen name="m5">5dp</dimen>
+        <dimen name="m6">6dp</dimen>
+        <dimen name="m7">7dp</dimen>
+        <dimen name="m8">8dp</dimen>
+        <dimen name="m9">9dp</dimen>
+        <dimen name="m10">10dp</dimen>
+        <dimen name="m12">12dp</dimen>
+        <dimen name="m15">15dp</dimen>
+        <dimen name="m16">16dp</dimen>
+        <dimen name="m18">18dp</dimen>
+        <dimen name="m20">20dp</dimen>
+        <dimen name="m30">30dp</dimen>
+
+        <!--corners-->
+        <dimen name="r2">2dp</dimen>
+        <dimen name="r4">4dp</dimen>
+        <dimen name="r6">6dp</dimen>
+        <dimen name="r8">8dp</dimen>
+        <dimen name="r10">10dp</dimen>
+
+        <!--分割线-->
+        <dimen name="common_divider">1px</dimen>
+
+    <!--点赞按钮-->
+        <dimen name="height_icon_xs">12dp</dimen>
+        <dimen name="height_icon_s">18dp</dimen>
+        <dimen name="height_icon_m">24dp</dimen>
+        <dimen name="height_icon_l">36dp</dimen>
+        <dimen name="height_icon_xl">52dp</dimen>
+
+        <dimen name="height_heard_portrait">60dp</dimen>
+        <dimen name="width_heard_portrait">60dp</dimen>
+
+    <!--用来测电影详情页-->
+        <dimen name="new_home_header_size">325dp</dimen>
+
+
+        <dimen name="slide_shape_title_ng">310dp</dimen>
+
+        <!--电影详情图片的宽高-->
+        <dimen name="movie_detail_width">125dp</dimen>
+        <dimen name="movie_detail_height">165dp</dimen>
+        <!--评论头像大小-->
+        <dimen name="comment_face_size">42dp</dimen>
+        <dimen name="list_image_size">80dp</dimen>
+
+        <dimen name="top_news_image">180dp</dimen>
+        <dimen name="movie_top_image">120dp</dimen>
+        <dimen name="top_news_text">160dp</dimen>
+        <dimen name="movie_top_text">100dp</dimen>
+
+</resources>
