@@ -5,10 +5,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.bingo.king.R;
 import com.bingo.king.app.base.BaseFragment;
 import com.bingo.king.app.utils.CommonUtils;
+import com.bingo.king.di.component.DaggerCategoryComponent;
 import com.bingo.king.di.module.CategoryModule;
 import com.bingo.king.mvp.contract.CategoryContract;
 import com.bingo.king.mvp.model.entity.GankEntity;
@@ -18,9 +18,6 @@ import com.bingo.king.mvp.ui.adapter.CategoryAdapter;
 import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-
-import static com.bingo.king.app.ARouterPaths.MAIN_DETAIL;
-import static com.bingo.king.app.EventBusTags.EXTRA_DETAIL;
 
 
 /**
@@ -36,7 +33,7 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     private boolean isLoadingMore;
-    private Paginate mPaginate;
+//    private Paginate mPaginate;
     private String type;
 
     public static CategoryFragment newInstance(String type) {
@@ -63,6 +60,8 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
         type = getArguments().getString("type");
         mSwipeRefreshLayout.setOnRefreshListener(this);
         CommonUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
+
+
         mPresenter.requestData(type,true);
     }
 
@@ -105,42 +104,42 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
         mAdapter.setOnItemClickListener((adapter, view, position) ->
         {
             GankEntity.ResultsBean bean = (GankEntity.ResultsBean) adapter.getItem(position);
-            ARouter.getInstance().build(MAIN_DETAIL)
-                    .withSerializable(EXTRA_DETAIL,bean)
-                    .navigation();
+//            ARouter.getInstance().build(MAIN_DETAIL)
+//                    .withSerializable(EXTRA_DETAIL,bean)
+//                    .navigation();
         });
         initPaginate();
     }
 
     private void initPaginate()
     {
-        if (mPaginate == null)
-        {
-            Paginate.Callbacks callback = new Paginate.Callbacks()
-            {
-                @Override
-                public void onLoadMore()
-                {
-                    mPresenter.requestData(type,false);
-                }
-
-                @Override
-                public boolean isLoading()
-                {
-                    return isLoadingMore;
-                }
-
-                @Override
-                public boolean hasLoadedAllItems()
-                {
-                    return false;
-                }
-            };
-            mPaginate = Paginate.with(mRecyclerView,callback)
-                    .setLoadingTriggerThreshold(0)
-                    .build();
-            mPaginate.setHasMoreDataToLoad(false);
-        }
+//        if (mPaginate == null)
+//        {
+//            Paginate.Callbacks callback = new Paginate.Callbacks()
+//            {
+//                @Override
+//                public void onLoadMore()
+//                {
+//                    mPresenter.requestData(type,false);
+//                }
+//
+//                @Override
+//                public boolean isLoading()
+//                {
+//                    return isLoadingMore;
+//                }
+//
+//                @Override
+//                public boolean hasLoadedAllItems()
+//                {
+//                    return false;
+//                }
+//            };
+//            mPaginate = Paginate.with(mRecyclerView,callback)
+//                    .setLoadingTriggerThreshold(0)
+//                    .build();
+//            mPaginate.setHasMoreDataToLoad(false);
+//        }
     }
 
     @Override

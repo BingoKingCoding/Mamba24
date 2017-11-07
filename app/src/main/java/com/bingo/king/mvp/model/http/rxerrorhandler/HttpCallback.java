@@ -1,6 +1,5 @@
 package com.bingo.king.mvp.model.http.rxerrorhandler;
 
-import com.bingo.king.app.base.IView;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -58,7 +57,7 @@ public class HttpCallback<T> implements Observer<T>
          * 不过获取到的数据都是不规则的，理论上来说需要判断该数据是否为null或者list.size()是否为0
          * 只有不成立的情况下，才能调用成功方法refreshView/()。如果统一处理就放在每个refreshView中处理。
          */
-        ((IView)mStateful).refreshView(data);
+//        ((IView)mStateful).refreshView(data);
     }
 
 

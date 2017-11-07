@@ -87,12 +87,10 @@ public class MeiziFragment extends BaseFragment<MeiziPresenter> implements Meizi
         mRecyclerView.addItemDecoration(decoration);
 
         mRecyclerView.setAdapter(mAdapter);
-    }
 
-    @Override
-    protected void onFragmentFirstVisible()
-    {
+
         mPresenter.requestData(true);
+
     }
 
     @Override
