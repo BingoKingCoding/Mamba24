@@ -10,5 +10,6 @@ import io.reactivex.Observable;
  */
 public interface IRepository
 {
+    Observable<GankEntity> gank(String type,int pageSize,String page);
     Observable<GankEntity> getRandomGirl();
 }

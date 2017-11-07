@@ -26,6 +26,13 @@ public class RepositoryImpl implements IRepository
         this.mOneService = oneRetrofit.create(OneService.class);
         this.mTestTwoService = twoRetrofit.create(TestTwoService.class);
     }
+
+    @Override
+    public Observable<GankEntity> gank(String type, int pageSize, String page)
+    {
+        return mOneService.gank(type,pageSize,page);
+    }
+
     @Override
     public Observable<GankEntity> getRandomGirl()
     {

@@ -3,13 +3,13 @@ package com.bingo.king.mvp.model;
 import android.os.Message;
 
 import com.bingo.king.app.base.BaseModel;
+import com.bingo.king.app.greendao.DaoGankEntityDao;
 import com.bingo.king.app.greendao.GreenDaoHelper;
 import com.bingo.king.di.scope.ActivityScope;
 import com.bingo.king.mvp.contract.WelfareContract;
 import com.bingo.king.mvp.model.entity.DaoGankEntity;
 import com.bingo.king.mvp.model.entity.GankEntity;
 import com.bingo.king.mvp.model.http.IRepository;
-import com.king.king.app.greendao.DaoGankEntityDao;
 
 import java.util.List;
 

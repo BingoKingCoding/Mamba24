@@ -21,9 +21,9 @@ import static android.os.Environment.getExternalStorageDirectory;
 
 public class FileUtil
 {
-    private static final String HTTP_CACHE_DIR = "http";
-    private static final String IMAGE_CACHE_DIR = "image";
-    private static final String AD_IMAGE_CACHE_DIR = "adimages";
+    public static final String HTTP_CACHE_DIR = "http";
+    public static final String IMAGE_CACHE_DIR = "image";
+    public static final String AD_IMAGE_CACHE_DIR = "adimages";
 
     /**
      * sd卡是否存在

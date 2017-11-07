@@ -130,7 +130,6 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         if (isFirst)
         {
             setupComponent();
-            onFragmentFirstVisible();
         }
         loadBaseData();//根据获取的数据来调用showView()切换界面
     }

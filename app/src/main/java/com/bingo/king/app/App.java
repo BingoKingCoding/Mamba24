@@ -3,6 +3,7 @@ package com.bingo.king.app;
 import android.app.Application;
 import android.content.Context;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bingo.king.BuildConfig;
 import com.bingo.king.app.greendao.GreenDaoHelper;
 import com.bingo.king.di.component.AppComponent;
@@ -31,21 +32,17 @@ public class App extends Application
         super.onCreate();
         instance = this;
         Utils.init(this);
-        initDebug();
         initTimber();
         initLeakCanary();
         setupInjector();
         GreenDaoHelper.getInstance().initDatabase(this);
-    }
-
-    private void initDebug()
-    {
-        if (BuildConfig.DEBUG)
-        {
+        if (BuildConfig.DEBUG) {
             ButterKnife.setDebug(true);
+            ARouter.openLog();     // 打印日志
+            ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
         }
+        ARouter.init(this); // 尽可能早，推荐在Application中初始化
     }
-
 
     private void initTimber()
     {
