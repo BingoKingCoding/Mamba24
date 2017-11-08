@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.util.Preconditions;
@@ -11,11 +12,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.bingo.king.R;
 import com.bingo.king.app.App;
 import com.bingo.king.app.EventBusTags;
 import com.bingo.king.app.utils.SDFragmentManager;
 import com.bingo.king.di.component.AppComponent;
 import com.blankj.utilcode.util.AppUtils;
+import com.jaeger.library.StatusBarUtil;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
@@ -82,6 +85,19 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
         }
         setupActivityComponent();
         initData(savedInstanceState);
+    }
+
+
+    @Override
+    public void setContentView(@LayoutRes int layoutResID)
+    {
+        super.setContentView(layoutResID);
+        setStatusBar();
+    }
+
+    protected void setStatusBar()
+    {
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary));
     }
 
 
@@ -187,7 +203,7 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
     public void onExitAppReceive(Message message)
     {
         //可以在工具类或者其他类中做相应的退出逻辑
-        Timber.d(TAG,"exit_app");
+        Timber.d(TAG, "exit_app");
     }
 
 
@@ -237,6 +253,7 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
     }
 
     private SDFragmentManager mFragmentManager;
+
     public SDFragmentManager getSDFragmentManager()
     {
         if (mFragmentManager == null)
@@ -245,7 +262,6 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
         }
         return mFragmentManager;
     }
-
 
 
 }

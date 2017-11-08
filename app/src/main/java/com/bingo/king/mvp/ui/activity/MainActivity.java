@@ -21,6 +21,7 @@ import com.bingo.king.mvp.presenter.MainPresenter;
 import com.bingo.king.mvp.ui.fragment.CollectFragment;
 import com.bingo.king.mvp.ui.fragment.HomeFragment;
 import com.bingo.king.mvp.ui.fragment.WelfareFragment;
+import com.jaeger.library.StatusBarUtil;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
@@ -89,6 +90,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     public int initView(Bundle savedInstanceState)
     {
         return R.layout.activity_main;
+    }
+
+
+    @Override
+    protected void setStatusBar()
+    {
+        int mStatusBarColor = getResources().getColor(R.color.colorPrimary);
+        StatusBarUtil.setColorForDrawerLayout(this, findViewById(R.id.dl_layout), mStatusBarColor,0);
     }
 
     @Override
