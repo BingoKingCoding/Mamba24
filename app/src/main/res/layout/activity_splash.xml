@@ -16,13 +16,13 @@
             android:layout_height="640dp"/>
     </ScrollView>
 
-    <!--<ImageView-->
-        <!--android:id="@+id/iv_logo"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:scaleType="fitXY"-->
-        <!--android:src="@mipmap/ic_bg_spring" />-->
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_bg_spring" />
 
 
 </RelativeLayout>

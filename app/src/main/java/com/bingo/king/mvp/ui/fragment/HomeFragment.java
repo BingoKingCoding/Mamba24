@@ -27,8 +27,10 @@ import butterknife.BindView;
 
 public class HomeFragment extends BaseFragment<HomePresenter> implements HomeContract.View
 {
-    @BindView(R.id.tabs)TabLayout tabs;
-    @BindView(R.id.mainPager)ViewPager mainPager;
+    @BindView(R.id.tabs)
+    TabLayout tabs;
+    @BindView(R.id.mainPager)
+    ViewPager mainPager;
     private List<Fragment> mFragments;
 
 
@@ -59,15 +61,15 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             mFragments.add(CategoryFragment.newInstance(CategoryType.IOS_STR));
             mFragments.add(CategoryFragment.newInstance(CategoryType.QIAN_STR));
         }
-
+        mainPager.setOffscreenPageLimit(mFragments.size());
+        mainPager.setAdapter(new MianViewPagerAdapter(getChildFragmentManager(), mFragments));
+        tabs.setupWithViewPager(mainPager);
     }
 
     @Override
     protected void initView()
     {
-        mainPager.setOffscreenPageLimit(mFragments.size());
-        mainPager.setAdapter(new MianViewPagerAdapter(getChildFragmentManager(),mFragments));
-        tabs.setupWithViewPager(mainPager);
+
     }
 
     @Override

@@ -34,10 +34,14 @@ import static com.bingo.king.app.EventBusTags.ACTIVITY_FRAGMENT_REPLACE;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View
 {
-    @BindView(R.id.toolbar)Toolbar mToolbar;
-    @BindView(R.id.toolbar_title)TextView mToolbarTitle;
-    @BindView(R.id.bottomBar)BottomBar mBottomBar;
-    @BindView(R.id.dl_layout)DrawerLayout dlLayout;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.toolbar_title)
+    TextView mToolbarTitle;
+    @BindView(R.id.bottomBar)
+    BottomBar mBottomBar;
+    @BindView(R.id.dl_layout)
+    DrawerLayout dlLayout;
 
 
     private List<Integer> mTitles;
@@ -47,7 +51,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
 
     @OnClick(R.id.fl_title_menu)
-    public void flTitleMenu() {
+    public void flTitleMenu()
+    {
         dlLayout.openDrawer(GravityCompat.START);
     }
 
@@ -71,12 +76,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                     getSDFragmentManager().toggle(R.id.main_frame, null, CollectFragment.class);
                     mReplace = 2;
                     break;
-//            case R.id.tab_mycenter:
-//                mReplace = 3;
-//                break;
+                case R.id.tab_mycenter:
+                    mReplace = 3;
+                    break;
             }
             mToolbarTitle.setText(mTitles.get(mReplace));
-//            FragmentUtils.hideAllShowFragment(mFragments.get(mReplace));
+
         }
     };
 
@@ -105,46 +110,16 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             mTitles.add(R.string.title_home);
             mTitles.add(R.string.title_dashboard);
             mTitles.add(R.string.title_favourite);
-//            mTitles.add(R.string.title_mecenter);
+            mTitles.add(R.string.title_mecenter);
         }
-//
         if (mNavIds == null)
         {
             mNavIds = new ArrayList<>();
             mNavIds.add(R.id.tab_home);
             mNavIds.add(R.id.tab_dashboard);
             mNavIds.add(R.id.tab_myfavourite);
-//            mNavIds.add(R.id.tab_mycenter);
+            mNavIds.add(R.id.tab_mycenter);
         }
-//        HomeFragment homeFragment;
-//        WelfareFragment welfareFragment;
-//        CollectFragment collectFragment;
-//        UserCenterFragment userCenterFragment;
-//
-//        if (savedInstanceState == null)
-//        {
-//            homeFragment = new HomeFragment();
-//            welfareFragment = new WelfareFragment();
-//            collectFragment = new CollectFragment();
-//            userCenterFragment = UserCenterFragment.newInstance();
-//        }else {
-//            mReplace = savedInstanceState.getInt(ACTIVITY_FRAGMENT_REPLACE);
-//            FragmentManager fm = getSupportFragmentManager();
-//            homeFragment = (HomeFragment) FragmentUtils.findFragment(fm,HomeFragment.class);
-//            welfareFragment = (WelfareFragment) FragmentUtils.findFragment(fm,WelfareFragment.class);
-//            collectFragment = (CollectFragment) FragmentUtils.findFragment(fm,CollectFragment.class);
-//            userCenterFragment = (UserCenterFragment) SDFragmentManager.findFragment(fm,UserCenterFragment.class);
-//        }
-
-//        if (mFragments == null)
-//        {
-//            mFragments = new ArrayList<>();
-//            mFragments.add(homeFragment);
-//            mFragments.add(welfareFragment);
-//            mFragments.add(collectFragment);
-//            mFragments.add(userCenterFragment);
-//        }
-//        FragmentUtils.addFragments(getSupportFragmentManager(),mFragments,R.id.main_frame,0);
         mBottomBar.setOnTabSelectListener(mOnTabSelectListener);
         mBottomBar.selectTabAtPosition(0);
     }
@@ -198,10 +173,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     protected void onDestroy()
     {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        try {
+        try
+        {
             InputMethodManager.class.getDeclaredMethod("windowDismissed", IBinder.class).invoke(imm,
                     getWindow().getDecorView().getWindowToken());
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
         super.onDestroy();
@@ -211,11 +188,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
     @Override
-    public void onBackPressed() {
-        if (dlLayout.isDrawerOpen(GravityCompat.START)) {
+    public void onBackPressed()
+    {
+        if (dlLayout.isDrawerOpen(GravityCompat.START))
+        {
             dlLayout.closeDrawer(GravityCompat.START);
-        }
-        else {
+        } else
+        {
             super.onBackPressed();
         }
     }

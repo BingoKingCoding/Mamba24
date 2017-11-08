@@ -198,7 +198,9 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
      * 然后在该方法内将状态设置为下载状态，接着去执行下载的任务
      * 最后在 onFragmentVisibleChange() 里根据数据下载状态来控制下载进度ui控件的显示与隐藏
      */
-    protected void onFragmentFirstVisible(){};
+    protected void onFragmentFirstVisible()
+    {
+    }
 
 
     protected boolean isFragmentVisible()
@@ -317,14 +319,13 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
 
     /**
      * 2
-     * 网络请求成功在去加载布局
+     * 网络请求成功在加载布局
      */
     protected abstract int getContentLayoutId();
 
     /**
      * 3
      * 子类关于View的操作(如setAdapter)都必须在这里面，会因为页面状态不为成功，而binding还没创建就引用而导致空指针。
-     * loadData()和initView只执行一次，如果有一些请求需要二次的不要放到loadData()里面。
      */
     protected abstract void initView();
 
