@@ -1,5 +1,6 @@
 package com.bingo.king.mvp.ui.fragment;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -11,6 +12,7 @@ import com.bingo.king.di.module.CollectModule;
 import com.bingo.king.mvp.contract.CollectContract;
 import com.bingo.king.mvp.presenter.CollectPresenter;
 import com.bingo.king.mvp.ui.adapter.CollectViewPagerAdapter;
+import com.bingo.king.mvp.ui.widget.LoadingPage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,13 +33,8 @@ public class CollectFragment extends BaseFragment<CollectPresenter> implements C
     ViewPager mainPager;
     private List<Fragment> mFragments;
 
-    public static CollectFragment newInstance() {
-        CollectFragment fragment = new CollectFragment();
-        return fragment;
-    }
-
     @Override
-    public void setupComponent()
+    public void initComponent()
     {
         DaggerCollectComponent.builder()
                 .appComponent(getAppComponent())
@@ -45,7 +42,6 @@ public class CollectFragment extends BaseFragment<CollectPresenter> implements C
                 .build()
                 .inject(this);
     }
-
 
     @Override
     protected int getContentLayoutId()
@@ -55,16 +51,18 @@ public class CollectFragment extends BaseFragment<CollectPresenter> implements C
 
 
     @Override
-    public void initData()
+    public void initData(Bundle savedInstanceState)
     {
         if (mFragments == null) {
             mFragments = new ArrayList<>();
-            mFragments.add(MeiziFragment.newInstance());
-            mFragments.add(ArticleFragment.newInstance());
+            mFragments.add(new MeiziFragment());
+            mFragments.add(new ArticleFragment());
         }
         mainPager.setOffscreenPageLimit(mFragments.size());
         mainPager.setAdapter(new CollectViewPagerAdapter(getChildFragmentManager(),mFragments));
         tabs.setupWithViewPager(mainPager);
+
+        setState(LoadingPage.STATE_SUCCESS);
     }
 
     @Override

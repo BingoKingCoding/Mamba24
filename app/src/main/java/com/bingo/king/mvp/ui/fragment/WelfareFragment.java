@@ -2,6 +2,7 @@ package com.bingo.king.mvp.ui.fragment;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -50,15 +51,9 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
 
     private WelfareAdapter mWelfareAdapter;
 
-    public static WelfareFragment newInstance()
-    {
-        WelfareFragment fragment = new WelfareFragment();
-        return fragment;
-    }
-
 
     @Override
-    public void initData()
+    public void initData(Bundle savedInstanceState)
     {
         mSwipeRefreshLayout.setOnRefreshListener(this);
         PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
@@ -70,6 +65,7 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
 //        mAdapter.setEmptyView(textView);
         mRecyclerView.setAdapter(mWelfareAdapter);
 
+        mPresenter.requestData(true);
     }
 
     private static final DecelerateInterpolator DECCELERATE_INTERPOLATOR = new DecelerateInterpolator();
@@ -117,12 +113,6 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
     }
 
 
-    @Override
-    protected void onFragmentFirstVisible()
-    {
-        //去服务器下载数据
-        mPresenter.requestData(true);
-    }
 
     @Override
     public void startLoadMore()
@@ -219,7 +209,7 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
     }
 
     @Override
-    public void setupComponent()
+    public void initComponent()
     {
         DaggerWelfareComponent.builder()
                 .appComponent(getAppComponent())

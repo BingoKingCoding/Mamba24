@@ -45,7 +45,7 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     }
 
     @Override
-    public void setupComponent()
+    public void initComponent()
     {
         DaggerCategoryComponent.builder()
                 .appComponent(getAppComponent())
@@ -55,13 +55,9 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     }
 
     @Override
-    public void initData()
+    public void initData(Bundle savedInstanceState)
     {
         type = getArguments().getString("type");
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-        CommonUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
-
-
         mPresenter.requestData(type,true);
     }
 
@@ -76,6 +72,8 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     @Override
     protected void initView()
     {
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        CommonUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
 
     }
 

@@ -14,6 +14,8 @@ import com.bingo.king.mvp.model.http.rxerrorhandler.Stateful;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
+import org.simple.eventbus.EventBus;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
@@ -26,31 +28,26 @@ import butterknife.Unbinder;
  * @Email:634051075@qq.com
  */
 
-public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements IFragment, Stateful
+public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements Stateful
 {
     protected final String TAG = this.getClass().getSimpleName();
 
+    @Inject
+    protected P mPresenter;
 
     public LoadingPage mLoadingPage;
 
-    private boolean mIsVisible = false;     // fragment是否显示了
+    private boolean isFragmentVisible = false;     // fragment是否显示了
 
-    private boolean isPrepared = false;
+    private boolean isReuseView;
 
-    private boolean isFirst = true; //只加载一次界面
+    private boolean isFirstVisible = true; //只加载一次界面
 
     protected View contentView;
     private Unbinder bind;
 
-    @Inject
-    protected P mPresenter;
+    private View rootView;
     private BaseActivity mActivity;
-
-    public BaseFragment()
-    {
-        //必须确保在Fragment实例化时setArguments()
-        setArguments(new Bundle());
-    }
 
     @Nullable
     @Override
@@ -61,21 +58,17 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
             mLoadingPage = new LoadingPage(getContext())
             {
                 @Override
-                protected int getContentLayoutId()
+                protected void initView()
                 {
-                    return BaseFragment.this.getContentLayoutId();
+                    BaseFragment.this.contentView = this.contentView;
+                    bind = ButterKnife.bind(BaseFragment.this, contentView);
+                    BaseFragment.this.initView();
                 }
 
                 @Override
-                protected void initView()
+                protected int getContentLayoutId()
                 {
-                    if (isFirst)
-                    {
-                        BaseFragment.this.contentView = this.contentView;
-                        bind = ButterKnife.bind(BaseFragment.this, contentView);
-                        BaseFragment.this.initView();
-                        isFirst = false;
-                    }
+                    return BaseFragment.this.getContentLayoutId();
                 }
 
                 @Override
@@ -85,27 +78,134 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
                 }
             };
         }
-        isPrepared = true;
-        loadBaseData();
+        initData(savedInstanceState);
         return mLoadingPage;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        if (useEventBus())
+        {//如果要使用eventbus请将此方法返回true
+            EventBus.getDefault().register(this);
+        }//注册到事件主线
+        initVariable();
+        initComponent();
+    }
+
+
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
+    {
+        //如果setUserVisibleHint()在rootView创建前调用时，那么
+        //就等到rootView创建完后才回调onFragmentVisibleChange(true)
+        //保证onFragmentVisibleChange()的回调发生在rootView创建完成之后，以便支持ui操作
+        if (rootView == null)
+        {
+            rootView = view;
+        }
+        super.onViewCreated(isReuseView ? rootView : view, savedInstanceState);
+    }
+
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        if (getUserVisibleHint())
+        {
+            if (isFirstVisible)
+            {
+                onFragmentFirstVisible();
+                isFirstVisible = false;
+            }
+            onFragmentVisibleChange(true);
+            isFragmentVisible = true;
+        }
+    }
+
+
+    private void initVariable()
+    {
+        isFirstVisible = true;
+        isFragmentVisible = false;
+        rootView = null;
+        isReuseView = true;
+    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser)
     {
         super.setUserVisibleHint(isVisibleToUser);
-        if (getUserVisibleHint())
-        {//fragment可见
-            mIsVisible = true;
-            onVisible();
-        } else
-        {//fragment不可见
-            mIsVisible = false;
-            onInvisible();
+        //setUserVisibleHint()有可能在fragment的生命周期外被调用
+        if (rootView == null)
+        {
+            return;
+        }
+        if (isFirstVisible && isVisibleToUser)
+        {
+            onFragmentFirstVisible();
+            isFirstVisible = false;
+        }
+        if (isVisibleToUser)
+        {
+            onFragmentVisibleChange(true);
+            isFragmentVisible = true;
+            return;
+        }
+        if (isFragmentVisible)
+        {
+            isFragmentVisible = false;
+            onFragmentVisibleChange(false);
         }
 
     }
+
+
+    /**
+     * 设置是否使用 view 的复用，默认开启
+     * view 的复用是指，ViewPager 在销毁和重建 Fragment 时会不断调用 onCreateView() -> onDestroyView()
+     * 之间的生命函数，这样可能会出现重复创建 view 的情况，导致界面上显示多个相同的 Fragment
+     * view 的复用其实就是指保存第一次创建的 view，后面再 onCreateView() 时直接返回第一次创建的 view
+     *
+     * @param isReuse
+     */
+    protected void reuseView(boolean isReuse)
+    {
+        isReuseView = isReuse;
+    }
+
+
+    /**
+     * 去除setUserVisibleHint()多余的回调场景，保证只有当fragment可见状态发生变化时才回调
+     * 回调时机在view创建完后，所以支持ui操作，解决在setUserVisibleHint()里进行ui操作有可能报null异常的问题
+     * <p>
+     * 可在该回调方法里进行一些ui显示与隐藏，比如加载框的显示和隐藏
+     *
+     * @param isVisible true  不可见 -> 可见
+     *                  false 可见  -> 不可见
+     */
+    protected void onFragmentVisibleChange(boolean isVisible)
+    {
+
+    }
+
+
+    /**
+     * 在fragment首次可见时回调，可在这里进行加载数据，保证只在第一次打开Fragment时才会加载数据，
+     * 这样就可以防止每次进入都重复加载数据
+     * 该方法会在 onFragmentVisibleChange() 之前调用，所以第一次打开时，可以用一个全局变量表示数据下载状态，
+     * 然后在该方法内将状态设置为下载状态，接着去执行下载的任务
+     * 最后在 onFragmentVisibleChange() 里根据数据下载状态来控制下载进度ui控件的显示与隐藏
+     */
+    protected void onFragmentFirstVisible(){};
+
+
+    protected boolean isFragmentVisible()
+    {
+        return isFragmentVisible;
+    }
+
 
     @Override
     public void setState(int state)
@@ -115,49 +215,11 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     }
 
 
-    protected void onInvisible()
-    {
-    }
-
-    /**
-     * 显示时加载数据,需要这样的使用
-     * 注意声明 isPrepared，先初始化
-     * 生命周期会先执行 setUserVisibleHint 再执行onActivityCreated
-     * 在 onActivityCreated 之后第一次显示加载数据，只加载一次
-     */
-    protected void onVisible()
-    {
-        if (isFirst)
-        {
-            setupComponent();
-        }
-        loadBaseData();//根据获取的数据来调用showView()切换界面
-    }
-
-    public void loadBaseData()
-    {
-        if (!mIsVisible || !isPrepared || !isFirst)
-        {
-            return;
-        }
-        initData();
-    }
-
-
-    /**
-     * 在fragment首次可见时回调，可在这里进行加载数据，保证只在第一次打开Fragment时才会加载数据，
-     * 这样就可以防止每次进入都重复加载数据
-     */
-    protected void onFragmentFirstVisible()
-    {
-
-    }
-
-
     @Override
-    public void onDetach()
+    public void onDestroy()
     {
-        super.onDetach();
+        super.onDestroy();
+        initVariable();
         if (bind != null)
         {
             bind.unbind();
@@ -167,13 +229,16 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
             mPresenter.onDestroy();
         }
         this.mPresenter = null;
+
+        if (useEventBus())//如果要使用eventbus请将此方法返回true
+            EventBus.getDefault().unregister(this);//注册到事件主线
     }
 
 
     /**
      * 是否使用eventBus,默认为使用(true)，
      */
-    @Override
+
     public boolean useEventBus()
     {
         return true;
@@ -236,6 +301,12 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     {
         return (isAdded() && !isRemoving());
     }
+
+
+    protected abstract void initComponent();
+
+
+    protected abstract void initData(Bundle savedInstanceState);
 
 
     /**

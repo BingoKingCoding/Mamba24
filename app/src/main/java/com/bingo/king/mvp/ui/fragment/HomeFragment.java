@@ -1,5 +1,6 @@
 package com.bingo.king.mvp.ui.fragment;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -12,6 +13,7 @@ import com.bingo.king.di.module.HomeModule;
 import com.bingo.king.mvp.contract.HomeContract;
 import com.bingo.king.mvp.presenter.HomePresenter;
 import com.bingo.king.mvp.ui.adapter.MianViewPagerAdapter;
+import com.bingo.king.mvp.ui.widget.LoadingPage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +30,8 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     @BindView(R.id.tabs)TabLayout tabs;
     @BindView(R.id.mainPager)ViewPager mainPager;
     private List<Fragment> mFragments;
-    public static HomeFragment newInstance()
-    {
-        HomeFragment fragment = new HomeFragment();
-        return fragment;
-    }
+
+
     @Override
     protected int getContentLayoutId()
     {
@@ -40,7 +39,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     }
 
     @Override
-    public void setupComponent()
+    public void initComponent()
     {
         DaggerHomeComponent.builder()
                 .appComponent(getAppComponent())
@@ -51,7 +50,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
 
     @Override
-    public void initData()
+    public void initData(Bundle savedInstanceState)
     {
         if (mFragments == null)
         {
@@ -60,15 +59,15 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             mFragments.add(CategoryFragment.newInstance(CategoryType.IOS_STR));
             mFragments.add(CategoryFragment.newInstance(CategoryType.QIAN_STR));
         }
-        mainPager.setOffscreenPageLimit(mFragments.size());
-        mainPager.setAdapter(new MianViewPagerAdapter(getChildFragmentManager(),mFragments));
-        tabs.setupWithViewPager(mainPager);
+
     }
 
     @Override
     protected void initView()
     {
-
+        mainPager.setOffscreenPageLimit(mFragments.size());
+        mainPager.setAdapter(new MianViewPagerAdapter(getChildFragmentManager(),mFragments));
+        tabs.setupWithViewPager(mainPager);
     }
 
     @Override
@@ -111,6 +110,12 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     protected void retryRequestData()
     {
 
+    }
+
+    @Override
+    protected void onFragmentFirstVisible()
+    {
+        setState(LoadingPage.STATE_SUCCESS);
     }
 
     @Override

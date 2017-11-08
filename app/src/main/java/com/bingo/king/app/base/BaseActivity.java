@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.bingo.king.app.App;
 import com.bingo.king.app.EventBusTags;
+import com.bingo.king.app.utils.SDFragmentManager;
 import com.bingo.king.di.component.AppComponent;
 import com.blankj.utilcode.util.AppUtils;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -29,6 +30,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.Observable;
+import timber.log.Timber;
 
 import static com.bingo.king.app.utils.ThirdViewUtil.convertAutoView;
 
@@ -185,6 +187,7 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
     public void onExitAppReceive(Message message)
     {
         //可以在工具类或者其他类中做相应的退出逻辑
+        Timber.d(TAG,"exit_app");
     }
 
 
@@ -232,5 +235,17 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
     {
         return RxView.clicks(view).throttleFirst(500, TimeUnit.MILLISECONDS).compose(bindToLifecycle());
     }
+
+    private SDFragmentManager mFragmentManager;
+    public SDFragmentManager getSDFragmentManager()
+    {
+        if (mFragmentManager == null)
+        {
+            mFragmentManager = new SDFragmentManager(getSupportFragmentManager());
+        }
+        return mFragmentManager;
+    }
+
+
 
 }

@@ -76,32 +76,46 @@ public abstract class LoadingPage extends FrameLayout
             errorView = createErrorView();
             this.addView(errorView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         }
+
+        if (contentView == null)
+        {
+            contentView = creatContentView();
+            this.addView(contentView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+            initView();
+        }
+
         showPage();//根据状态显示界面
     }
 
-    private View createLoadingView() {
+    private View createLoadingView()
+    {
         loadingView = LayoutInflater.from(mContext).inflate(R.layout.loadingpage_state_loading, null);
         img = (ImageView) loadingView.getRootView().findViewById(R.id.img_progress);
         // 加载动画 这边也可以直接用progressbar
         mAnimationDrawable = (AnimationDrawable) img.getDrawable();
         // 默认进入页面就开启动画
-        if (!mAnimationDrawable.isRunning()) {
+        if (!mAnimationDrawable.isRunning())
+        {
             mAnimationDrawable.start();
         }
         return loadingView;
     }
 
-    private View createEmptyView() {
+    private View createEmptyView()
+    {
         emptyView = LayoutInflater.from(mContext).inflate(R.layout.loadingpage_state_empty, null);
         return emptyView;
     }
 
 
-    private View createErrorView() {
+    private View createErrorView()
+    {
         errorView = LayoutInflater.from(mContext).inflate(R.layout.loadingpage_state_error, null);
-        errorView.setOnClickListener(new OnClickListener() {
+        errorView.setOnClickListener(new OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 state = STATE_LOADING;
                 showPage();
                 retryRequestData();
@@ -110,60 +124,72 @@ public abstract class LoadingPage extends FrameLayout
         return errorView;
     }
 
-    private void startAnimation() {
-        if (!mAnimationDrawable.isRunning()) {
+
+    private View creatContentView()
+    {
+        contentView = LayoutInflater.from(mContext).inflate(getContentLayoutId(), null);
+        return contentView;
+    }
+
+
+    private void startAnimation()
+    {
+        if (!mAnimationDrawable.isRunning())
+        {
             mAnimationDrawable.start();
         }
     }
 
-    private void stopAnimation() {
-        if (mAnimationDrawable != null && mAnimationDrawable.isRunning()) {
+    private void stopAnimation()
+    {
+        if (mAnimationDrawable != null && mAnimationDrawable.isRunning())
+        {
             mAnimationDrawable.stop();
         }
     }
 
-    public void showPage() {
-        if (loadingView != null) {
-            if (state == STATE_UNKNOWN || state == STATE_LOADING) {
+    public void showPage()
+    {
+        if (loadingView != null)
+        {
+            if (state == STATE_UNKNOWN || state == STATE_LOADING)
+            {
                 loadingView.setVisibility(View.VISIBLE);
                 // 开始动画
                 startAnimation();
-            } else {
+            } else
+            {
                 // 关闭动画
                 stopAnimation();
                 loadingView.setVisibility(View.GONE);
             }
         }
-        if (state == STATE_EMPTY || state == STATE_ERROR || state == STATE_SUCCESS) {
+        if (state == STATE_EMPTY || state == STATE_ERROR || state == STATE_SUCCESS)
+        {
             // 关闭动画
             stopAnimation();
         }
 
 
-        if (emptyView != null) {
+        if (emptyView != null)
+        {
             emptyView.setVisibility(state == STATE_EMPTY ? View.VISIBLE : View.GONE);
         }
 
-        if (errorView != null) {
+        if (errorView != null)
+        {
             errorView.setVisibility(state == STATE_ERROR ? View.VISIBLE : View.GONE);
         }
 
-        if (state == STATE_SUCCESS) {
-            if (contentView == null) {
-                contentView = LayoutInflater.from(mContext).inflate(getContentLayoutId(), null);
-                addView(contentView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-                initView();
-            }
-            contentView.setVisibility(View.VISIBLE);
-        } else {
-            if (contentView != null) {
-                contentView.setVisibility(View.GONE);
-            }
+        if (contentView != null)
+        {
+            contentView.setVisibility(state == STATE_SUCCESS ? View.VISIBLE : View.GONE);
         }
     }
 
     /**
      * 1、
+     *
      * @Description 初始化布局，当网络请求成功时显示
      */
     protected abstract int getContentLayoutId();
@@ -180,7 +206,6 @@ public abstract class LoadingPage extends FrameLayout
      * 根据网络获取的数据返回状态，每一个子类的获取网络返回的都不一样，所以要交给子类去完成
      */
     protected abstract void retryRequestData();
-
 
 
 }

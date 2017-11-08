@@ -1,6 +1,7 @@
 package com.bingo.king.mvp.ui.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -44,14 +45,9 @@ public class MeiziFragment extends BaseFragment<MeiziPresenter> implements Meizi
 
     private MeiziAdapter mAdapter;
 
-    public static MeiziFragment newInstance()
-    {
-        MeiziFragment fragment = new MeiziFragment();
-        return fragment;
-    }
 
     @Override
-    public void setupComponent()
+    public void initComponent()
     {
         DaggerMeiziComponent.builder()
                 .appComponent(getAppComponent())
@@ -62,7 +58,7 @@ public class MeiziFragment extends BaseFragment<MeiziPresenter> implements Meizi
 
 
     @Override
-    public void initData()
+    public void initData(Bundle savedInstanceState)
     {
         mSwipeRefreshLayout.setOnRefreshListener(this);
         CommonUtils.configRecycleView(mRecyclerView, new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));

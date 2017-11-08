@@ -1,5 +1,6 @@
 package com.bingo.king.mvp.ui.fragment;
 
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,14 +41,9 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
     private ArticleAdapter mAdapter;
     private GankEntity.ResultsBean intentArticle;
 
-    public static ArticleFragment newInstance()
-    {
-        ArticleFragment fragment = new ArticleFragment();
-        return fragment;
-    }
 
     @Override
-    public void setupComponent()
+    public void initComponent()
     {
         DaggerArticleComponent.builder()
                 .appComponent(getAppComponent())
@@ -58,7 +54,7 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
 
 
     @Override
-    public void initData()
+    public void initData(Bundle savedInstanceState)
     {
         mSwipeRefreshLayout.setOnRefreshListener(this);
         CommonUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
