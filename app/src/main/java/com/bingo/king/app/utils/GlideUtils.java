@@ -4,7 +4,8 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.bingo.king.R;
-import com.blankj.utilcode.util.Utils;
+import com.bingo.king.app.App;
+import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -15,22 +16,37 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 public class GlideUtils
 {
-    /**
-     * 首页zhihu item读取图片
-     * @param imgNumber 图片大小1最大 2中等 3最小 正方形的
-     * @param url
-     * @param image
-     */
-    public static void loadImage(int imgNumber, String url, ImageView image) {
-        Glide.with(Utils.getApp())
+    private static GlideUtils instance;
+
+    public static GlideUtils getInstance()
+    {
+        if (instance == null)
+        {
+            synchronized (GlideUtils.class)
+            {
+                if (instance == null)
+                {
+                    instance = new GlideUtils();
+                }
+            }
+        }
+        return instance;
+    }
+
+
+    public void loadImage(String url, ImageView image)
+    {
+        Glide.with(image.getContext())
                 .load(url)
-                .crossFade(1500)
-                .error(getDefaultPic(imgNumber))
+                .placeholder(R.drawable.ic_bg_image_loading)
+                .error(R.drawable.ic_nopic)
                 .into(image);
     }
 
-    private static int getDefaultPic(int imgNumber) {
-        switch (imgNumber) {
+    private int getDefaultPic(int imgNumber)
+    {
+        switch (imgNumber)
+        {
             case 1:
                 return R.mipmap.img_two_bi_one;
             case 2:
@@ -43,11 +59,13 @@ public class GlideUtils
         return R.mipmap.img_four_bi_three;
     }
 
-    public static void load(Context mContext, String url, ImageView iv) {    //使用Glide加载圆形ImageView(如头像)时，不要使用占位图
+    public void load(Context mContext, String url, ImageView iv)
+    {    //使用Glide加载圆形ImageView(如头像)时，不要使用占位图
         Glide.with(mContext).load(url).crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(iv);
     }
 
-    public static void loadDetailImg(Context mContext, String url, ImageView iv) {    //使用Glide加载圆形ImageView(如头像)时，不要使用占位图
+    public void loadDetailImg(Context mContext, String url, ImageView iv)
+    {    //使用Glide加载圆形ImageView(如头像)时，不要使用占位图
         Glide.with(mContext).load(url).asBitmap()
                 .placeholder(R.drawable.nothing)
                 .format(DecodeFormat.PREFER_ARGB_8888)
@@ -56,7 +74,8 @@ public class GlideUtils
                 .into(iv);
     }
 
-    public static void loadMovieTopImg(ImageView imageView, String url) {
+    public void loadMovieTopImg(ImageView imageView, String url)
+    {
         Glide.with(imageView.getContext())
                 .load(url)
                 .crossFade(500)
@@ -64,7 +83,8 @@ public class GlideUtils
                 .into(imageView);
     }
 
-    public static void loadMovieLatestImg(ImageView imageView, String url) {
+    public void loadMovieLatestImg(ImageView imageView, String url)
+    {
         Glide.with(imageView.getContext())
                 .load(url)
                 .crossFade(500)
@@ -73,4 +93,21 @@ public class GlideUtils
                 .error(getDefaultPic(4))
                 .into(imageView);
     }
+
+    /**
+     * 默认调用方法
+     *
+     * @param model String, byte[], File, Integer, Uri
+     * @param <T>
+     * @return
+     */
+    public <T> DrawableTypeRequest<T> load(T model)
+    {
+        return (DrawableTypeRequest<T>) Glide.with(App.getApplication()).load(model)
+                .error(R.drawable.ic_nopic)
+                .dontAnimate();
+    }
+
+
+
 }

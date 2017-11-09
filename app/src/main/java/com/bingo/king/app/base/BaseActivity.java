@@ -130,9 +130,7 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
     /**
      * 是否使用eventBus,默认为使用(true)，
      *
-     * @return
      */
-    @Override
     public boolean useEventBus()
     {
         return true;
@@ -142,7 +140,6 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
      * 这个Activity是否会使用Fragment,框架会根据这个属性判断是否注册{@link android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks}
      * 如果返回false,那意味着这个Activity不需要绑定Fragment,那你再在这个Activity中绑定继承于 {@link BaseFragment} 的Fragment将不起任何作用
      *
-     * @return
      */
     @Override
     public boolean useFragment()
@@ -210,7 +207,6 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
     /**
      * 用snackbar显示
      *
-     * @param message
      */
     protected void showSnackbar(String message)
     {
@@ -220,7 +216,6 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
     /**
      * 用snackbar显示
      *
-     * @param message
      */
     protected void showSnackbarWithLong(String message)
     {
@@ -231,8 +226,6 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
     /**
      * 使用snackbar显示内容
      *
-     * @param message
-     * @param isLong
      */
     protected void showSnackbar(String message, boolean isLong)
     {

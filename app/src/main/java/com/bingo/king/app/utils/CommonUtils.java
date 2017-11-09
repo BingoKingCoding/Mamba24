@@ -3,8 +3,12 @@ package com.bingo.king.app.utils;
 import android.content.res.Resources;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 
 import com.blankj.utilcode.util.Utils;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * <请描述这个类是干什么的>
@@ -37,5 +41,61 @@ public class CommonUtils
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
+
+
+    public static String formatMoneyChina(String money)
+    {
+        if (!TextUtils.isEmpty(money))
+        {
+            String moneyRound = String.valueOf(scaleHalfUp(SDTypeParseUtil.getDouble(money), 2));
+            money = new BigDecimal(moneyRound).toPlainString();
+            if (money.contains("."))
+            {
+                int decimalIndex = money.indexOf(".");
+                String decimalPart = money.substring(decimalIndex + 1);
+                if ("0".equals(decimalPart) || "00".equals(decimalPart))
+                {
+                    money = money.substring(0, decimalIndex);
+                }
+            }
+            return "¥" + money;
+        } else
+        {
+            return "¥0";
+        }
+    }
+
+    public static String formatMoneyChina(double money)
+    {
+        return formatMoneyChina(String.valueOf(money));
+    }
+
+    /**
+     * 保留小数位（四舍五入模式）
+     *
+     * @param value 需要格式化的值
+     * @param scale 保留几位小数
+     * @return
+     */
+    public static double scaleHalfUp(double value, int scale)
+    {
+        return scale(value, scale, RoundingMode.HALF_UP);
+    }
+
+    /**
+     * 保留小数位
+     *
+     * @param value 需要格式化的值
+     * @param scale 保留几位小数
+     * @param mode  保留模式
+     * @return
+     */
+    public static double scale(double value, int scale, RoundingMode mode)
+    {
+        return new BigDecimal(String.valueOf(value)).setScale(scale, mode).doubleValue();
+    }
+
+
+
 
 }

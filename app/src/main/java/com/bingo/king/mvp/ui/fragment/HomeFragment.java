@@ -67,9 +67,10 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     }
 
     @Override
-    protected void initView()
+    protected void onFragmentFirstVisible()
     {
-
+        super.onFragmentFirstVisible();
+        setState(LoadingPage.STATE_SUCCESS);
     }
 
     @Override
@@ -112,12 +113,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     protected void retryRequestData()
     {
 
-    }
-
-    @Override
-    protected void onFragmentFirstVisible()
-    {
-        setState(LoadingPage.STATE_SUCCESS);
     }
 
     @Override

@@ -63,7 +63,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
     @Override
     protected void setStatusBar()
     {
-        super.setStatusBar();
+
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.bingo.king.mvp.contract.CategoryContract;
 import com.bingo.king.mvp.model.entity.GankEntity;
 import com.bingo.king.mvp.model.http.rxerrorhandler.HttpCallback;
 import com.bingo.king.mvp.ui.adapter.CategoryAdapter;
+import com.bingo.king.mvp.ui.widget.EasyLoadMoreView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
@@ -51,6 +52,8 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.Model, Cat
         if (mAdapter == null)
         {
             mAdapter = new CategoryAdapter(mData);
+            EasyLoadMoreView easyLoadMoreView = new EasyLoadMoreView();
+            mAdapter.setLoadMoreView(easyLoadMoreView);
             mAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
             mAdapter.isFirstOnly(false);
             mRootView.setAdapter(mAdapter);
@@ -64,6 +67,9 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.Model, Cat
             lastUserId++;
         }
 
+        if (lastUserId == 10){
+            mAdapter.loadMoreEnd();
+        }
         requestDataOnPullToRefresh(pullToRefresh, mModel.gank(type, String.valueOf(lastUserId)), new HttpCallback<GankEntity>()
         {
             @Override
@@ -76,9 +82,13 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.Model, Cat
                 }
                 mData.addAll(gankEntity.results);
                 if (pullToRefresh)
+                {
                     mAdapter.notifyDataSetChanged();
-                else
+                } else
+                {
                     mAdapter.notifyItemRangeInserted(preEndIndex, gankEntity.results.size());
+                }
+                mAdapter.loadMoreComplete();
             }
         });
     }

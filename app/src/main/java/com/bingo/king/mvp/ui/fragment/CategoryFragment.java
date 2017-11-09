@@ -14,6 +14,7 @@ import com.bingo.king.mvp.contract.CategoryContract;
 import com.bingo.king.mvp.model.entity.GankEntity;
 import com.bingo.king.mvp.presenter.CategoryPresenter;
 import com.bingo.king.mvp.ui.adapter.CategoryAdapter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
@@ -25,15 +26,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
  * Created by wwb on 2017/9/20 17:19.
  */
 
-public class CategoryFragment extends BaseFragment<CategoryPresenter> implements CategoryContract.View,SwipeRefreshLayout.OnRefreshListener
+public class CategoryFragment extends BaseFragment<CategoryPresenter> implements CategoryContract.View,SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener
 {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.refreshLayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
-
-    private boolean isLoadingMore;
-//    private Paginate mPaginate;
     private String type;
 
     public static CategoryFragment newInstance(String type) {
@@ -58,10 +56,17 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     public void initData(Bundle savedInstanceState)
     {
         type = getArguments().getString("type");
-        mPresenter.requestData(type,true);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        CommonUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
     }
 
 
+    @Override
+    protected void onFragmentFirstVisible()
+    {
+        super.onFragmentFirstVisible();
+        mPresenter.requestData(type,true);
+    }
 
     @Override
     protected int getContentLayoutId()
@@ -70,23 +75,13 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     }
 
     @Override
-    protected void initView()
-    {
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-        CommonUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
-
-    }
-
-    @Override
     public void startLoadMore()
     {
-        isLoadingMore = true;
     }
 
     @Override
     public void endLoadMore()
     {
-        isLoadingMore = false;
     }
 
     @Override
@@ -98,6 +93,7 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     @Override
     public void setAdapter(CategoryAdapter mAdapter)
     {
+        mAdapter.setOnLoadMoreListener(this, mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((adapter, view, position) ->
         {
@@ -106,39 +102,8 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
 //                    .withSerializable(EXTRA_DETAIL,bean)
 //                    .navigation();
         });
-        initPaginate();
     }
 
-    private void initPaginate()
-    {
-//        if (mPaginate == null)
-//        {
-//            Paginate.Callbacks callback = new Paginate.Callbacks()
-//            {
-//                @Override
-//                public void onLoadMore()
-//                {
-//                    mPresenter.requestData(type,false);
-//                }
-//
-//                @Override
-//                public boolean isLoading()
-//                {
-//                    return isLoadingMore;
-//                }
-//
-//                @Override
-//                public boolean hasLoadedAllItems()
-//                {
-//                    return false;
-//                }
-//            };
-//            mPaginate = Paginate.with(mRecyclerView,callback)
-//                    .setLoadingTriggerThreshold(0)
-//                    .build();
-//            mPaginate.setHasMoreDataToLoad(false);
-//        }
-    }
 
     @Override
     public void showLoading()
@@ -173,4 +138,9 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
         mPresenter.requestData(type,true);
     }
 
+    @Override
+    public void onLoadMoreRequested()
+    {
+        mPresenter.requestData(type,false);
+    }
 }

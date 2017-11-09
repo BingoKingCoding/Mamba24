@@ -1,5 +1,6 @@
 package com.bingo.king.app.base;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -20,6 +21,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import timber.log.Timber;
 
 /**
  * <请描述这个类是干什么的>
@@ -53,6 +55,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
+        Timber.d(TAG,"onCreateView");
         if (mLoadingPage == null)
         {
             mLoadingPage = new LoadingPage(getContext())
@@ -62,7 +65,6 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
                 {
                     BaseFragment.this.contentView = this.contentView;
                     bind = ButterKnife.bind(BaseFragment.this, contentView);
-                    BaseFragment.this.initView();
                 }
 
                 @Override
@@ -86,6 +88,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        Timber.d(TAG,"onCreate");
         if (useEventBus())
         {//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().register(this);
@@ -104,6 +107,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         {
             rootView = view;
         }
+        Timber.d(TAG,"onViewCreated");
         super.onViewCreated(isReuseView ? rootView : view, savedInstanceState);
     }
 
@@ -112,6 +116,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     public void onStart()
     {
         super.onStart();
+        Timber.d(TAG,"onStart");
         if (getUserVisibleHint())
         {
             if (isFirstVisible)
@@ -137,6 +142,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     public void setUserVisibleHint(boolean isVisibleToUser)
     {
         super.setUserVisibleHint(isVisibleToUser);
+        Timber.d(TAG,"setUserVisibleHint");
         //setUserVisibleHint()有可能在fragment的生命周期外被调用
         if (rootView == null)
         {
@@ -187,7 +193,6 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
      */
     protected void onFragmentVisibleChange(boolean isVisible)
     {
-
     }
 
 
@@ -221,6 +226,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     public void onDestroy()
     {
         super.onDestroy();
+        Timber.d(TAG,"onDestroy");
         initVariable();
         if (bind != null)
         {
@@ -241,7 +247,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
      * 是否使用eventBus,默认为使用(true)，
      */
 
-    public boolean useEventBus()
+    protected boolean useEventBus()
     {
         return true;
     }
@@ -250,7 +256,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     /**
      * 获取Activity
      */
-    public BaseActivity getBaseActivity()
+    protected BaseActivity getBaseActivity()
     {
         if (mActivity == null)
         {
@@ -299,7 +305,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
      *
      * @return true为正常 false为未加载或正在删除
      */
-    private boolean getStatus()
+    protected boolean getStatus()
     {
         return (isAdded() && !isRemoving());
     }
@@ -319,15 +325,26 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
 
     /**
      * 2
-     * 网络请求成功在加载布局
+     * 网络请求成功去加载布局
      */
     protected abstract int getContentLayoutId();
 
-    /**
-     * 3
-     * 子类关于View的操作(如setAdapter)都必须在这里面，会因为页面状态不为成功，而binding还没创建就引用而导致空指针。
-     */
-    protected abstract void initView();
+
+    @Override
+    public void onAttach(Activity activity)
+    {
+        super.onAttach(activity);
+        Timber.d(TAG,"onAttach");
+    }
+
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Timber.d(TAG,"onResume");
+    }
+
 
 
 }

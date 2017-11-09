@@ -30,13 +30,6 @@ public interface IActivity
     void setupActivityComponent();
 
     /**
-     * 是否使用EventBus
-     *
-     * @return
-     */
-    boolean useEventBus();
-
-    /**
      * 初始化 View,如果initView返回0,框架则不会调用{@link Activity#setContentView(int)}
      *
      * @param savedInstanceState

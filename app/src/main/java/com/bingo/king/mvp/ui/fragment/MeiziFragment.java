@@ -84,27 +84,25 @@ public class MeiziFragment extends BaseFragment<MeiziPresenter> implements Meizi
 
         mRecyclerView.setAdapter(mAdapter);
 
+    }
 
+    @Override
+    protected void onFragmentFirstVisible()
+    {
+        super.onFragmentFirstVisible();
         mPresenter.requestData(true);
-
     }
 
     @Override
     protected void retryRequestData()
     {
-
+        mPresenter.requestData(true);
     }
 
     @Override
     protected int getContentLayoutId()
     {
         return R.layout.layout_refresh_list;
-    }
-
-    @Override
-    protected void initView()
-    {
-
     }
 
     @Override

@@ -87,27 +87,25 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
         mRecyclerView.setAdapter(mAdapter);
 
 
-
-        mPresenter.requestData(true);
     }
 
+    @Override
+    protected void onFragmentFirstVisible()
+    {
+        super.onFragmentFirstVisible();
+        mPresenter.requestData(true);
+    }
 
     @Override
     protected void retryRequestData()
     {
-
+        mPresenter.requestData(true);
     }
 
     @Override
     protected int getContentLayoutId()
     {
         return R.layout.layout_refresh_list;
-    }
-
-    @Override
-    protected void initView()
-    {
-
     }
 
     @Override

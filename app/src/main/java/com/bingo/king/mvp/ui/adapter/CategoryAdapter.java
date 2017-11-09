@@ -21,13 +21,16 @@ public class CategoryAdapter extends BaseQuickAdapter<GankEntity.ResultsBean, Ba
 {
     public CategoryAdapter(@Nullable List<GankEntity.ResultsBean> data)
     {
-        super(R.layout.item_collection, data);
+        super(R.layout.item_category, data);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, GankEntity.ResultsBean item)
     {
         helper.setText(R.id.tvDesc, item.desc);
+        helper.setText(R.id.tvDate,item.publishedAt);
+        helper.setText(R.id.tvDate,item.publishedAt);
+        helper.setText(R.id.tvAuthor,item.who);
         ImageView ivImage = helper.getView(R.id.ivImage);
         if (item.type.equals(CategoryType.ANDROID_STR))
         {

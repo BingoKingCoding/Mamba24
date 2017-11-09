@@ -25,7 +25,7 @@ public class MeiziAdapter extends BaseQuickAdapter<DaoGankEntity,BaseViewHolder>
     @Override
     protected void convert(BaseViewHolder helper, DaoGankEntity item)
     {
-        GlideUtils.loadImage(1,item.url,helper.getView(R.id.network_imageview));
+        GlideUtils.getInstance().loadImage(item.url,helper.getView(R.id.network_imageview));
     }
 
 }

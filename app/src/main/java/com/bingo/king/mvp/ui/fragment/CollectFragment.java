@@ -116,9 +116,4 @@ public class CollectFragment extends BaseFragment<CollectPresenter> implements C
 
     }
 
-    @Override
-    protected void initView()
-    {
-
-    }
 }

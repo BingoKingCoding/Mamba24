@@ -25,7 +25,7 @@ public class PhotoViewPageAdapter extends DDPagerAdapter<String>
     {
         String url = getData(position);
         PhotoView photoView = new PhotoView(getActivity());
-        GlideUtils.loadImage(1,url,photoView);
+        GlideUtils.getInstance().loadImage(url,photoView);
         return photoView;
     }
 }

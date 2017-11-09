@@ -65,6 +65,12 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
 //        mAdapter.setEmptyView(textView);
         mRecyclerView.setAdapter(mWelfareAdapter);
 
+    }
+
+    @Override
+    protected void onFragmentFirstVisible()
+    {
+        super.onFragmentFirstVisible();
         mPresenter.requestData(true);
     }
 
@@ -231,9 +237,4 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
         return R.layout.fragment_welfare;
     }
 
-    @Override
-    protected void initView()
-    {
-
-    }
 }
