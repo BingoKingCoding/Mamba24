@@ -9,7 +9,7 @@ import android.widget.TextView;
 /**
  */
 
-public class DDViewBinder
+public class ViewBinder
 {
     public static void setRatingBar(RatingBar ratingBar, float rating)
     {

@@ -25,7 +25,7 @@ import java.io.InputStream;
  * <请描述这个类是干什么的>
  */
 
-public class DDImageUtil
+public class ImageUtil
 {
     public static Bitmap drawable2Bitmap(Drawable drawable)
     {

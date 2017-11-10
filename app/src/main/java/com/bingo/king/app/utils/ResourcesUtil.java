@@ -10,7 +10,7 @@ import com.bingo.king.app.App;
  * Created by wwb on 2017/9/26 15:27.
  */
 
-public class DDResourcesUtil
+public class ResourcesUtil
 {
     public static Resources getResources()
     {

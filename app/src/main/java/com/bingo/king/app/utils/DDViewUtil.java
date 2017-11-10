@@ -84,7 +84,7 @@ public class DDViewUtil
      */
     public static void setBackgroundColorResId(View view, int resId)
     {
-        view.setBackgroundColor(DDResourcesUtil.getColor(resId));
+        view.setBackgroundColor(ResourcesUtil.getColor(resId));
     }
     /**
      * 设置textView的字体颜色
@@ -94,7 +94,7 @@ public class DDViewUtil
      */
     public static void setTextViewColorResId(TextView textView, int resId)
     {
-        textView.setTextColor(DDResourcesUtil.getColor(resId));
+        textView.setTextColor(ResourcesUtil.getColor(resId));
     }
     /**
      * 设置textView的字体大小
@@ -1460,10 +1460,10 @@ public class DDViewUtil
     public static int getStatusBarHeight()
     {
         int result = 0;
-        int resourceId = DDResourcesUtil.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        int resourceId = ResourcesUtil.getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0)
         {
-            result = DDResourcesUtil.getResources().getDimensionPixelSize(resourceId);
+            result = ResourcesUtil.getResources().getDimensionPixelSize(resourceId);
         }
         return result;
     }
@@ -1523,8 +1523,8 @@ public class DDViewUtil
             Drawable drawable = imageView.getDrawable();
             if (drawable != null)
             {
-                Bitmap bmp = DDImageUtil.drawable2Bitmap(drawable);
-                Bitmap bmpGray = DDImageUtil.getGrayBitmap(bmp);
+                Bitmap bmp = ImageUtil.drawable2Bitmap(drawable);
+                Bitmap bmpGray = ImageUtil.getGrayBitmap(bmp);
                 if (bmpGray != null)
                 {
                     imageView.setImageBitmap(bmpGray);
@@ -1545,11 +1545,11 @@ public class DDViewUtil
             Drawable drawable = view.getBackground();
             if (drawable != null)
             {
-                Bitmap bmp = DDImageUtil.drawable2Bitmap(drawable);
-                Bitmap bmpGray = DDImageUtil.getGrayBitmap(bmp);
+                Bitmap bmp = ImageUtil.drawable2Bitmap(drawable);
+                Bitmap bmpGray = ImageUtil.getGrayBitmap(bmp);
                 if (bmpGray != null)
                 {
-                    Drawable drawableGray = DDImageUtil.Bitmap2Drawable(bmpGray);
+                    Drawable drawableGray = ImageUtil.Bitmap2Drawable(bmpGray);
                     if (drawableGray != null)
                     {
                         setBackgroundDrawable(view, drawableGray);

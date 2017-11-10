@@ -13,12 +13,13 @@ import io.reactivex.disposables.Disposable;
  * Created by wang on 2017/11/3 16:45.
  */
 
-public class HttpCallback<T> implements Observer<T>
+public abstract class HttpCallback<T> implements Observer<T>
 {
 
     private Stateful mStateful;
 
-    public void setTarget(Stateful target) {
+    public void setTarget(Stateful target)
+    {
         this.mStateful = target;
     }
 
@@ -50,16 +51,12 @@ public class HttpCallback<T> implements Observer<T>
 
     }
 
-    public void onSuccess(T data)
-    {
-        /**
-         * 如果喜欢统一处理成功回掉也是可以的。
-         * 不过获取到的数据都是不规则的，理论上来说需要判断该数据是否为null或者list.size()是否为0
-         * 只有不成立的情况下，才能调用成功方法refreshView/()。如果统一处理就放在每个refreshView中处理。
-         */
-//        ((IView)mStateful).refreshView(data);
-    }
-
+    /**
+     * 如果喜欢统一处理成功回掉也是可以的。
+     * 不过获取到的数据都是不规则的，理论上来说需要判断该数据是否为null或者list.size()是否为0
+     * 只有不成立的情况下，才能调用成功方法refreshView/()。如果统一处理就放在每个refreshView中处理。
+     */
+    public abstract void onSuccess(T data);
 
     private void onFail()
     {

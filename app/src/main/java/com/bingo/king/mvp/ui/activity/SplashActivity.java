@@ -12,7 +12,7 @@ import android.support.v7.app.AlertDialog;
 
 import com.bingo.king.R;
 import com.bingo.king.app.base.BaseActivity;
-import com.bingo.king.app.utils.DDResourcesUtil;
+import com.bingo.king.app.utils.ResourcesUtil;
 import com.bingo.king.di.component.DaggerSplashComponent;
 import com.bingo.king.di.module.SplashModule;
 import com.bingo.king.mvp.contract.SplashContract;
@@ -124,7 +124,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
             EasyPermissions.requestPermissions(this, "应用需要这些权限", PERMISSON_REQUESTCODE, needPermissions);
         } else
         {
-            splashImg.setImageDrawable(DDResourcesUtil.getDrawable(R.drawable.window_static_bg_normal_mid));
+            splashImg.setImageDrawable(ResourcesUtil.getDrawable(R.drawable.window_static_bg_normal_mid));
             animWelcomeImage();
         }
     }
