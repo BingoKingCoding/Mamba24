@@ -274,6 +274,12 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
         finish();
     }
 
+    @Override
+    public void setState(int state)
+    {
+
+    }
+
 //    private void startLoginActivity(){
 //        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
 //        startActivity(intent);

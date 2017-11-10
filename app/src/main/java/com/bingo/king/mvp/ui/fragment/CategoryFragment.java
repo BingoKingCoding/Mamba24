@@ -5,7 +5,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bingo.king.R;
+import com.bingo.king.app.ARouterPaths;
 import com.bingo.king.app.base.BaseFragment;
 import com.bingo.king.app.utils.CommonUtils;
 import com.bingo.king.di.component.DaggerCategoryComponent;
@@ -19,6 +21,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+
+import static com.bingo.king.app.EventBusTags.EXTRA_DETAIL;
 
 
 /**
@@ -98,9 +102,9 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
         mAdapter.setOnItemClickListener((adapter, view, position) ->
         {
             GankEntity.ResultsBean bean = (GankEntity.ResultsBean) adapter.getItem(position);
-//            ARouter.getInstance().build(MAIN_DETAIL)
-//                    .withSerializable(EXTRA_DETAIL,bean)
-//                    .navigation();
+            ARouter.getInstance().build(ARouterPaths.MAIN_DETAIL)
+                    .withSerializable(EXTRA_DETAIL,bean)
+                    .navigation();
         });
     }
 
@@ -127,7 +131,7 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     }
 
     @Override
-    public void refreshView(Object data)
+    public void refreshView(GankEntity data)
     {
 
     }

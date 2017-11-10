@@ -18,6 +18,11 @@
 
     <style name="AppTheme" parent="AppBaseTheme"/>
 
+    <style name="FullScreenTheme" parent="AppBaseTheme">
+        //沉浸状态栏
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
     <style name="SplashTheme" parent="AppBaseTheme">
         //沉浸状态栏
         <item name="android:windowTranslucentStatus">true</item>

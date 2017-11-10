@@ -17,6 +17,7 @@ import com.bingo.king.app.App;
 import com.bingo.king.app.EventBusTags;
 import com.bingo.king.app.utils.SDFragmentManager;
 import com.bingo.king.di.component.AppComponent;
+import com.bingo.king.mvp.model.http.rxerrorhandler.Stateful;
 import com.blankj.utilcode.util.AppUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -41,7 +42,7 @@ import static com.bingo.king.app.utils.ThirdViewUtil.convertAutoView;
  * Created by wang on 2017/11/1 16:55.
  */
 
-public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActivity implements IActivity
+public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActivity implements Stateful
 {
     protected final String TAG = this.getClass().getSimpleName();
     protected Unbinder mUnbinder;
@@ -132,17 +133,6 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
      *
      */
     public boolean useEventBus()
-    {
-        return true;
-    }
-
-    /**
-     * 这个Activity是否会使用Fragment,框架会根据这个属性判断是否注册{@link android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks}
-     * 如果返回false,那意味着这个Activity不需要绑定Fragment,那你再在这个Activity中绑定继承于 {@link BaseFragment} 的Fragment将不起任何作用
-     *
-     */
-    @Override
-    public boolean useFragment()
     {
         return true;
     }
@@ -255,6 +245,20 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
         }
         return mFragmentManager;
     }
+
+    /**
+     * 初始化 View,
+     *
+     */
+    public abstract int initView(Bundle savedInstanceState);
+    public abstract void setupActivityComponent();
+    /**
+     * 初始化数据
+     *
+     */
+    public abstract void initData(Bundle savedInstanceState);
+
+
 
 
 }

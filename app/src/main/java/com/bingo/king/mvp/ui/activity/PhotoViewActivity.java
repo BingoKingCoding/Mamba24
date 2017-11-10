@@ -161,4 +161,9 @@ public class PhotoViewActivity extends BaseActivity<PhotoViewPresenter> implemen
         tv_page.setText((selectPosition + 1) + "/" + listImageUrl.size());
     }
 
+    @Override
+    public void setState(int state)
+    {
+
+    }
 }

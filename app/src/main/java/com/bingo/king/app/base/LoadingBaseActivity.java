@@ -3,7 +3,6 @@ package com.bingo.king.app.base;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
-import com.bingo.king.mvp.model.http.rxerrorhandler.Stateful;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
 
 import butterknife.ButterKnife;
@@ -12,7 +11,7 @@ import butterknife.ButterKnife;
  * <请描述这个类是干什么的>
  */
 
-public abstract class LoadingBaseActivity<P extends IPresenter> extends BaseActivity<P> implements Stateful
+public abstract class LoadingBaseActivity<P extends IPresenter> extends BaseActivity<P>
 {
 
     protected LoadingPage mLoadingPage;
