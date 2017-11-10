@@ -4,14 +4,14 @@
                 android:layout_height="match_parent"
                 android:background="@color/white" >
 
-    <com.king.learn.mvp.ui.widget.PhotoViewPager
+    <com.bingo.king.mvp.ui.widget.PhotoViewPager
         android:id="@+id/viewPager"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:background="@color/black"
         android:unselectedAlpha="1" >
-    </com.king.learn.mvp.ui.widget.PhotoViewPager>
+    </com.bingo.king.mvp.ui.widget.PhotoViewPager>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -30,8 +30,8 @@
         <ImageView
             android:id="@+id/iv_down_load"
             android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_photo_add"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_file_download"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp" />
 

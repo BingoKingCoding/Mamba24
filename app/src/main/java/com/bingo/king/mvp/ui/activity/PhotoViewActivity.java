@@ -52,6 +52,12 @@ public class PhotoViewActivity extends BaseActivity<PhotoViewPresenter> implemen
     private ArrayList<String> listImageUrl;
     private PhotoViewPageAdapter mAdapter;
 
+
+    @Override
+    protected void setStatusBar()
+    {
+    }
+
     @Override
     public void setupActivityComponent()
     {

@@ -18,6 +18,7 @@ import com.bingo.king.mvp.model.entity.DaoGankEntity;
 import com.bingo.king.mvp.presenter.MeiziPresenter;
 import com.bingo.king.mvp.ui.activity.PhotoViewActivity;
 import com.bingo.king.mvp.ui.adapter.MeiziAdapter;
+import com.bingo.king.mvp.ui.widget.LoadingPage;
 import com.bingo.king.mvp.ui.widget.SpacesItemDecoration;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -60,6 +61,7 @@ public class MeiziFragment extends BaseFragment<MeiziPresenter> implements Meizi
     @Override
     public void initData(Bundle savedInstanceState)
     {
+        setState(LoadingPage.STATE_SUCCESS);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         CommonUtils.configRecycleView(mRecyclerView, new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mAdapter = new MeiziAdapter(null);

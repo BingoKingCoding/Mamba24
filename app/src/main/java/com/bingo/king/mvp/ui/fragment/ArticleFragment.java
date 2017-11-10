@@ -17,6 +17,7 @@ import com.bingo.king.mvp.model.entity.DaoGankEntity;
 import com.bingo.king.mvp.model.entity.GankEntity;
 import com.bingo.king.mvp.presenter.ArticlePresenter;
 import com.bingo.king.mvp.ui.adapter.ArticleAdapter;
+import com.bingo.king.mvp.ui.widget.LoadingPage;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.List;
@@ -56,6 +57,7 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
     @Override
     public void initData(Bundle savedInstanceState)
     {
+        setState(LoadingPage.STATE_SUCCESS);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         CommonUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
 
