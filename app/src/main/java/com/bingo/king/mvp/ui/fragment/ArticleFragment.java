@@ -7,7 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bingo.king.R;
+import com.bingo.king.app.ARouterPaths;
+import com.bingo.king.app.EventBusTags;
 import com.bingo.king.app.base.BaseFragment;
 import com.bingo.king.app.utils.CommonUtils;
 import com.bingo.king.di.component.DaggerArticleComponent;
@@ -78,9 +81,9 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
             intentArticle.url = bean.url;
             intentArticle.used = bean.used;
             intentArticle.who = bean.who;
-//            ARouter.getInstance().build(ARouterPaths.MAIN_DETAIL)
-//                    .withSerializable(EventBusTags.EXTRA_DETAIL, intentArticle)
-//                    .navigation();
+            ARouter.getInstance().build(ARouterPaths.MAIN_DETAIL)
+                    .withSerializable(EventBusTags.EXTRA_DETAIL, intentArticle)
+                    .navigation();
         });
         TextView textView = new TextView(getContext());
         textView.setText("没有更多内容了");

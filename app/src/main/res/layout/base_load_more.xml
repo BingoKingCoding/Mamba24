@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="没有数据，下次在来看吧"
+            android:text="没有数据了 ，下次再来看吧"
             android:textColor="@color/C6"
             android:textSize="14sp" />
 

@@ -72,9 +72,7 @@
         android:layout_marginRight="@dimen/dp_10"
         android:src="@drawable/ic_share"
         app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|right|end"
-
-    />
+        app:layout_anchorGravity="bottom|right|end"/>
 
     <FrameLayout
         android:id="@+id/fl_base_content"

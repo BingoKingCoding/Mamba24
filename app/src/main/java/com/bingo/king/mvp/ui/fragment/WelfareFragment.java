@@ -64,7 +64,6 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
         textView.setGravity(Gravity.CENTER);
 //        mAdapter.setEmptyView(textView);
         mRecyclerView.setAdapter(mWelfareAdapter);
-
     }
 
     @Override
@@ -79,7 +78,6 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
 
     private void animatePhotoLike()
     {
-
         mSparkButton.setScaleY(0.1f);
         mSparkButton.setScaleX(0.1f);
 
@@ -113,12 +111,10 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
 
     private void collectWelfare(Object o)
     {
-        animatePhotoLike();
+//        animatePhotoLike();
         GankEntity.ResultsBean entity = (GankEntity.ResultsBean) o;
         mPresenter.addToFavorites(entity);
     }
-
-
 
     @Override
     public void startLoadMore()
@@ -151,7 +147,6 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
                 if (direction == CardConfig.SWIPED_RIGHT)
                 {
                     collectWelfare(o);
-
                 }
             }
 
@@ -202,7 +197,7 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
     }
 
     @Override
-    public void refreshView(Object data)
+    public void refreshView(List<GankEntity.ResultsBean> data)
     {
 
     }

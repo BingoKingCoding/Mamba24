@@ -10,6 +10,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * Created by quantan.liu on 2017/3/23.
  */
@@ -42,6 +46,21 @@ public class GlideUtils
                 .error(R.drawable.ic_nopic)
                 .into(image);
     }
+
+    public void loadImageCenterCrop(String url, ImageView image)
+    {
+        Glide.with(image.getContext())
+                .load(url)
+                .centerCrop()
+                .placeholder(R.drawable.ic_bg_image_loading)
+                .error(R.drawable.ic_nopic)
+                .into(image);
+    }
+
+
+
+
+
 
     private int getDefaultPic(int imgNumber)
     {
@@ -108,6 +127,22 @@ public class GlideUtils
                 .dontAnimate();
     }
 
+
+    public void clearMemory(boolean isClearDiskCache, boolean isClearMemory)
+    {
+        if (isClearDiskCache)
+        {//清除本地缓存
+            Observable.just(0)
+                    .observeOn(Schedulers.io())
+                    .subscribe(integer -> Glide.get(App.getApplication()).clearDiskCache());
+        }
+        if (isClearMemory)
+        {//清除内存缓存
+            Observable.just(0)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(integer -> Glide.get(App.getApplication()).clearMemory());
+        }
+    }
 
 
 }

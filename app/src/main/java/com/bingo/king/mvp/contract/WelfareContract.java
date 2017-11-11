@@ -18,7 +18,7 @@ import io.reactivex.Observable;
 
 public interface WelfareContract
 {
-    interface View extends IView
+    interface View extends IView<List<GankEntity.ResultsBean>>
     {
         void setNewData(List<GankEntity.ResultsBean> mData);
         void setAddData(List<GankEntity.ResultsBean> results);
