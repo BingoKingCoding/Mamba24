@@ -57,11 +57,6 @@ public class GlideUtils
                 .into(image);
     }
 
-
-
-
-
-
     private int getDefaultPic(int imgNumber)
     {
         switch (imgNumber)

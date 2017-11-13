@@ -1,10 +1,12 @@
 package com.bingo.king.app.utils;
 
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 
+import com.bingo.king.app.App;
 import com.blankj.utilcode.util.Utils;
 
 import java.math.BigDecimal;
@@ -96,6 +98,52 @@ public class CommonUtils
     }
 
 
+    /**
+     * 获取颜色值
+     *
+     * @param object
+     * @return
+     */
+    public static int getResultColor(Object object) {
+        if (object instanceof String) {// "#666666"
+            return Color.parseColor((String) object);
+        } else if (object instanceof Integer) {
+            if ((Integer) object > 0)// R.string.app_color
+                return App.getApplication().getResources().getColor((Integer) object);
+            else return (Integer) object;// Color.BLUE
+        } else throw new IllegalStateException("The current color is not found");
+    }
+
+    /**
+     * 获取文本值
+     *
+     * @param object
+     * @return
+     */
+    public static String getResultString(Object object) {
+        if (object instanceof String)//"标题"
+            return (String) object;
+        else if (object instanceof Integer && (Integer) object > 0) //R.string.app_name
+            return App.getApplication().getResources().getString((Integer) object);
+        else throw new IllegalStateException("The current string is not found");
+    }
 
 
+    /**
+     * 计算颜色值
+     *
+     * @param color color值
+     * @param alpha alpha值
+     * @return 最终颜色
+     */
+    public static int calculateColorWithAlpha(int color, int alpha) {
+        float a = 1 - alpha / 255f;
+        int red = color >> 16 & 0xff;
+        int green = color >> 8 & 0xff;
+        int blue = color & 0xff;
+        red = (int) (red * a + 0.5);
+        green = (int) (green * a + 0.5);
+        blue = (int) (blue * a + 0.5);
+        return 0xff << 24 | red << 16 | green << 8 | blue;
+    }
 }

@@ -6,6 +6,9 @@
 
     <color name="transparent">#00000000</color>
     <color name="bgB8000000">#B8000000</color>
+
+    <!-- 系统ToolBar背景颜色 -->
+    <color name="base_title_color">@color/colorPrimary</color>
     <!-- 系统背景色 -->
     <color name="base_window_background">#f9f9f9</color>
     <!-- 系统操作栏背景色 -->
