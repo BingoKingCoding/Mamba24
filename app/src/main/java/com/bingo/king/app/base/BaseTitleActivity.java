@@ -68,7 +68,6 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
     /**
      * 获取菜单资源id，默认无，子类可重写
      *
-     * @return
      */
     protected int getMenuLayoutId() {
         return 0;
@@ -77,7 +76,6 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
     /**
      * 设置主标题
      *
-     * @param object
      */
     public void setMainTitle(Object object) {
         toolbar.setTitle(CommonUtils.getResultString(object));
@@ -86,7 +84,6 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
     /**
      * 设置子类标题
      *
-     * @param object
      */
     public void setSubTitle(Object object) {
         toolbar.setSubtitle(CommonUtils.getResultString(object));
@@ -95,7 +92,6 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
     /**
      * 设置主标题字体颜色
      *
-     * @param object
      */
     public void setMainTitleColor(Object object) {
         toolbar.setTitleTextColor(CommonUtils.getResultColor(object));
@@ -104,7 +100,6 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
     /**
      * 设置子标题字体颜色
      *
-     * @param object
      */
     public void setSubTitleColor(Object object) {
         toolbar.setSubtitleTextColor(CommonUtils.getResultColor(object));
@@ -113,7 +108,6 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
     /**
      * 设置logoIcon
      *
-     * @param resId
      */
 
     public void setLogoIcon(int resId) {
@@ -123,7 +117,6 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
     /**
      * 设置中间标题
      *
-     * @param object
      */
     public void setToolbarTitleTv(Object object) {
         tv_title.setText(CommonUtils.getResultString(object));
@@ -132,7 +125,6 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
     /**
      * 设置标题栏背景颜色
      *
-     * @param color
      */
     protected void setTitleBgColor(int color) {
         toolbar.setBackgroundColor(CommonUtils.getResultColor(color));
@@ -142,7 +134,6 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
     /**
      * 设置左边标题图标
      *
-     * @param iconRes
      */
     public void setTitleNavigationIcon(int iconRes) {
         toolbar.setNavigationIcon(iconRes);
@@ -168,7 +159,6 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
     /**
      * Navigation Button点击回调，默认回退销毁页面，其他操作子类可重写
      *
-     * @param view
      */
     protected void callbackOnClickNavigationAction(View view) {
         onBackPressed();
@@ -178,14 +168,38 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
     /**
      * menu点击回调，默认无，子类可重写
      *
-     * @param item
-     * @return
      */
     protected boolean callbackOnMenuAction(MenuItem item) {
         return false;
     }
 
 
+
+//    protected int getMenuLayoutId() {
+//        return R.menu.menu_main;
+//    }
+
+//    public boolean callbackOnMenuAction(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.menu_test:
+//                ToastTool.showNativeShortToast(ToolbarActivity.this, "测试");
+//                return true;
+//            case R.id.menu_search:
+//                ToastTool.showNativeShortToast(ToolbarActivity.this, "搜索");
+//                return true;
+//            case R.id.menu_settings:
+//                ToastTool.showNativeShortToast(ToolbarActivity.this, "设置");
+//                return true;
+//            case R.id.menu_check_update:
+//                ToastTool.showNativeShortToast(ToolbarActivity.this, "检查更新");
+//                return true;
+//            case R.id.menu_about:
+//                ToastTool.showNativeShortToast(ToolbarActivity.this, "关于");
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
 
 }
