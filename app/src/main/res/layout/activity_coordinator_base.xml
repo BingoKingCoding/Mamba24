@@ -21,7 +21,6 @@
             app:expandedTitleMarginEnd="10dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-
             <!--app:layout_scrollFlags="scroll"
             scroll 跟着底下的view的滑动
             enterAlways 底下的View滑动后，整个AppBarLayout会收起，效果比较突兀，而且不现实toolbar
@@ -30,7 +29,6 @@
             snap 和 enterAlwaysCollapsed类是不过他的toolbar会闪出去。
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
            该属性改变CollapsingToolbarLayout的toolbar的text颜色
-
             -->
 
             <ImageView
@@ -38,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="-27dp"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:transitionName="@string/transition_image"/>
             <!--<View-->
             <!--android:layout_width="match_parent"-->

@@ -4,10 +4,6 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bingo.king.R;
@@ -18,7 +14,10 @@ import com.bingo.king.di.module.DetailModule;
 import com.bingo.king.mvp.contract.DetailContract;
 import com.bingo.king.mvp.model.entity.GankEntity;
 import com.bingo.king.mvp.presenter.DetailPresenter;
+import com.bingo.king.mvp.ui.widget.X5WebView;
 import com.blankj.utilcode.util.ToastUtils;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
 import butterknife.BindView;
 
@@ -28,7 +27,7 @@ import static com.bingo.king.app.EventBusTags.EXTRA_DETAIL;
 public class DetailActivity extends CoordinatorBaseActivity<DetailPresenter> implements DetailContract.View
 {
     @BindView(R.id.webview)
-    WebView webview;
+    X5WebView webview;
     private GankEntity.ResultsBean entity;
     private boolean isFavorite;
 
@@ -74,7 +73,8 @@ public class DetailActivity extends CoordinatorBaseActivity<DetailPresenter> imp
     @Override
     protected void retryRequestData()
     {
-
+        mPresenter.getGirl();
+        webview.loadUrl(entity.url);
     }
 
     @Override
@@ -84,20 +84,15 @@ public class DetailActivity extends CoordinatorBaseActivity<DetailPresenter> imp
     }
 
     private void initWebView() {
-        WebSettings settings = webview.getSettings();
-        settings.setUseWideViewPort(true);
-        settings.setLoadWithOverviewMode(true);
-        settings.setSupportZoom(true);
-        settings.setBuiltInZoomControls(true);
-        settings.setDisplayZoomControls(false);
         webview.setWebViewClient(new WebViewClient(){
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            /**
+             * 防止加载网页时调起系统浏览器
+             */
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
                 return true;
             }
         });
-
         webview.loadUrl(entity.url);
     }
 

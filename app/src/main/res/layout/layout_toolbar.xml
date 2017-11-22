@@ -8,9 +8,9 @@
     android:layout_height="?attr/actionBarSize"
     android:background="@color/colorPrimary"
     android:minHeight="?attr/actionBarSize"
-    app:subtitleTextAppearance="@style/ToolbarTitleStyle"
+    app:subtitleTextAppearance="@style/ToolBar.Title"
     app:theme="@style/ToolbarTheme"
-    app:titleTextAppearance="@style/ToolbarTitleStyle">
+    app:titleTextAppearance="@style/Toolbar.SubTitle">
 
 
     <TextView

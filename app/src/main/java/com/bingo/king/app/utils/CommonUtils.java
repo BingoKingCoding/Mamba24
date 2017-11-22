@@ -1,7 +1,15 @@
 package com.bingo.king.app.utils;
 
+import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.net.Uri;
+import android.provider.Settings;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -146,4 +154,47 @@ public class CommonUtils
         blue = (int) (blue * a + 0.5);
         return 0xff << 24 | red << 16 | green << 8 | blue;
     }
+
+
+    /**
+     * 实现文本复制功能
+     *
+     * @param content 复制的文本
+     */
+    public static void copy(String content) {
+        // 得到剪贴板管理器
+        ClipboardManager cmb = (ClipboardManager) Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE);
+        cmb.setPrimaryClip(ClipData.newPlainText(null, content.trim()));
+    }
+
+    /**
+     * 使用浏览器打开链接
+     */
+    public static void openLink(Context context, String content) {
+        Uri issuesUrl = Uri.parse(content);
+        Intent intent = new Intent(Intent.ACTION_VIEW, issuesUrl);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 网络配置
+     */
+    public static void openWirelessSettings(Activity activity)
+    {
+        Intent intent = null;
+        // 判断手机系统的版本 即API大于10 就是3.0或以上版本
+        if (android.os.Build.VERSION.SDK_INT > 10)
+        {
+            intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+        } else
+        {
+            intent = new Intent();
+            ComponentName component =
+                    new ComponentName("com.android.settings", "com.android.settings.WirelessSettings");
+            intent.setComponent(component);
+            intent.setAction("android.intent.action.VIEW");
+        }
+        activity.startActivity(intent);
+    }
+
 }

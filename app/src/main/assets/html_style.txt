@@ -1,0 +1,24 @@
+<html>
+	<head lang="zh">
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="false" name="twcClient" id="twcClient">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <!--允许全屏模式-->
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <!--指定sari的样式-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="wap-font-scale" content="no">
+    <meta content="telephone=no" name="format-detection" />
+
+	<style type="text/css">
+		body{font-family:Tahoma;color:#333333;font-size:1em;-webkit-tap-highlight-color: rgba(200,235,255,0.6); line-height:180% !important;}img{width:100% !important; height:auto !important;border:0 !important; padding:0px 0px !important;
+		}
+		video{width:100% !important; height:auto !important; border:0 !important;}
+		#main{width:100% !important;  margin-top:-10px !important;}
+		div{padding:0px 0px !important;}
+	</style>
+	<body>

@@ -81,9 +81,9 @@ public class GlideUtils
     public void loadDetailImg(Context mContext, String url, ImageView iv)
     {    //使用Glide加载圆形ImageView(如头像)时，不要使用占位图
         Glide.with(mContext).load(url).asBitmap()
-                .placeholder(R.drawable.nothing)
+                .placeholder(R.drawable.ic_nothing)
                 .format(DecodeFormat.PREFER_ARGB_8888)
-                .error(R.drawable.nothing)
+                .error(R.drawable.ic_nothing)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(iv);
     }

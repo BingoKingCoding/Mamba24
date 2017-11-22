@@ -105,6 +105,7 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
             ARouter.getInstance().build(ARouterPaths.MAIN_DETAIL)
                     .withSerializable(EXTRA_DETAIL,bean)
                     .navigation();
+//            WebActivity.loadUrl(getActivity(),bean.url,"加载中");
         });
     }
 
