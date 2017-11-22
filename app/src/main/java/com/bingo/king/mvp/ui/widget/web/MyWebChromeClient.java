@@ -1,14 +1,9 @@
 package com.bingo.king.mvp.ui.widget.web;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.net.Uri;
-import android.view.LayoutInflater;
-import android.view.View;
 
-import com.bingo.king.R;
 import com.bingo.king.mvp.ui.activity.WebActivity;
-import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
@@ -17,10 +12,6 @@ import static android.app.Activity.RESULT_OK;
 
 
 /**
- *
- * - 播放网络视频配置
- * - 上传图片(兼容)
- * 点击空白区域的左边,因是公司图片,自己编辑过,所以显示不全,见谅
  */
 public class MyWebChromeClient extends WebChromeClient
 {
@@ -30,60 +21,14 @@ public class MyWebChromeClient extends WebChromeClient
     public static int FILECHOOSER_RESULTCODE = 1;
     public static int FILECHOOSER_RESULTCODE_FOR_ANDROID_5 = 2;
 
-    private View mXProgressVideo;
     private WebActivity mActivity;
     private IWebPageView mIWebPageView;
-    private View mXCustomView;
-    private IX5WebChromeClient.CustomViewCallback mXCustomViewCallback;
 
     public MyWebChromeClient(IWebPageView mIWebPageView) {
         this.mIWebPageView = mIWebPageView;
         this.mActivity = (WebActivity) mIWebPageView;
     }
 
-    // 播放网络视频时全屏会被调用的方法
-    @Override
-    public void onShowCustomView(View view, IX5WebChromeClient.CustomViewCallback callback) {
-        mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        mIWebPageView.hindWebView();
-        // 如果一个视图已经存在，那么立刻终止并新建一个
-        if (mXCustomView != null) {
-            callback.onCustomViewHidden();
-            return;
-        }
-
-        mActivity.fullViewAddView(view);
-        mXCustomView = view;
-        mXCustomViewCallback = callback;
-        mIWebPageView.showVideoFullView();
-    }
-
-    // 视频播放退出全屏会被调用的
-    @Override
-    public void onHideCustomView() {
-        if (mXCustomView == null)// 不是全屏播放状态
-            return;
-        mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        mXCustomView.setVisibility(View.GONE);
-        if (mActivity.getVideoFullView() != null) {
-            mActivity.getVideoFullView().removeView(mXCustomView);
-        }
-        mXCustomView = null;
-        mIWebPageView.hindVideoFullView();
-        mXCustomViewCallback.onCustomViewHidden();
-        mIWebPageView.showWebView();
-    }
-
-    // 视频加载时进程loading
-    @Override
-    public View getVideoLoadingProgressView() {
-        if (mXProgressVideo == null) {
-            LayoutInflater inflater = LayoutInflater.from(mActivity);
-            mXProgressVideo = inflater.inflate(R.layout.layout_web_video_loading_progress, null);
-        }
-        return mXProgressVideo;
-    }
 
     @Override
     public void onProgressChanged(WebView view, int newProgress) {
@@ -91,12 +36,6 @@ public class MyWebChromeClient extends WebChromeClient
         mIWebPageView.progressChanged(newProgress);
     }
 
-    /**
-     * 判断是否是全屏
-     */
-    public boolean inCustomView() {
-        return (mXCustomView != null);
-    }
 
     @Override
     public void onReceivedTitle(WebView view, String title) {

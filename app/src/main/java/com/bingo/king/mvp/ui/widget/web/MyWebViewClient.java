@@ -48,7 +48,8 @@ public class MyWebViewClient extends WebViewClient
 
             // 电话、短信、邮箱
         } else if (url.startsWith(WebView.SCHEME_TEL) || url.startsWith("sms:") || url.startsWith(WebView.SCHEME_MAILTO)) {
-            try {
+            try
+            {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
                 mActivity.startActivity(intent);
@@ -78,8 +79,6 @@ public class MyWebViewClient extends WebViewClient
         if (!NetworkUtils.isConnected()) {
             mIWebPageView.hindProgressBar();
         }
-        // html加载完成之后，添加监听图片的点击js函数
-//        mIWebPageView.addImageClickListener();
         super.onPageFinished(view, url);
     }
 

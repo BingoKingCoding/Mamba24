@@ -12,14 +12,12 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.bingo.king.R;
 import com.bingo.king.app.utils.CommonUtils;
 import com.bingo.king.mvp.ui.widget.X5WebView;
 import com.bingo.king.mvp.ui.widget.web.AppJsHandler;
-import com.bingo.king.mvp.ui.widget.web.FullscreenHolder;
 import com.bingo.king.mvp.ui.widget.web.IWebPageView;
 import com.bingo.king.mvp.ui.widget.web.MyWebChromeClient;
 import com.bingo.king.mvp.ui.widget.web.MyWebViewClient;
@@ -42,8 +40,6 @@ public class WebActivity extends RxAppCompatActivity implements IWebPageView
     // 进度条
     ProgressBar mProgressBar;
     public X5WebView webView;
-    // 全屏时视频加载view
-    FrameLayout videoFullView;
     Toolbar mToolbar;
     // 进度条是否加载到90%
     public boolean mProgress90;
@@ -73,7 +69,8 @@ public class WebActivity extends RxAppCompatActivity implements IWebPageView
         if (getIntent() != null)
         {
             mTitle = getIntent().getStringExtra("mTitle");
-            mUrl = getIntent().getStringExtra("mUrl");
+//            mUrl = getIntent().getStringExtra("mUrl");
+            mUrl = "http://v.sports.qq.com/?pgv_ref=aio2015&ptlang=2052#/cover/296vmgfvrnpj6b1/x0025hp3r4p";
         }
     }
 
@@ -92,7 +89,6 @@ public class WebActivity extends RxAppCompatActivity implements IWebPageView
     {
         mProgressBar = findViewById(R.id.pb_progress);
         webView = findViewById(R.id.webview_detail);
-        videoFullView = findViewById(R.id.video_fullView);
         mToolbar = findViewById(R.id.title_tool_bar);
         mToolbar.setTitle(mTitle);
         //设置相关默认操作
@@ -124,12 +120,12 @@ public class WebActivity extends RxAppCompatActivity implements IWebPageView
                     loadUrl();
                     break;
                 case R.id.actionbar_share:// 分享到
-                    String shareText = mWebChromeClient.getTitle() + mUrl + "（分享自" + R.string.app_name + "）";
+                    String shareText = mWebChromeClient.getTitle() + mUrl + "（分享自逗萌吧）";
                     ShareUtils.share(WebActivity.this, shareText);
                     break;
                 case R.id.actionbar_cope:// 复制链接
                     CommonUtils.copy(mUrl);
-                    showSnackbar("复制成功",false);
+                    showSnackbar("复制成功", false);
                     break;
                 case R.id.actionbar_open:// 打开链接
                     CommonUtils.openLink(WebActivity.this, mUrl);
@@ -179,18 +175,6 @@ public class WebActivity extends RxAppCompatActivity implements IWebPageView
     }
 
     @Override
-    public void showWebView()
-    {
-        webView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hindWebView()
-    {
-        webView.setVisibility(View.INVISIBLE);
-    }
-
-    @Override
     public void progressChanged(int newProgress)
     {
         if (mProgress90)
@@ -205,32 +189,6 @@ public class WebActivity extends RxAppCompatActivity implements IWebPageView
                 }
             }
         }
-    }
-
-    @Override
-    public void fullViewAddView(View view)
-    {
-        FrameLayout decor = (FrameLayout) getWindow().getDecorView();
-        videoFullView = new FullscreenHolder(WebActivity.this);
-        videoFullView.addView(view);
-        decor.addView(videoFullView);
-    }
-
-    @Override
-    public void showVideoFullView()
-    {
-        videoFullView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hindVideoFullView()
-    {
-        videoFullView.setVisibility(View.GONE);
-    }
-
-    public FrameLayout getVideoFullView()
-    {
-        return videoFullView;
     }
 
 
@@ -310,18 +268,11 @@ public class WebActivity extends RxAppCompatActivity implements IWebPageView
     {
         if (keyCode == KeyEvent.KEYCODE_BACK)
         {
-            //全屏播放退出全屏
-            if (mWebChromeClient.inCustomView())
-            {
-                hideCustomView();
-                return true;
-
-                //返回网页上一页
-            } else if (webView.canGoBack())
+            //返回网页上一页
+            if (webView.canGoBack())
             {
                 webView.goBack();
                 return true;
-
                 //退出网页
             } else
             {
@@ -357,7 +308,6 @@ public class WebActivity extends RxAppCompatActivity implements IWebPageView
     protected void onDestroy()
     {
         super.onDestroy();
-        videoFullView.removeAllViews();
         if (webView != null)
         {
             ViewGroup parent = (ViewGroup) webView.getParent();
@@ -411,7 +361,6 @@ public class WebActivity extends RxAppCompatActivity implements IWebPageView
 
     /**
      * 使用snackbar显示内容
-     *
      */
     private void showSnackbar(String message, boolean isLong)
     {
