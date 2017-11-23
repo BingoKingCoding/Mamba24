@@ -6,7 +6,6 @@ package com.bingo.king.app.base;
  * showLoading()、hideLoading、startLoadMore、endLoadMore
  * 四个方法在列表加载的时候调用用来控制刷新和加载的进度框
  *
- * 在没有列表的页面可以使用setState进行控制加载进度框
  */
 
 public interface IView<T>

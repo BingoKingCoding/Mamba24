@@ -71,11 +71,6 @@ public class MyWebViewClient extends WebViewClient
 
     @Override
     public void onPageFinished(WebView view, String url) {
-        if (mActivity.mProgress90) {
-            mIWebPageView.hindProgressBar();
-        } else {
-            mActivity.mPageFinish = true;
-        }
         if (!NetworkUtils.isConnected()) {
             mIWebPageView.hindProgressBar();
         }

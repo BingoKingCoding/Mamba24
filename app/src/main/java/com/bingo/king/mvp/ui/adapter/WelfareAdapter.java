@@ -21,7 +21,7 @@ public class WelfareAdapter extends BaseQuickAdapter<GankEntity.ResultsBean,Base
     @Override
     protected void convert(BaseViewHolder helper, GankEntity.ResultsBean item)
     {
-        GlideUtils.getInstance().loadImageCenterCrop(item.url,helper.getView(R.id.ivImage));
+        GlideUtils.getInstance().loadImage(item.url,helper.getView(R.id.ivImage));
     }
 
 }

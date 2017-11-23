@@ -162,7 +162,7 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
         touchHelper.attachToRecyclerView(mRecyclerView);
 
         mWelfareAdapter.setNewData(mData);
-        if (mWelfareAdapter.getData().size() < 3)
+        if (mWelfareAdapter.getData().size() < 5)
         {
             mPresenter.requestData(false);
         }

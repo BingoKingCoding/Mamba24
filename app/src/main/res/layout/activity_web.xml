@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:background="@color/color_page_bg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -25,12 +26,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.bingo.king.mvp.ui.widget.X5WebView
-                android:id="@+id/webview_detail"
+            <RelativeLayout
+                android:id="@+id/rl_web_content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbarSize="3dp"
-                android:scrollbarThumbVertical="@color/tabBackground"/>
+                android:layout_height="match_parent"/>
 
             <ProgressBar
                 android:id="@+id/pb_progress"
@@ -38,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
                 android:layout_alignParentTop="true"
-                android:max="1000"
+                android:max="100"
                 android:progress="0"
                 android:progressDrawable="@drawable/web_process_bg"
                 android:visibility="gone"/>

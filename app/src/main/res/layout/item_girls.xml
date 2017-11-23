@@ -18,6 +18,7 @@
             android:id="@+id/ivImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             android:background="@android:color/transparent"
             />
         <View
@@ -31,7 +32,7 @@
             android:id="@+id/ivLike"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="center"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_heart_outline_white"
             android:visibility="invisible" />
 

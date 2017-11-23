@@ -13,15 +13,18 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.bingo.king.R;
 import com.bingo.king.app.utils.CommonUtils;
+import com.bingo.king.app.utils.DDViewUtil;
 import com.bingo.king.mvp.ui.widget.X5WebView;
 import com.bingo.king.mvp.ui.widget.web.AppJsHandler;
 import com.bingo.king.mvp.ui.widget.web.IWebPageView;
 import com.bingo.king.mvp.ui.widget.web.MyWebChromeClient;
 import com.bingo.king.mvp.ui.widget.web.MyWebViewClient;
 import com.bingo.king.mvp.ui.widget.web.ShareUtils;
+import com.bingo.king.mvp.ui.widget.web.SlowlyProgressBarHelper;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.util.ArrayList;
@@ -35,16 +38,13 @@ public class WebActivity extends RxAppCompatActivity implements IWebPageView
 {
     private final String TAG = this.getClass().getSimpleName();
     //加载错误时候网页
-    public static final String NO_NETWORK_URL = "file:///android_asset/error_network.html";
-
+    private static final String NO_NETWORK_URL = "file:///android_asset/error_network.html";
+    private SlowlyProgressBarHelper slowlyProgressBar;
     // 进度条
-    ProgressBar mProgressBar;
-    public X5WebView webView;
-    Toolbar mToolbar;
-    // 进度条是否加载到90%
-    public boolean mProgress90;
-    // 网页是否加载完成
-    public boolean mPageFinish;
+    private ProgressBar mProgressBar;
+    private RelativeLayout rl_web_content;
+    private X5WebView webView;
+    private Toolbar mToolbar;
     // 加载视频相关
     private MyWebChromeClient mWebChromeClient;
     // title
@@ -58,7 +58,7 @@ public class WebActivity extends RxAppCompatActivity implements IWebPageView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         getIntentData();
-        initTitle();
+        initView();
         initWebView();
         RemoveAD();
         loadUrl();
@@ -69,26 +69,17 @@ public class WebActivity extends RxAppCompatActivity implements IWebPageView
         if (getIntent() != null)
         {
             mTitle = getIntent().getStringExtra("mTitle");
-//            mUrl = getIntent().getStringExtra("mUrl");
-            mUrl = "http://v.sports.qq.com/?pgv_ref=aio2015&ptlang=2052#/cover/296vmgfvrnpj6b1/x0025hp3r4p";
+            mUrl = getIntent().getStringExtra("mUrl");
+//            mUrl = "http://v.sports.qq.com/?pgv_ref=aio2015&ptlang=2052#/cover/296vmgfvrnpj6b1/x0025hp3r4p";
         }
     }
 
-    private void initWebView()
+    private void initView()
     {
-        mProgressBar.setVisibility(View.VISIBLE);
-
-        mWebChromeClient = new MyWebChromeClient(this);
-        webView.setWebChromeClient(mWebChromeClient);
-        // 与js交互(这里的"App"可根据公司前端协商定义)
-        webView.addJavascriptInterface(new AppJsHandler(this), "App");
-        webView.setWebViewClient(new MyWebViewClient(this));
-    }
-
-    private void initTitle()
-    {
+        rl_web_content = findViewById(R.id.rl_web_content);
         mProgressBar = findViewById(R.id.pb_progress);
-        webView = findViewById(R.id.webview_detail);
+        webView = new X5WebView(getApplicationContext());
+        DDViewUtil.addView(rl_web_content,webView);
         mToolbar = findViewById(R.id.title_tool_bar);
         mToolbar.setTitle(mTitle);
         //设置相关默认操作
@@ -136,6 +127,16 @@ public class WebActivity extends RxAppCompatActivity implements IWebPageView
 
     }
 
+    private void initWebView()
+    {
+        slowlyProgressBar = new SlowlyProgressBarHelper(mProgressBar);
+        mWebChromeClient = new MyWebChromeClient(this);
+        webView.setWebChromeClient(mWebChromeClient);
+        // 与js交互(这里的"App"可根据公司前端协商定义)
+        webView.addJavascriptInterface(new AppJsHandler(this), "App");
+        webView.setWebViewClient(new MyWebViewClient(this));
+    }
+
 
     public void loadUrl()
     {
@@ -165,87 +166,19 @@ public class WebActivity extends RxAppCompatActivity implements IWebPageView
     @Override
     public void startProgress()
     {
-        startProgress90();
+        slowlyProgressBar.onProgressStart();
     }
 
     @Override
     public void hindProgressBar()
     {
-        mProgressBar.setVisibility(View.GONE);
+//        mProgressBar.setVisibility(View.GONE);
     }
 
     @Override
     public void progressChanged(int newProgress)
     {
-        if (mProgress90)
-        {
-            int progress = newProgress * 100;
-            if (progress > 900)
-            {
-                mProgressBar.setProgress(progress);
-                if (progress == 1000)
-                {
-                    mProgressBar.setVisibility(View.GONE);
-                }
-            }
-        }
-    }
-
-
-    /**
-     * 进度条 假装加载到90%
-     */
-    public void startProgress90()
-    {
-        for (int i = 0; i < 900; i++)
-        {
-            final int progress = i + 1;
-            mProgressBar.postDelayed(() ->
-            {
-                mProgressBar.setProgress(progress);
-                if (progress == 900)
-                {
-                    mProgress90 = true;
-                    if (mPageFinish)
-                    {
-                        startProgress90to100();
-                    }
-                }
-            }, (i + 1) * 2);
-        }
-    }
-
-    /**
-     * 进度条 加载到100%
-     */
-    public void startProgress90to100()
-    {
-        for (int i = 900; i <= 1000; i++)
-        {
-            final int progress = i + 1;
-            mProgressBar.postDelayed(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    mProgressBar.setProgress(progress);
-                    if (progress == 1000)
-                    {
-                        mProgressBar.setVisibility(View.GONE);
-                    }
-                }
-            }, (i + 1) * 2);
-        }
-    }
-
-
-    /**
-     * 全屏时按返加键执行退出全屏方法
-     */
-    public void hideCustomView()
-    {
-        mWebChromeClient.onHideCustomView();
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        slowlyProgressBar.onProgressChange(newProgress);
     }
 
     /**
@@ -308,6 +241,10 @@ public class WebActivity extends RxAppCompatActivity implements IWebPageView
     protected void onDestroy()
     {
         super.onDestroy();
+        if(slowlyProgressBar!=null){
+            slowlyProgressBar.destroy();
+            slowlyProgressBar = null;
+        }
         if (webView != null)
         {
             ViewGroup parent = (ViewGroup) webView.getParent();

@@ -56,7 +56,7 @@ public abstract class LoadingPage extends FrameLayout
 
     private void init()
     {
-        this.setBackgroundColor(getResources().getColor(R.color.colorPageBg));
+        this.setBackgroundColor(getResources().getColor(R.color.color_page_bg));
         //把loadingView添加到frameLayout上
         if (loadingView == null)
         {
