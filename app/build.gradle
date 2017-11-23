@@ -124,4 +124,5 @@ dependencies {
 
     compile 'pub.devrel:easypermissions:1.0.1'
     compile 'com.jaeger.statusbarutil:library:1.4.0'
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
 }

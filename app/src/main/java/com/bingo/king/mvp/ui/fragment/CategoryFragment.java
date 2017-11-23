@@ -1,7 +1,6 @@
 package com.bingo.king.mvp.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -16,10 +15,10 @@ import com.bingo.king.mvp.presenter.CategoryPresenter;
 import com.bingo.king.mvp.ui.activity.WebActivity;
 import com.bingo.king.mvp.ui.adapter.CategoryAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import butterknife.BindView;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 
 /**
@@ -27,12 +26,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
  * Created by wwb on 2017/9/20 17:19.
  */
 
-public class CategoryFragment extends BaseFragment<CategoryPresenter> implements CategoryContract.View,SwipeRefreshLayout.OnRefreshListener,BaseQuickAdapter.RequestLoadMoreListener
+public class CategoryFragment extends BaseFragment<CategoryPresenter> implements CategoryContract.View,BaseQuickAdapter.RequestLoadMoreListener,OnRefreshListener
+
 {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.refreshLayout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    RefreshLayout mRefreshLayout;
     private String type;
 
     public static CategoryFragment newInstance(String type) {
@@ -57,7 +57,7 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     public void initData(Bundle savedInstanceState)
     {
         type = getArguments().getString("type");
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setOnRefreshListener(this);
         CommonUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
     }
 
@@ -110,16 +110,16 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     @Override
     public void showLoading()
     {
-        Observable.just(1)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(integer ->
-                        mSwipeRefreshLayout.setRefreshing(true));
+//        Observable.just(1)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(integer ->
+//                        mRefreshLayout.autoRefresh());
     }
 
     @Override
     public void hideLoading()
     {
-        mSwipeRefreshLayout.setRefreshing(false);
+        mRefreshLayout.finishRefresh();
     }
 
     @Override
@@ -135,14 +135,14 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     }
 
     @Override
-    public void onRefresh()
-    {
-        mPresenter.requestData(type,true);
-    }
-
-    @Override
     public void onLoadMoreRequested()
     {
         mPresenter.requestData(type,false);
+    }
+
+    @Override
+    public void onRefresh(RefreshLayout refreshlayout)
+    {
+        mPresenter.requestData(type,true);
     }
 }

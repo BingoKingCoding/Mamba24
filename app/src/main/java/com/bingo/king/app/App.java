@@ -2,16 +2,25 @@ package com.bingo.king.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bingo.king.BuildConfig;
+import com.bingo.king.R;
 import com.bingo.king.app.greendao.GreenDaoHelper;
+import com.bingo.king.app.utils.DynamicTimeFormat;
 import com.bingo.king.di.component.AppComponent;
 import com.bingo.king.di.component.DaggerAppComponent;
 import com.bingo.king.di.module.AppModule;
 import com.bingo.king.di.module.NetworkModule;
 import com.blankj.utilcode.util.Utils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.smtt.sdk.QbSdk;
 
@@ -39,7 +48,8 @@ public class App extends Application
         setupInjector();
         initX5();
         GreenDaoHelper.getInstance().initDatabase(this);
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG)
+        {
             ButterKnife.setDebug(true);
             ARouter.openLog();     // 打印日志
             ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
@@ -50,21 +60,24 @@ public class App extends Application
     private void initX5()
     {
         //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
-        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
+        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback()
+        {
             @Override
-            public void onViewInitFinished(boolean arg0) {
+            public void onViewInitFinished(boolean arg0)
+            {
                 // TODO Auto-generated method stub
                 //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
                 Log.d("app", " onViewInitFinished is " + arg0);
             }
 
             @Override
-            public void onCoreInitFinished() {
+            public void onCoreInitFinished()
+            {
                 // TODO Auto-generated method stub
             }
         };
         //x5内核初始化接口
-        QbSdk.initX5Environment(getApplicationContext(),cb);
+        QbSdk.initX5Environment(getApplicationContext(), cb);
     }
 
     private void initTimber()
@@ -92,6 +105,21 @@ public class App extends Application
         }
     }
 
+
+    static
+    {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+        SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater()
+        {
+            @NonNull
+            @Override
+            public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout)
+            {
+                layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);//全局设置主题颜色
+                return new ClassicsHeader(context).setTimeFormat(new DynamicTimeFormat("更新于 %s"));
+            }
+        });
+    }
 
     @Override
     protected void attachBaseContext(Context base)
