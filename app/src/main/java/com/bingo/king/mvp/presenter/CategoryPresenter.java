@@ -9,12 +9,15 @@ import com.bingo.king.mvp.model.entity.GankEntity;
 import com.bingo.king.mvp.model.http.rxerrorhandler.HttpCallback;
 import com.bingo.king.mvp.ui.adapter.CategoryAdapter;
 import com.bingo.king.mvp.ui.widget.EasyLoadMoreView;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import io.reactivex.annotations.NonNull;
 
 /**
  * <请描述这个类是干什么的>
@@ -91,6 +94,14 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.Model, Cat
                 }
                 mAdapter.loadMoreComplete();
             }
+
+            @Override
+            public void onError(@NonNull Throwable e)
+            {
+                e.printStackTrace();
+                ToastUtils.showShort("网络异常，请检查网络连接");
+            }
+
         });
     }
 

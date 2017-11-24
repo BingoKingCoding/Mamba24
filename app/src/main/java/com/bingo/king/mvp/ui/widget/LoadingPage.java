@@ -3,6 +3,7 @@ package com.bingo.king.mvp.ui.widget;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,7 +112,8 @@ public abstract class LoadingPage extends FrameLayout
     private View createErrorView()
     {
         errorView = LayoutInflater.from(mContext).inflate(R.layout.loadingpage_state_error, null);
-        errorView.setOnClickListener(new OnClickListener()
+        CardView cv_error_refresh = errorView.findViewById(R.id.cv_error_refresh);
+        cv_error_refresh.setOnClickListener(new OnClickListener()
         {
             @Override
             public void onClick(View view)

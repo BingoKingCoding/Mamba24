@@ -63,7 +63,7 @@ public abstract class HttpCallback<T> implements Observer<T>
         if (!NetworkUtils.isAvailableByPing())
         {
 //            mView.showMessage("你连接的网络有问题，请检查路由器");
-            ToastUtils.showShort("你连接的网络有问题，请检查路由器");
+            ToastUtils.showShort("网络异常，请检查网络连接");
             if (mStateful != null)
             {
                 mStateful.setState(LoadingPage.STATE_ERROR);
