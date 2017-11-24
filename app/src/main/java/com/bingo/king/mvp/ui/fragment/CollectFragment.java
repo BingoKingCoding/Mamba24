@@ -65,11 +65,6 @@ public class CollectFragment extends BaseFragment<CollectPresenter> implements C
         setState(LoadingPage.STATE_SUCCESS);
     }
 
-    @Override
-    public void showLoading()
-    {
-
-    }
 
     @Override
     public void hideLoading()
@@ -93,12 +88,6 @@ public class CollectFragment extends BaseFragment<CollectPresenter> implements C
     public void showMessage(String message)
     {
         showSnackbar(message);
-    }
-
-    @Override
-    public void refreshView(Object data)
-    {
-
     }
 
 

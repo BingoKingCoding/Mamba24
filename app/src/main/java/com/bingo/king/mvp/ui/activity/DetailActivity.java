@@ -96,11 +96,6 @@ public class DetailActivity extends CoordinatorBaseActivity<DetailPresenter> imp
         webview.loadUrl(entity.url);
     }
 
-    @Override
-    public void showLoading()
-    {
-
-    }
 
     @Override
     public void hideLoading()
@@ -124,12 +119,6 @@ public class DetailActivity extends CoordinatorBaseActivity<DetailPresenter> imp
     public void showMessage(@NonNull String message)
     {
         showSnackbar(message);
-    }
-
-    @Override
-    public void refreshView(GankEntity data)
-    {
-
     }
 
 

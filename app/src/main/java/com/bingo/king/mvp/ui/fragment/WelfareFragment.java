@@ -3,15 +3,11 @@ package com.bingo.king.mvp.ui.fragment;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.Gravity;
-import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.TextView;
 
 import com.bingo.king.R;
 import com.bingo.king.app.base.BaseFragment;
@@ -22,13 +18,10 @@ import com.bingo.king.mvp.model.entity.GankEntity;
 import com.bingo.king.mvp.presenter.WelfarePresenter;
 import com.bingo.king.mvp.ui.adapter.WelfareAdapter;
 import com.bingo.king.mvp.ui.widget.sparkbutton.SparkButton;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.List;
 
 import butterknife.BindView;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import me.yuqirong.cardswipelayout.CardConfig;
 import me.yuqirong.cardswipelayout.CardItemTouchHelperCallback;
 import me.yuqirong.cardswipelayout.CardLayoutManager;
@@ -40,12 +33,10 @@ import me.yuqirong.cardswipelayout.OnSwipeListener;
  * Created by wwb on 2017/9/20 16:13.
  */
 
-public class WelfareFragment extends BaseFragment<WelfarePresenter> implements WelfareContract.View, SwipeRefreshLayout.OnRefreshListener
+public class WelfareFragment extends BaseFragment<WelfarePresenter> implements WelfareContract.View
 {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-    @BindView(R.id.refreshLayout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.spark_button)
     SparkButton mSparkButton;
 
@@ -55,14 +46,9 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
     @Override
     public void initData(Bundle savedInstanceState)
     {
-        mSwipeRefreshLayout.setOnRefreshListener(this);
         PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
         pagerSnapHelper.attachToRecyclerView(mRecyclerView);
         mWelfareAdapter = new WelfareAdapter(null);
-        TextView textView = new TextView(getContext());
-        textView.setText("没有更多内容了");
-        textView.setGravity(Gravity.CENTER);
-//        mAdapter.setEmptyView(textView);
         mRecyclerView.setAdapter(mWelfareAdapter);
     }
 
@@ -101,12 +87,6 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
         animatorSet.play(imgScaleDownYAnim).with(imgScaleDownXAnim).after(imgScaleUpYAnim);
 
         animatorSet.start();
-    }
-
-    private void collectWelfare(BaseQuickAdapter adapter, View view, int position)
-    {
-        GankEntity.ResultsBean entity = (GankEntity.ResultsBean) adapter.getItem(position);
-        mPresenter.addToFavorites(entity);
     }
 
     private void collectWelfare(Object o)
@@ -162,7 +142,7 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
         touchHelper.attachToRecyclerView(mRecyclerView);
 
         mWelfareAdapter.setNewData(mData);
-        if (mWelfareAdapter.getData().size() < 5)
+        if (mWelfareAdapter.getData().size() < 3)
         {
             mPresenter.requestData(false);
         }
@@ -176,18 +156,8 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
     }
 
     @Override
-    public void showLoading()
-    {
-        Observable.just(1)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(integer ->
-                        mSwipeRefreshLayout.setRefreshing(true));
-    }
-
-    @Override
     public void hideLoading()
     {
-        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -196,18 +166,6 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
         showSnackbar(message);
     }
 
-    @Override
-    public void refreshView(List<GankEntity.ResultsBean> data)
-    {
-
-    }
-
-
-    @Override
-    public void onRefresh()
-    {
-        mPresenter.requestData(true);
-    }
 
     @Override
     public void initComponent()

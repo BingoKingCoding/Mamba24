@@ -32,7 +32,7 @@ public class ArticlePresenter extends BasePresenter<ArticleContract.Model, Artic
 
     public void requestData(boolean pullToRefresh) {
         mRootView.setAdapter(mModel.getEntity());
-        mRootView.endLoadMore();
+        mRootView.hideLoading();
     }
 
 }

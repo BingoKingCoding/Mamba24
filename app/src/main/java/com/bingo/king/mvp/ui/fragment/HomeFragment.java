@@ -73,11 +73,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         setState(LoadingPage.STATE_SUCCESS);
     }
 
-    @Override
-    public void showLoading()
-    {
-
-    }
 
     @Override
     public void hideLoading()
@@ -101,12 +96,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     public void showMessage(String message)
     {
         showSnackbar(message);
-    }
-
-    @Override
-    public void refreshView(Object data)
-    {
-
     }
 
     @Override

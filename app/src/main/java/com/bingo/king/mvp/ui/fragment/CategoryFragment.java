@@ -108,15 +108,6 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
 
 
     @Override
-    public void showLoading()
-    {
-//        Observable.just(1)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(integer ->
-//                        mRefreshLayout.autoRefresh());
-    }
-
-    @Override
     public void hideLoading()
     {
         mRefreshLayout.finishRefresh();
@@ -126,12 +117,6 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     public void showMessage(String message)
     {
         showSnackbar(message);
-    }
-
-    @Override
-    public void refreshView(GankEntity data)
-    {
-
     }
 
     @Override

@@ -12,11 +12,6 @@ public interface IView<T>
 {
 
     /**
-     * 显示加载
-     */
-    void showLoading();
-
-    /**
      * 隐藏加载
      */
     void hideLoading();
@@ -38,6 +33,4 @@ public interface IView<T>
     void showMessage(String message);
 
 
-
-    void refreshView(T data);
 }

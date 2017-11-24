@@ -10,17 +10,16 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.bingo.king.BuildConfig;
 import com.bingo.king.R;
 import com.bingo.king.app.greendao.GreenDaoHelper;
-import com.bingo.king.app.utils.DynamicTimeFormat;
 import com.bingo.king.di.component.AppComponent;
 import com.bingo.king.di.component.DaggerAppComponent;
 import com.bingo.king.di.module.AppModule;
 import com.bingo.king.di.module.NetworkModule;
+import com.bingo.king.mvp.ui.widget.CustomRefreshHeader;
 import com.blankj.utilcode.util.Utils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.smtt.sdk.QbSdk;
 
@@ -116,7 +115,8 @@ public class App extends Application
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout)
             {
                 layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);//全局设置主题颜色
-                return new ClassicsHeader(context).setTimeFormat(new DynamicTimeFormat("更新于 %s"));
+//                return new ClassicsHeader(context).setTimeFormat(new DynamicTimeFormat("更新于 %s"));
+                return new CustomRefreshHeader(context);
             }
         });
     }

@@ -2,7 +2,6 @@ package com.bingo.king.mvp.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Gravity;
@@ -21,14 +20,14 @@ import com.bingo.king.mvp.ui.adapter.MeiziAdapter;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
 import com.bingo.king.mvp.ui.widget.SpacesItemDecoration;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.simple.eventbus.Subscriber;
 
 import java.util.List;
 
 import butterknife.BindView;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 
 /**
@@ -36,13 +35,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
  * Created by wwb on 2017/9/27 16:33.
  */
 
-public class MeiziFragment extends BaseFragment<MeiziPresenter> implements MeiziContract.View, SwipeRefreshLayout.OnRefreshListener
+public class MeiziFragment extends BaseFragment<MeiziPresenter> implements MeiziContract.View, OnRefreshListener
 {
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.refreshLayout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    RefreshLayout mRefreshLayout;
 
     private MeiziAdapter mAdapter;
 
@@ -57,12 +56,11 @@ public class MeiziFragment extends BaseFragment<MeiziPresenter> implements Meizi
                 .inject(this);
     }
 
-
     @Override
     public void initData(Bundle savedInstanceState)
     {
         setState(LoadingPage.STATE_SUCCESS);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setOnRefreshListener(this);
         CommonUtils.configRecycleView(mRecyclerView, new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mAdapter = new MeiziAdapter(null);
         mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
@@ -108,15 +106,9 @@ public class MeiziFragment extends BaseFragment<MeiziPresenter> implements Meizi
     }
 
     @Override
-    public void showLoading()
-    {
-
-    }
-
-    @Override
     public void hideLoading()
     {
-
+        mRefreshLayout.finishRefresh();
     }
 
     @Override
@@ -126,14 +118,7 @@ public class MeiziFragment extends BaseFragment<MeiziPresenter> implements Meizi
     }
 
     @Override
-    public void refreshView(Object data)
-    {
-
-    }
-
-
-    @Override
-    public void onRefresh()
+    public void onRefresh(RefreshLayout refreshlayout)
     {
         mPresenter.requestData(true);
     }
@@ -141,10 +126,6 @@ public class MeiziFragment extends BaseFragment<MeiziPresenter> implements Meizi
     @Override
     public void startLoadMore()
     {
-        Observable.just(1)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(integer ->
-                        mSwipeRefreshLayout.setRefreshing(true));
     }
 
     @Subscriber(tag = "meizi")
@@ -156,7 +137,7 @@ public class MeiziFragment extends BaseFragment<MeiziPresenter> implements Meizi
     @Override
     public void endLoadMore()
     {
-        mSwipeRefreshLayout.setRefreshing(false);
+        mRefreshLayout.finishRefresh();
     }
 
     @Override
@@ -164,6 +145,5 @@ public class MeiziFragment extends BaseFragment<MeiziPresenter> implements Meizi
     {
         mAdapter.setNewData(entity);
     }
-
 
 }

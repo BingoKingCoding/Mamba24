@@ -21,8 +21,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 
 
-
-public class PhotoViewActivity extends BaseActivity<PhotoViewPresenter> implements PhotoViewContract.View,View.OnClickListener
+public class PhotoViewActivity extends BaseActivity<PhotoViewPresenter> implements PhotoViewContract.View, View.OnClickListener
 {
 
     /**
@@ -95,12 +94,6 @@ public class PhotoViewActivity extends BaseActivity<PhotoViewPresenter> implemen
 
 
     @Override
-    public void showLoading()
-    {
-
-    }
-
-    @Override
     public void hideLoading()
     {
 
@@ -124,12 +117,6 @@ public class PhotoViewActivity extends BaseActivity<PhotoViewPresenter> implemen
         showSnackbar(message);
     }
 
-    @Override
-    public void refreshView(Object data)
-    {
-
-    }
-
 
     @Override
     public void onClick(View v)
@@ -137,7 +124,7 @@ public class PhotoViewActivity extends BaseActivity<PhotoViewPresenter> implemen
         switch (v.getId())
         {
             case R.id.iv_down_load:
-                mPresenter.savePic(listImageUrl,selectPosition);
+                mPresenter.savePic(listImageUrl, selectPosition);
                 break;
         }
     }

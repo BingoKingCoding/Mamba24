@@ -26,7 +26,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 
-public class SplashActivity extends BaseActivity<SplashPresenter> implements SplashContract.View,EasyPermissions.PermissionCallbacks
+public class SplashActivity extends BaseActivity<SplashPresenter> implements SplashContract.View, EasyPermissions.PermissionCallbacks
 {
 
     @BindView(R.id.splash_img)
@@ -42,6 +42,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION
     };
+
     @Override
     public void setupActivityComponent()
     {
@@ -73,12 +74,6 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
 
 
     @Override
-    public void showLoading()
-    {
-
-    }
-
-    @Override
     public void hideLoading()
     {
 
@@ -100,12 +95,6 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
     public void showMessage(@NonNull String message)
     {
         showSnackbar(message);
-    }
-
-    @Override
-    public void refreshView(Object data)
-    {
-
     }
 
 
@@ -257,18 +246,20 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
-    private void startMainOrLogin(){
+    private void startMainOrLogin()
+    {
 //        UserEntity user = UserModelDao.query();
 //        if (user != null)
 //        {
-            startMainActivity();
+        startMainActivity();
 //        } else
 //        {
 //            startLoginActivity();
 //        }
     }
 
-    private void startMainActivity(){
+    private void startMainActivity()
+    {
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(intent);
         finish();

@@ -68,7 +68,7 @@ public class HttpUtils
     /**
      * @date 2017/11/5
      * @author wwb
-     * @Description 上拉加载下来刷新使用,如果有适用loadingpage的话会出现两次加载，此时showLoading不需要执行任何逻辑
+     * @Description 上拉加载下来刷新使用, 如果有适用loadingpage的话会出现两次加载，此时showLoading不需要执行任何逻辑
      */
     public static <T> void requestDataOnPullToRefresh(boolean pullToRefresh, IView<T> mView, Observable<T> observable, HttpCallback<T> httpCallback)
     {
@@ -108,9 +108,7 @@ public class HttpUtils
         observable.subscribeOn(Schedulers.io())
                 .doOnSubscribe(disposable ->
                 {
-                    if (pullToRefresh)
-                        mView.showLoading();
-                    else
+                    if (!pullToRefresh)
                         mView.startLoadMore();
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())

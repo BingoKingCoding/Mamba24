@@ -1,7 +1,6 @@
 package com.bingo.king.mvp.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -22,12 +21,12 @@ import com.bingo.king.mvp.presenter.ArticlePresenter;
 import com.bingo.king.mvp.ui.adapter.ArticleAdapter;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.List;
 
 import butterknife.BindView;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 
 /**
@@ -35,12 +34,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
  * Created by wwb on 2017/9/27 17:08.
  */
 
-public class ArticleFragment extends BaseFragment<ArticlePresenter> implements ArticleContract.View, SwipeRefreshLayout.OnRefreshListener
+public class ArticleFragment extends BaseFragment<ArticlePresenter> implements ArticleContract.View,OnRefreshListener
 {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.refreshLayout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    RefreshLayout mRefreshLayout;
 
     private ArticleAdapter mAdapter;
     private GankEntity.ResultsBean intentArticle;
@@ -61,7 +60,7 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
     public void initData(Bundle savedInstanceState)
     {
         setState(LoadingPage.STATE_SUCCESS);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setOnRefreshListener(this);
         CommonUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
 
         mAdapter = new ArticleAdapter(null);
@@ -113,16 +112,11 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
         return R.layout.layout_refresh_list;
     }
 
-    @Override
-    public void showLoading()
-    {
-
-    }
 
     @Override
     public void hideLoading()
     {
-
+        mRefreshLayout.finishRefresh();
     }
 
     @Override
@@ -132,13 +126,7 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
     }
 
     @Override
-    public void refreshView(Object data)
-    {
-
-    }
-
-    @Override
-    public void onRefresh()
+    public void onRefresh(RefreshLayout refreshLayout)
     {
         mPresenter.requestData(true);
     }
@@ -146,15 +134,12 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
     @Override
     public void startLoadMore()
     {
-        Observable.just(1)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(integer -> mSwipeRefreshLayout.setRefreshing(true));
     }
 
     @Override
     public void endLoadMore()
     {
-        mSwipeRefreshLayout.setRefreshing(false);
+        mRefreshLayout.finishRefresh();
     }
 
     @Override

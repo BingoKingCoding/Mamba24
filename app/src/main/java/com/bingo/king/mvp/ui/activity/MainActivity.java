@@ -140,17 +140,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         showSnackbar(message);
     }
 
-    @Override
-    public void refreshView(Object data)
-    {
-
-    }
-
-    @Override
-    public void showLoading()
-    {
-
-    }
 
     @Override
     public void hideLoading()
