@@ -35,6 +35,8 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     RefreshLayout mRefreshLayout;
     private String type;
 
+    private CategoryAdapter mAdapter;
+
     public static CategoryFragment newInstance(String type) {
         CategoryFragment fragment = new CategoryFragment();
         Bundle bundle = new Bundle();
@@ -83,6 +85,10 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     @Override
     public void endLoadMore()
     {
+        if (mAdapter != null)
+        {
+            mAdapter.loadMoreFail();
+        }
     }
 
     @Override
@@ -94,6 +100,7 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     @Override
     public void setAdapter(CategoryAdapter mAdapter)
     {
+        this.mAdapter = mAdapter;
         mAdapter.setOnLoadMoreListener(this, mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((adapter, view, position) ->

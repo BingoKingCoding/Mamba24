@@ -96,10 +96,10 @@ public class HttpUtils
                 {
                     mView.endLoadMore();
                 }
-                if (mView instanceof Stateful)
-                {
-                    ((Stateful) mView).setState(LoadingPage.STATE_ERROR);
-                }
+//                if (mView instanceof Stateful)
+//                {
+//                    ((Stateful) mView).setState(LoadingPage.STATE_ERROR);
+//                }
             }
             return;
         }

@@ -12,13 +12,14 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="15dp"
         android:gravity="center_vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="没有数据了 ，下次再来看吧"
+            android:text="——— 我是有底线的~ ———"
             android:textColor="@color/C6"
             android:textSize="14sp" />
 
@@ -27,11 +28,14 @@
     <LinearLayout
         android:id="@+id/load_more_load_fail_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="15dp"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:gravity="center_vertical"
+        android:visibility="gone"
+        >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

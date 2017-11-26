@@ -108,7 +108,7 @@ public class WebActivity extends RxAppCompatActivity implements IWebPageView
             switch (item.getItemId())
             {
                 case R.id.actionbar_refresh:
-                    loadUrl();
+                    webView.reload();
                     break;
                 case R.id.actionbar_share:// 分享到
                     String shareText = mWebChromeClient.getTitle() + mUrl + "（分享自逗萌吧）";
