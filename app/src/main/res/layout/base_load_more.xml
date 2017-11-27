@@ -12,14 +12,13 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="15dp"
         android:gravity="center_vertical"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="——— 我是有底线的~ ———"
+            android:text="—— 我是有底线的~ ——"
             android:textColor="@color/C6"
             android:textSize="14sp" />
 
@@ -34,13 +33,12 @@
         android:layout_marginTop="15dp"
         android:orientation="vertical"
         android:gravity="center_vertical"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="出错了，请点击重新加载更多"
+            android:text="出错了，请点击重新加载更多~"
             android:textColor="@color/C6"
             android:textSize="14sp" />
     </LinearLayout>

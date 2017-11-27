@@ -16,7 +16,7 @@
               android:layout_height="wrap_content"
               android:layout_marginLeft="5dp"
               android:layout_marginTop="10dp"
-              android:text="空空如也～"
+              android:text="空空如也~"
               android:textColor="@color/C13"/>
 
 </LinearLayout>
