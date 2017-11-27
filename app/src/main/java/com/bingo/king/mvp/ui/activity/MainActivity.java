@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.IdRes;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
@@ -46,7 +45,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
 
     private List<Integer> mTitles;
-    private List<Fragment> mFragments;
     private List<Integer> mNavIds;
     private int mReplace = 0;
 
@@ -148,12 +146,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
     @Override
-    public void startLoadMore()
-    {
-
-    }
-
-    @Override
     public void endLoadMore()
     {
 
@@ -181,7 +173,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         }
         super.onDestroy();
         this.mTitles = null;
-        this.mFragments = null;
         this.mNavIds = null;
     }
 

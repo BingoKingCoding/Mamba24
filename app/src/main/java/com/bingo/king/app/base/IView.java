@@ -8,7 +8,7 @@ package com.bingo.king.app.base;
  *
  */
 
-public interface IView<T>
+public interface IView
 {
 
     /**
@@ -16,10 +16,6 @@ public interface IView<T>
      */
     void hideLoading();
 
-    /**
-     * 显示加载更多
-     */
-    void startLoadMore();
 
     /**
      * 隐藏加载更多

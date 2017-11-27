@@ -7,8 +7,10 @@ import com.bingo.king.di.scope.ActivityScope;
 import com.bingo.king.mvp.contract.CategoryContract;
 import com.bingo.king.mvp.model.entity.GankEntity;
 import com.bingo.king.mvp.model.http.rxerrorhandler.HttpCallback;
+import com.bingo.king.mvp.model.http.rxerrorhandler.Stateful;
 import com.bingo.king.mvp.ui.adapter.CategoryAdapter;
 import com.bingo.king.mvp.ui.widget.EasyLoadMoreView;
+import com.bingo.king.mvp.ui.widget.LoadingPage;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -99,6 +101,16 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.Model, Cat
             public void onError(@NonNull Throwable e)
             {
                 e.printStackTrace();
+                if (mAdapter.getData().size() > 0)
+                {
+                    mAdapter.loadMoreFail();
+                } else
+                {
+                    if (mRootView instanceof Stateful)
+                    {
+                        ((Stateful) mRootView).setState(LoadingPage.STATE_ERROR);
+                    }
+                }
                 ToastUtils.showShort("网络异常，请检查网络连接");
             }
 

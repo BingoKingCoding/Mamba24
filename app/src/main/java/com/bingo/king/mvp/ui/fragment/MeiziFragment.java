@@ -123,11 +123,6 @@ public class MeiziFragment extends BaseFragment<MeiziPresenter> implements Meizi
         mPresenter.requestData(true);
     }
 
-    @Override
-    public void startLoadMore()
-    {
-    }
-
     @Subscriber(tag = "meizi")
     private void updateAdapter(Object o)
     {

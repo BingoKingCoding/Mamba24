@@ -73,12 +73,6 @@ public class CollectFragment extends BaseFragment<CollectPresenter> implements C
     }
 
     @Override
-    public void startLoadMore()
-    {
-
-    }
-
-    @Override
     public void endLoadMore()
     {
 

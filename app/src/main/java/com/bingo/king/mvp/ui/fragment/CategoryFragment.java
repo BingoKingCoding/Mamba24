@@ -78,11 +78,6 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     }
 
     @Override
-    public void startLoadMore()
-    {
-    }
-
-    @Override
     public void endLoadMore()
     {
         if (mAdapter != null)

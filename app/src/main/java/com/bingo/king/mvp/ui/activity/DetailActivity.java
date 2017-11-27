@@ -104,12 +104,6 @@ public class DetailActivity extends CoordinatorBaseActivity<DetailPresenter> imp
     }
 
     @Override
-    public void startLoadMore()
-    {
-
-    }
-
-    @Override
     public void endLoadMore()
     {
 

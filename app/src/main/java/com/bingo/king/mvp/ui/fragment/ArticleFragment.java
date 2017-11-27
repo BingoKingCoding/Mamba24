@@ -131,10 +131,6 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
         mPresenter.requestData(true);
     }
 
-    @Override
-    public void startLoadMore()
-    {
-    }
 
     @Override
     public void endLoadMore()

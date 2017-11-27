@@ -20,7 +20,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class GlideUtils
 {
-    private static GlideUtils instance;
+    private static volatile GlideUtils instance;
 
     public static GlideUtils getInstance()
     {

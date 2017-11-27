@@ -81,12 +81,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     }
 
     @Override
-    public void startLoadMore()
-    {
-
-    }
-
-    @Override
     public void endLoadMore()
     {
 

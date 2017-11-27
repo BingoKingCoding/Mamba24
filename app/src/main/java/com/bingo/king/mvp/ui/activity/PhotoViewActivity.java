@@ -100,12 +100,6 @@ public class PhotoViewActivity extends BaseActivity<PhotoViewPresenter> implemen
     }
 
     @Override
-    public void startLoadMore()
-    {
-
-    }
-
-    @Override
     public void endLoadMore()
     {
 

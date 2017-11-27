@@ -97,12 +97,6 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
     }
 
     @Override
-    public void startLoadMore()
-    {
-        mWelfareAdapter.setEnableLoadMore(true);
-    }
-
-    @Override
     public void endLoadMore()
     {
         mWelfareAdapter.loadMoreComplete();
