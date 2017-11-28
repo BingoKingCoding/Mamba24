@@ -16,7 +16,7 @@ import io.reactivex.disposables.Disposable;
 public class BasePresenter<M extends IModel, V extends IView> implements IPresenter
 {
     protected final String TAG = this.getClass().getSimpleName();
-    protected CompositeDisposable mCompositeDisposable;
+    private CompositeDisposable mCompositeDisposable;
 
     protected M mModel;
     protected V mRootView;
@@ -71,7 +71,6 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
     /**
      * 是否使用eventBus,默认为使用(true)，
      *
-     * @return
      */
     public boolean useEventBus()
     {
@@ -88,7 +87,7 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
         mCompositeDisposable.add(disposable);//将所有disposable放入,集中处理
     }
 
-    public void unDispose()
+    private void unDispose()
     {
         if (mCompositeDisposable != null)
         {
@@ -97,12 +96,27 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
     }
 
 
+    /**
+     * 页面初始化请求数据
+     */
+    protected <T> void initializeRequestData(Observable<T> observable, HttpCallback<T> httpCallback){
+
+        this.mHttpCallback = httpCallback;
+        HttpUtils.initializeRequestData(mRootView, observable, httpCallback);
+    }
+
+    /**
+     *
+     */
     protected <T> void requestData(Observable<T> observable, HttpCallback<T> httpCallback)
     {
         this.mHttpCallback = httpCallback;
         HttpUtils.requestData(mRootView, observable, httpCallback);
     }
 
+    /**
+     * 上拉加载和下拉刷新 使用
+     */
     protected <T> void requestDataOnPullToRefresh(boolean pullToRefresh, Observable<T> observable, HttpCallback<T> httpCallback)
     {
         this.mHttpCallback = httpCallback;

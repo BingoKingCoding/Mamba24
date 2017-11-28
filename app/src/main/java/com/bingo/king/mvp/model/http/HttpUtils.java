@@ -15,12 +15,14 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * <请描述这个类是干什么的>
  * Created by adou on 2017/11/4:21:49.
- *
  */
 
 public class HttpUtils
 {
-    public static <T> void requestData(IView mView, Observable<T> observable, HttpCallback<T> httpCallback)
+    /**
+     * 页面初始化请求数据
+     */
+    public static <T> void initializeRequestData(IView mView, Observable<T> observable, HttpCallback<T> httpCallback)
     {
 
         Stateful target;
@@ -60,13 +62,33 @@ public class HttpUtils
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxUtils.bindToLifecycle(mView))
                 .subscribe(httpCallback);
+    }
+
+
+    public static <T> void requestData(IView mView, Observable<T> observable, HttpCallback<T> httpCallback)
+    {
+        if (!NetworkUtils.isConnected())
+        {
+            if (mView != null)
+            {
+                mView.showMessage("网络连接已断开");
+            }
+            return;
+        }
+        observable.subscribeOn(Schedulers.io())
+                .doOnSubscribe(disposable -> mView.showLoadingDialog())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doAfterTerminate(mView::closeLoadingDialog)
+                .compose(RxUtils.bindToLifecycle(mView))
+                .subscribe(httpCallback);
 
     }
 
 
     /**
      * 2017/11/5
-     *
+     * <p>
      * 上拉加载下来刷新使用, 如果有适用loadingpage的话会出现两次加载，此时showLoading不需要执行任何逻辑
      */
     public static <T> void requestDataOnPullToRefresh(boolean pullToRefresh, IView mView, Observable<T> observable, HttpCallback<T> httpCallback)
@@ -79,15 +101,12 @@ public class HttpUtils
         }
         //doOnSubscribe、doAfterTerminate可以用于上拉加载下来刷新
         observable.subscribeOn(Schedulers.io())
-                .doOnSubscribe(disposable ->
-                {
-                })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doAfterTerminate(() ->
                 {
                     if (pullToRefresh)
-                        mView.hideLoading();
+                        mView.hidePullLoading();
                     else
                         mView.endLoadMore();
                 })

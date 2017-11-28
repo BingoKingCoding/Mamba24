@@ -80,10 +80,7 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     @Override
     public void endLoadMore()
     {
-        if (mAdapter != null)
-        {
-            mAdapter.loadMoreFail();
-        }
+
     }
 
     @Override
@@ -110,7 +107,19 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
 
 
     @Override
-    public void hideLoading()
+    public void showLoadingDialog()
+    {
+
+    }
+
+    @Override
+    public void closeLoadingDialog()
+    {
+
+    }
+
+    @Override
+    public void hidePullLoading()
     {
         mRefreshLayout.finishRefresh();
     }
