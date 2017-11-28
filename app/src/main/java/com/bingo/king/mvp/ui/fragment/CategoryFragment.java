@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bingo.king.R;
+import com.bingo.king.app.ARouterPaths;
 import com.bingo.king.app.base.BaseFragment;
 import com.bingo.king.app.utils.CommonUtils;
 import com.bingo.king.di.component.DaggerCategoryComponent;
@@ -12,13 +14,14 @@ import com.bingo.king.di.module.CategoryModule;
 import com.bingo.king.mvp.contract.CategoryContract;
 import com.bingo.king.mvp.model.entity.GankEntity;
 import com.bingo.king.mvp.presenter.CategoryPresenter;
-import com.bingo.king.mvp.ui.activity.WebActivity;
 import com.bingo.king.mvp.ui.adapter.CategoryAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import butterknife.BindView;
+
+import static com.bingo.king.app.EventBusTags.EXTRA_DETAIL;
 
 
 /**
@@ -98,10 +101,10 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
         mAdapter.setOnItemClickListener((adapter, view, position) ->
         {
             GankEntity.ResultsBean bean = (GankEntity.ResultsBean) adapter.getItem(position);
-//            ARouter.getInstance().build(ARouterPaths.MAIN_DETAIL)
-//                    .withSerializable(EXTRA_DETAIL,bean)
-//                    .navigation();
-            WebActivity.loadUrl(getActivity(),bean.url,"加载中");
+            ARouter.getInstance().build(ARouterPaths.MAIN_DETAIL)
+                    .withSerializable(EXTRA_DETAIL,bean)
+                    .navigation();
+//            WebActivity.loadUrl(getActivity(),bean.url,"加载中");
         });
     }
 
