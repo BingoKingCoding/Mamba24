@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.widget.TextView;
 
 import com.bingo.king.R;
 import com.bingo.king.app.base.BaseFragment;
+import com.bingo.king.app.utils.ViewBinder;
 import com.bingo.king.di.component.DaggerCollectComponent;
 import com.bingo.king.di.module.CollectModule;
 import com.bingo.king.mvp.contract.CollectContract;
@@ -27,6 +29,8 @@ import butterknife.BindView;
 
 public class CollectFragment extends BaseFragment<CollectPresenter> implements CollectContract.View
 {
+    @BindView(R.id.toolbar_title)
+    TextView toolbar_title;
     @BindView(R.id.tabs)
     TabLayout tabs;
     @BindView(R.id.mainPager)
@@ -53,6 +57,7 @@ public class CollectFragment extends BaseFragment<CollectPresenter> implements C
     @Override
     public void initData(Bundle savedInstanceState)
     {
+        ViewBinder.setTextView(toolbar_title,"首页");
         if (mFragments == null) {
             mFragments = new ArrayList<>();
             mFragments.add(new MeiziFragment());
