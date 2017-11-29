@@ -34,7 +34,7 @@ public class MeiziPresenter extends BasePresenter<MeiziContract.Model, MeiziCont
 
     public void requestData(boolean b) {
         mRootView.setAdapter(mModel.getEntity());
-        mRootView.hideLoading();
+        mRootView.hidePullLoading();
     }
 
     public ArrayList<String> getImages(){

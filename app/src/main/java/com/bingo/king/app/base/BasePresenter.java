@@ -70,7 +70,6 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
 
     /**
      * 是否使用eventBus,默认为使用(true)，
-     *
      */
     public boolean useEventBus()
     {
@@ -99,19 +98,20 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
     /**
      * 页面初始化请求数据
      */
-    protected <T> void initializeRequestData(Observable<T> observable, HttpCallback<T> httpCallback){
+    protected <T> void initializeRequestData(Observable<T> observable, HttpCallback<T> httpCallback)
+    {
 
         this.mHttpCallback = httpCallback;
         HttpUtils.initializeRequestData(mRootView, observable, httpCallback);
     }
 
     /**
-     *
+     * 初始化之后的网络访问
      */
-    protected <T> void requestData(Observable<T> observable, HttpCallback<T> httpCallback)
+    protected <T> void requestData(String msg, Observable<T> observable, HttpCallback<T> httpCallback)
     {
         this.mHttpCallback = httpCallback;
-        HttpUtils.requestData(mRootView, observable, httpCallback);
+        HttpUtils.requestData(mRootView, msg, observable, httpCallback);
     }
 
     /**
@@ -120,7 +120,7 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
     protected <T> void requestDataOnPullToRefresh(boolean pullToRefresh, Observable<T> observable, HttpCallback<T> httpCallback)
     {
         this.mHttpCallback = httpCallback;
-        HttpUtils.requestDataOnPullToRefresh(pullToRefresh,mRootView, observable, httpCallback);
+        HttpUtils.requestDataOnPullToRefresh(pullToRefresh, mRootView, observable, httpCallback);
     }
 
 

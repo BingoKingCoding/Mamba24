@@ -106,7 +106,7 @@ public class MeiziFragment extends BaseFragment<MeiziPresenter> implements Meizi
     }
 
     @Override
-    public void hideLoading()
+    public void hidePullLoading()
     {
         mRefreshLayout.finishRefresh();
     }

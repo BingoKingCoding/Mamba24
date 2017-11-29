@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.bingo.king.app.App;
 import com.bingo.king.di.component.AppComponent;
-import com.bingo.king.mvp.model.http.rxerrorhandler.Stateful;
+import com.bingo.king.mvp.model.http.rxerrorhandler.StatefulCallback;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
@@ -30,7 +30,7 @@ import timber.log.Timber;
  * @Email:634051075@qq.com
  */
 
-public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements Stateful
+public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements StatefulCallback
 {
     protected final String TAG = this.getClass().getSimpleName();
 
@@ -55,7 +55,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        Timber.d(TAG,"onCreateView");
+        Timber.d(TAG, "onCreateView");
         if (mLoadingPage == null)
         {
             mLoadingPage = new LoadingPage(getContext())
@@ -88,7 +88,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        Timber.d(TAG,"onCreate");
+        Timber.d(TAG, "onCreate");
         if (useEventBus())
         {//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().register(this);
@@ -107,7 +107,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         {
             rootView = view;
         }
-        Timber.d(TAG,"onViewCreated");
+        Timber.d(TAG, "onViewCreated");
         super.onViewCreated(isReuseView ? rootView : view, savedInstanceState);
     }
 
@@ -116,7 +116,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     public void onStart()
     {
         super.onStart();
-        Timber.d(TAG,"onStart");
+        Timber.d(TAG, "onStart");
         if (getUserVisibleHint())
         {
             if (isFirstVisible)
@@ -142,7 +142,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     public void setUserVisibleHint(boolean isVisibleToUser)
     {
         super.setUserVisibleHint(isVisibleToUser);
-        Timber.d(TAG,"setUserVisibleHint");
+        Timber.d(TAG, "setUserVisibleHint");
         //setUserVisibleHint()有可能在fragment的生命周期外被调用
         if (rootView == null)
         {
@@ -221,12 +221,23 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         mLoadingPage.showPage();
     }
 
+    @Override
+    public void showLoadingDialog(String msg)
+    {
+        getBaseActivity().showLoadingDialog(msg);
+    }
+
+    @Override
+    public void closeLoadingDialog()
+    {
+        getBaseActivity().closeLoadingDialog();
+    }
 
     @Override
     public void onDestroy()
     {
         super.onDestroy();
-        Timber.d(TAG,"onDestroy");
+        Timber.d(TAG, "onDestroy");
         initVariable();
         if (bind != null)
         {
@@ -334,7 +345,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     public void onAttach(Activity activity)
     {
         super.onAttach(activity);
-        Timber.d(TAG,"onAttach");
+        Timber.d(TAG, "onAttach");
     }
 
 
@@ -342,9 +353,8 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     public void onResume()
     {
         super.onResume();
-        Timber.d(TAG,"onResume");
+        Timber.d(TAG, "onResume");
     }
-
 
 
 }

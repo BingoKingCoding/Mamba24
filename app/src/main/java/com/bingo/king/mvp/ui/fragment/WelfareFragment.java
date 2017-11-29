@@ -8,9 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.TextView;
 
 import com.bingo.king.R;
 import com.bingo.king.app.base.BaseFragment;
+import com.bingo.king.app.utils.ViewBinder;
 import com.bingo.king.di.component.DaggerWelfareComponent;
 import com.bingo.king.di.module.WelfareModule;
 import com.bingo.king.mvp.contract.WelfareContract;
@@ -35,6 +37,8 @@ import me.yuqirong.cardswipelayout.OnSwipeListener;
 
 public class WelfareFragment extends BaseFragment<WelfarePresenter> implements WelfareContract.View
 {
+    @BindView(R.id.toolbar_title)
+    TextView toolbar_title;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.spark_button)
@@ -46,6 +50,7 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
     @Override
     public void initData(Bundle savedInstanceState)
     {
+        ViewBinder.setTextView(toolbar_title,"福利");
         PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
         pagerSnapHelper.attachToRecyclerView(mRecyclerView);
         mWelfareAdapter = new WelfareAdapter(null);
@@ -150,7 +155,7 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
     }
 
     @Override
-    public void hideLoading()
+    public void hidePullLoading()
     {
     }
 

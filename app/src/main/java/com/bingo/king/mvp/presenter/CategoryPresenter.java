@@ -7,10 +7,11 @@ import com.bingo.king.di.scope.ActivityScope;
 import com.bingo.king.mvp.contract.CategoryContract;
 import com.bingo.king.mvp.model.entity.GankEntity;
 import com.bingo.king.mvp.model.http.rxerrorhandler.HttpCallback;
-import com.bingo.king.mvp.model.http.rxerrorhandler.Stateful;
+import com.bingo.king.mvp.model.http.rxerrorhandler.StatefulCallback;
 import com.bingo.king.mvp.ui.adapter.CategoryAdapter;
 import com.bingo.king.mvp.ui.widget.EasyLoadMoreView;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
+import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -73,7 +74,10 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.Model, Cat
             lastUserId = 1;//上拉刷新默认只请求第一页
         } else
         {
-            lastUserId++;
+            if (NetworkUtils.isAvailableByPing())
+            {
+                lastUserId++;
+            }
         }
 
         requestDataOnPullToRefresh(pullToRefresh, mModel.gank(type, String.valueOf(lastUserId)), new HttpCallback<GankEntity>()
@@ -101,17 +105,18 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.Model, Cat
             public void onError(@NonNull Throwable e)
             {
                 e.printStackTrace();
+                //判断是否有数据，如果有数据就让列表底部提示，如果没数据就显示重新加载
                 if (mAdapter.getData().size() > 0)
                 {
                     mAdapter.loadMoreFail();
                 } else
                 {
-                    if (mRootView instanceof Stateful)
+                    if (mRootView instanceof StatefulCallback)
                     {
-                        ((Stateful) mRootView).setState(LoadingPage.STATE_ERROR);
+                        ((StatefulCallback) mRootView).setState(LoadingPage.STATE_ERROR);
                     }
                 }
-                ToastUtils.showShort("网络异常，请检查网络连接");
+                ToastUtils.showShort("获取数据有误，请检查网络是否连接");
             }
 
         });

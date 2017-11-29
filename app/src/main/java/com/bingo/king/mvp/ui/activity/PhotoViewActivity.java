@@ -94,7 +94,7 @@ public class PhotoViewActivity extends BaseActivity<PhotoViewPresenter> implemen
 
 
     @Override
-    public void hideLoading()
+    public void hidePullLoading()
     {
 
     }

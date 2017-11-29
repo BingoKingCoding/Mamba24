@@ -74,7 +74,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
 
 
     @Override
-    public void hideLoading()
+    public void hidePullLoading()
     {
 
     }

@@ -16,9 +16,9 @@ import io.reactivex.disposables.Disposable;
 public abstract class HttpCallback<T> implements Observer<T>
 {
 
-    private Stateful mStateful;
+    private StatefulCallback mStateful;
 
-    public void setTarget(Stateful target)
+    public void setTarget(StatefulCallback target)
     {
         this.mStateful = target;
     }

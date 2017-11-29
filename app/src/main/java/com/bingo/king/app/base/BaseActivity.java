@@ -17,7 +17,8 @@ import com.bingo.king.app.App;
 import com.bingo.king.app.EventBusTags;
 import com.bingo.king.app.utils.SDFragmentManager;
 import com.bingo.king.di.component.AppComponent;
-import com.bingo.king.mvp.model.http.rxerrorhandler.Stateful;
+import com.bingo.king.mvp.model.http.rxerrorhandler.StatefulCallback;
+import com.bingo.king.mvp.ui.widget.ProgressDialog;
 import com.blankj.utilcode.util.AppUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -42,7 +43,7 @@ import static com.bingo.king.app.utils.ThirdViewUtil.convertAutoView;
  * Created by wang on 2017/11/1 16:55.
  */
 
-public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActivity implements Stateful
+public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActivity implements StatefulCallback
 {
     protected final String TAG = this.getClass().getSimpleName();
     protected Unbinder mUnbinder;
@@ -55,6 +56,10 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
 
     @Inject
     protected P mPresenter;
+
+
+    protected ProgressDialog mProgressDialog;
+
 
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs)
@@ -130,7 +135,6 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
 
     /**
      * 是否使用eventBus,默认为使用(true)，
-     *
      */
     public boolean useEventBus()
     {
@@ -196,7 +200,6 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
 
     /**
      * 用snackbar显示
-     *
      */
     protected void showSnackbar(String message)
     {
@@ -205,7 +208,6 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
 
     /**
      * 用snackbar显示
-     *
      */
     protected void showSnackbarWithLong(String message)
     {
@@ -215,7 +217,6 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
 
     /**
      * 使用snackbar显示内容
-     *
      */
     protected void showSnackbar(String message, boolean isLong)
     {
@@ -224,6 +225,26 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
         Snackbar.make(view, message, isLong ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
     }
 
+
+    @Override
+    public void showLoadingDialog(String msg)
+    {
+        if (mProgressDialog == null)
+        {
+            mProgressDialog = new ProgressDialog(this);
+        }
+        mProgressDialog.setTextMsg(msg);
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void closeLoadingDialog()
+    {
+        if (mProgressDialog != null)
+        {
+            mProgressDialog.dismiss();
+        }
+    }
 
     public Observable<Object> clicks(int viewId)
     {
@@ -248,17 +269,15 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
 
     /**
      * 初始化 View,
-     *
      */
     public abstract int initView(Bundle savedInstanceState);
+
     public abstract void setupActivityComponent();
+
     /**
      * 初始化数据
-     *
      */
     public abstract void initData(Bundle savedInstanceState);
-
-
 
 
 }

@@ -17,7 +17,6 @@ import com.bingo.king.R;
 public class ProgressDialog extends Dialog
 {
     private TextView tvContent;
-    boolean cancelAble;
 
     public ProgressDialog(Context context)
     {
@@ -30,7 +29,6 @@ public class ProgressDialog extends Dialog
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_progress);
-        setCancelable(cancelAble);
         tvContent = findViewById(R.id.tvContent);
     }
 
@@ -40,4 +38,5 @@ public class ProgressDialog extends Dialog
         tvContent.setText(message);
         return this;
     }
+
 }

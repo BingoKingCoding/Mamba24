@@ -4,23 +4,18 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.IdRes;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 
 import com.bingo.king.R;
 import com.bingo.king.app.base.BaseActivity;
-import com.bingo.king.app.utils.DDViewUtil;
 import com.bingo.king.di.component.DaggerMainComponent;
 import com.bingo.king.di.module.MainModule;
 import com.bingo.king.mvp.contract.MainContract;
 import com.bingo.king.mvp.presenter.MainPresenter;
 import com.bingo.king.mvp.ui.fragment.CollectFragment;
 import com.bingo.king.mvp.ui.fragment.HomeFragment;
+import com.bingo.king.mvp.ui.fragment.MeFragment;
 import com.bingo.king.mvp.ui.fragment.WelfareFragment;
-import com.jaeger.library.StatusBarUtil;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
@@ -28,39 +23,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 import static com.bingo.king.app.EventBusTags.ACTIVITY_FRAGMENT_REPLACE;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View
 {
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-    @BindView(R.id.toolbar_title)
-    TextView mToolbarTitle;
     @BindView(R.id.bottomBar)
     BottomBar mBottomBar;
-    @BindView(R.id.dl_layout)
-    DrawerLayout dlLayout;
 
 
     private List<Integer> mTitles;
     private List<Integer> mNavIds;
     private int mReplace = 0;
 
-
-    @OnClick(R.id.fl_title_menu)
-    public void flTitleMenu()
-    {
-        dlLayout.openDrawer(GravityCompat.START);
-    }
-
     private OnTabSelectListener mOnTabSelectListener = new OnTabSelectListener()
     {
         @Override
         public void onTabSelected(@IdRes int tabId)
         {
-            DDViewUtil.setVisible(mToolbar);
             switch (tabId)
             {
                 case R.id.tab_home:
@@ -76,11 +56,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                     mReplace = 2;
                     break;
                 case R.id.tab_mycenter:
+                    getSDFragmentManager().toggle(R.id.main_frame, null, MeFragment.class);
                     mReplace = 3;
                     break;
             }
-            mToolbarTitle.setText(mTitles.get(mReplace));
-
         }
     };
 
@@ -95,7 +74,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     protected void setStatusBar()
     {
         int mStatusBarColor = getResources().getColor(R.color.colorPrimary);
-        StatusBarUtil.setColorForDrawerLayout(this, findViewById(R.id.dl_layout), mStatusBarColor,0);
     }
 
     @Override
@@ -140,7 +118,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
 
     @Override
-    public void hideLoading()
+    public void hidePullLoading()
     {
 
     }
@@ -176,17 +154,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         this.mNavIds = null;
     }
 
-    @Override
-    public void onBackPressed()
-    {
-        if (dlLayout.isDrawerOpen(GravityCompat.START))
-        {
-            dlLayout.closeDrawer(GravityCompat.START);
-        } else
-        {
-            super.onBackPressed();
-        }
-    }
 
     @Override
     public void setState(int state)

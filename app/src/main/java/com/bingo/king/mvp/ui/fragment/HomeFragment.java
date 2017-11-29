@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.widget.TextView;
 
 import com.bingo.king.R;
 import com.bingo.king.app.base.BaseFragment;
 import com.bingo.king.app.utils.CategoryType;
+import com.bingo.king.app.utils.ViewBinder;
 import com.bingo.king.di.component.DaggerHomeComponent;
 import com.bingo.king.di.module.HomeModule;
 import com.bingo.king.mvp.contract.HomeContract;
@@ -27,6 +29,8 @@ import butterknife.BindView;
 
 public class HomeFragment extends BaseFragment<HomePresenter> implements HomeContract.View
 {
+    @BindView(R.id.toolbar_title)
+    TextView toolbar_title;
     @BindView(R.id.tabs)
     TabLayout tabs;
     @BindView(R.id.mainPager)
@@ -54,6 +58,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     @Override
     public void initData(Bundle savedInstanceState)
     {
+        ViewBinder.setTextView(toolbar_title,"首页");
         if (mFragments == null)
         {
             mFragments = new ArrayList<>();
@@ -75,7 +80,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
 
     @Override
-    public void hideLoading()
+    public void hidePullLoading()
     {
 
     }

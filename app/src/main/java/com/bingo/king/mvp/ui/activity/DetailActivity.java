@@ -4,6 +4,7 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bingo.king.R;
@@ -21,13 +22,14 @@ import com.tencent.smtt.sdk.WebViewClient;
 
 import butterknife.BindView;
 
+import static com.bingo.king.R.id.webview;
 import static com.bingo.king.app.EventBusTags.EXTRA_DETAIL;
 
 @Route(path = ARouterPaths.MAIN_DETAIL)
 public class DetailActivity extends CoordinatorBaseActivity<DetailPresenter> implements DetailContract.View
 {
-    @BindView(R.id.webview)
-    X5WebView webview;
+    @BindView(webview)
+    X5WebView mWebView;
     private GankEntity.ResultsBean entity;
     private boolean isFavorite;
 
@@ -74,7 +76,7 @@ public class DetailActivity extends CoordinatorBaseActivity<DetailPresenter> imp
     protected void retryRequestData()
     {
         mPresenter.getGirl();
-        webview.loadUrl(entity.url);
+        mWebView.loadUrl(entity.url);
     }
 
     @Override
@@ -84,7 +86,7 @@ public class DetailActivity extends CoordinatorBaseActivity<DetailPresenter> imp
     }
 
     private void initWebView() {
-        webview.setWebViewClient(new WebViewClient(){
+        mWebView.setWebViewClient(new WebViewClient(){
             /**
              * 防止加载网页时调起系统浏览器
              */
@@ -92,13 +94,26 @@ public class DetailActivity extends CoordinatorBaseActivity<DetailPresenter> imp
                 view.loadUrl(url);
                 return true;
             }
+
+            @Override
+            public void onPageFinished(WebView webView, String s)
+            {
+                super.onPageFinished(webView, s);
+                //这个是一定要加上那个的,配合scrollView和WebView的height=wrap_content属性使用
+                int w = View.MeasureSpec.makeMeasureSpec(0,
+                        View.MeasureSpec.UNSPECIFIED);
+                int h = View.MeasureSpec.makeMeasureSpec(0,
+                        View.MeasureSpec.UNSPECIFIED);
+                //重新测量
+                webView.measure(w, h);
+            }
         });
-        webview.loadUrl(entity.url);
+        mWebView.loadUrl(entity.url);
     }
 
 
     @Override
-    public void hideLoading()
+    public void hidePullLoading()
     {
 
     }

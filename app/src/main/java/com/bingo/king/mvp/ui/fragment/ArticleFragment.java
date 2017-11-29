@@ -12,6 +12,7 @@ import com.bingo.king.app.ARouterPaths;
 import com.bingo.king.app.EventBusTags;
 import com.bingo.king.app.base.BaseFragment;
 import com.bingo.king.app.utils.CommonUtils;
+import com.bingo.king.app.utils.ResourcesUtil;
 import com.bingo.king.di.component.DaggerArticleComponent;
 import com.bingo.king.di.module.ArticleModule;
 import com.bingo.king.mvp.contract.ArticleContract;
@@ -86,6 +87,7 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
         });
         TextView textView = new TextView(getContext());
         textView.setText("没有更多内容了");
+        textView.setTextColor(ResourcesUtil.getColor(R.color.C9));
         textView.setGravity(Gravity.CENTER);
         mAdapter.setEmptyView(textView);
         mRecyclerView.setAdapter(mAdapter);
@@ -112,18 +114,6 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
         return R.layout.layout_refresh_list;
     }
 
-
-    @Override
-    public void showLoadingDialog()
-    {
-
-    }
-
-    @Override
-    public void closeLoadingDialog()
-    {
-
-    }
 
     @Override
     public void hidePullLoading()

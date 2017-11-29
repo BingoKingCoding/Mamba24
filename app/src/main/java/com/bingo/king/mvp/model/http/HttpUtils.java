@@ -4,7 +4,7 @@ package com.bingo.king.mvp.model.http;
 import com.bingo.king.app.base.IView;
 import com.bingo.king.app.utils.RxUtils;
 import com.bingo.king.mvp.model.http.rxerrorhandler.HttpCallback;
-import com.bingo.king.mvp.model.http.rxerrorhandler.Stateful;
+import com.bingo.king.mvp.model.http.rxerrorhandler.StatefulCallback;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
 import com.blankj.utilcode.util.NetworkUtils;
 
@@ -25,10 +25,10 @@ public class HttpUtils
     public static <T> void initializeRequestData(IView mView, Observable<T> observable, HttpCallback<T> httpCallback)
     {
 
-        Stateful target;
-        if (mView instanceof Stateful)
+        StatefulCallback target;
+        if (mView instanceof StatefulCallback)
         {
-            target = (Stateful) mView;
+            target = (StatefulCallback) mView;
             httpCallback.setTarget(target);
         }
         /**
@@ -42,9 +42,9 @@ public class HttpUtils
             if (mView != null)
             {
                 mView.showMessage("网络连接已断开");
-                if (mView instanceof Stateful)
+                if (mView instanceof StatefulCallback)
                 {
-                    ((Stateful) mView).setState(LoadingPage.STATE_ERROR);
+                    ((StatefulCallback) mView).setState(LoadingPage.STATE_ERROR);
                 }
             }
             return;
@@ -53,9 +53,9 @@ public class HttpUtils
         observable.subscribeOn(Schedulers.io())
                 .doOnSubscribe(disposable ->
                 {
-                    if (mView instanceof Stateful)
+                    if (mView instanceof StatefulCallback)
                     {
-                        ((Stateful) mView).setState(LoadingPage.STATE_LOADING);
+                        ((StatefulCallback) mView).setState(LoadingPage.STATE_LOADING);
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -65,7 +65,7 @@ public class HttpUtils
     }
 
 
-    public static <T> void requestData(IView mView, Observable<T> observable, HttpCallback<T> httpCallback)
+    public static <T> void requestData(IView mView,String msg,Observable<T> observable, HttpCallback<T> httpCallback)
     {
         if (!NetworkUtils.isConnected())
         {
@@ -76,10 +76,22 @@ public class HttpUtils
             return;
         }
         observable.subscribeOn(Schedulers.io())
-                .doOnSubscribe(disposable -> mView.showLoadingDialog())
+                .doOnSubscribe(disposable ->
+                {
+                    if (mView instanceof StatefulCallback)
+                    {
+                        ((StatefulCallback) mView).showLoadingDialog(msg);
+                    }
+                })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doAfterTerminate(mView::closeLoadingDialog)
+                .doAfterTerminate(() ->
+                {
+                    if (mView instanceof StatefulCallback)
+                    {
+                        ((StatefulCallback) mView).closeLoadingDialog();
+                    }
+                })
                 .compose(RxUtils.bindToLifecycle(mView))
                 .subscribe(httpCallback);
 
@@ -93,10 +105,10 @@ public class HttpUtils
      */
     public static <T> void requestDataOnPullToRefresh(boolean pullToRefresh, IView mView, Observable<T> observable, HttpCallback<T> httpCallback)
     {
-        Stateful target;
-        if (mView instanceof Stateful)
+        StatefulCallback target;
+        if (mView instanceof StatefulCallback)
         {
-            target = (Stateful) mView;
+            target = (StatefulCallback) mView;
             httpCallback.setTarget(target);
         }
         //doOnSubscribe、doAfterTerminate可以用于上拉加载下来刷新

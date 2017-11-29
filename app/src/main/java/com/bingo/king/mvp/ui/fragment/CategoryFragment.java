@@ -30,7 +30,6 @@ import static com.bingo.king.app.EventBusTags.EXTRA_DETAIL;
  */
 
 public class CategoryFragment extends BaseFragment<CategoryPresenter> implements CategoryContract.View,BaseQuickAdapter.RequestLoadMoreListener,OnRefreshListener
-
 {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -108,18 +107,6 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
         });
     }
 
-
-    @Override
-    public void showLoadingDialog()
-    {
-
-    }
-
-    @Override
-    public void closeLoadingDialog()
-    {
-
-    }
 
     @Override
     public void hidePullLoading()

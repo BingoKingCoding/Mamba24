@@ -67,7 +67,7 @@ public class CollectFragment extends BaseFragment<CollectPresenter> implements C
 
 
     @Override
-    public void hideLoading()
+    public void hidePullLoading()
     {
 
     }
