@@ -3,7 +3,6 @@ package com.bingo.king.mvp.ui.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.annotation.IdRes;
 import android.view.inputmethod.InputMethodManager;
 
 import com.bingo.king.R;
@@ -36,30 +35,26 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     private List<Integer> mNavIds;
     private int mReplace = 0;
 
-    private OnTabSelectListener mOnTabSelectListener = new OnTabSelectListener()
+    private OnTabSelectListener mOnTabSelectListener = tabId ->
     {
-        @Override
-        public void onTabSelected(@IdRes int tabId)
+        switch (tabId)
         {
-            switch (tabId)
-            {
-                case R.id.tab_home:
-                    getSDFragmentManager().toggle(R.id.main_frame, null, HomeFragment.class);
-                    mReplace = 0;
-                    break;
-                case R.id.tab_dashboard:
-                    getSDFragmentManager().toggle(R.id.main_frame, null, WelfareFragment.class);
-                    mReplace = 1;
-                    break;
-                case R.id.tab_myfavourite:
-                    getSDFragmentManager().toggle(R.id.main_frame, null, CollectFragment.class);
-                    mReplace = 2;
-                    break;
-                case R.id.tab_mycenter:
-                    getSDFragmentManager().toggle(R.id.main_frame, null, MeFragment.class);
-                    mReplace = 3;
-                    break;
-            }
+            case R.id.tab_home:
+                getSDFragmentManager().toggle(R.id.main_frame, null, HomeFragment.class);
+                mReplace = 0;
+                break;
+            case R.id.tab_dashboard:
+                getSDFragmentManager().toggle(R.id.main_frame, null, WelfareFragment.class);
+                mReplace = 1;
+                break;
+            case R.id.tab_myfavourite:
+                getSDFragmentManager().toggle(R.id.main_frame, null, CollectFragment.class);
+                mReplace = 2;
+                break;
+            case R.id.tab_mycenter:
+                getSDFragmentManager().toggle(R.id.main_frame, null, MeFragment.class);
+                mReplace = 3;
+                break;
         }
     };
 
@@ -69,12 +64,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         return R.layout.activity_main;
     }
 
-
-    @Override
-    protected void setStatusBar()
-    {
-        int mStatusBarColor = getResources().getColor(R.color.colorPrimary);
-    }
 
     @Override
     public void setupActivityComponent()

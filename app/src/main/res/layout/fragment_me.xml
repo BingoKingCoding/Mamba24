@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.bingo.king.mvp.ui.widget.BounceZoomScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/color_page_bg">
 
     <LinearLayout
@@ -17,22 +17,54 @@
             android:layout_height="180dp"
             android:layout_gravity="center_horizontal">
 
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:fitsSystemWindows="true"
+                android:minHeight="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    tools:text="MVP"/>
+
+
+                <FrameLayout
+                    android:id="@+id/fl_title_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp">
+
+                    <ImageView
+                        android:id="@+id/iv_title_menu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_settings_white_24dp"/>
+                </FrameLayout>
+
+            </android.support.v7.widget.Toolbar>
+
+
             <ImageView
                 android:id="@+id/iv_personinfo_bg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_below="@id/toolbar"
                 android:background="@color/colorPrimary"
                 tools:ignore="contentDescription"/>
 
-            <ImageView
-                android:id="@+id/iv_my_setting"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="18dp"
-                android:layout_marginTop="18dp"
-                android:src="@drawable/ic_settings_white_24dp"
-                tools:ignore="contentDescription"/>
 
             <com.bingo.king.mvp.ui.widget.CircleImageView
                 android:id="@+id/civ_head"
