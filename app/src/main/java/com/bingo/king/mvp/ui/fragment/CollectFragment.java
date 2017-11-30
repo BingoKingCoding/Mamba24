@@ -57,7 +57,7 @@ public class CollectFragment extends BaseFragment<CollectPresenter> implements C
     @Override
     public void initData(Bundle savedInstanceState)
     {
-        ViewBinder.setTextView(toolbar_title,"首页");
+        ViewBinder.setTextView(toolbar_title,"收藏");
         if (mFragments == null) {
             mFragments = new ArrayList<>();
             mFragments.add(new MeiziFragment());

@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:scrollbars="none"
     android:layout_height="match_parent"
     android:background="@color/color_page_bg">
 
@@ -26,23 +27,23 @@
 
             <ImageView
                 android:id="@+id/iv_title_setting"
-                tools:ignore="contentDescription"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignParentRight="true"
+                android:layout_width="24dip"
+                android:layout_height="24dip"
+                android:layout_alignParentEnd="true"
                 android:layout_gravity="center"
-                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginTop="15dp"
-                android:src="@drawable/selector_mine_setting"/>
+                android:src="@drawable/selector_mine_setting"
+                tools:ignore="contentDescription"/>
 
             <com.bingo.king.mvp.ui.widget.CircleImageView
                 android:id="@+id/civ_head"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:civ_border_width="2dp"
-                app:civ_border_color="@color/white"
                 android:layout_centerInParent="true"
-                android:src="@drawable/default_user_avatar"/>
+                android:src="@drawable/default_user_avatar"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="2dp"/>
 
             <TextView
                 android:id="@+id/tv_login"
@@ -58,11 +59,6 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:background="@color/white"
@@ -72,7 +68,6 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -103,7 +98,6 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -134,7 +128,6 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -165,7 +158,6 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -190,7 +182,156 @@
 
             </LinearLayout>
 
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_marginTop="10dp"
+                      android:background="@color/white"
+                      android:orientation="vertical">
+
+            <FrameLayout style="@style/mine_tab_fl">
+
+                <TextView
+                    style="@style/mine_tab_text"
+                    android:drawableStart="@drawable/icon_mine_collect_normal"
+                    android:text="@string/mine_my_collect"/>
+
+                <ImageView android:layout_width="20dp"
+                           android:layout_height="20dp"
+                           android:layout_gravity="end|center_vertical"
+                           android:src="@drawable/icon_mine_arrows_normal"/>
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/C3"/>
+
+            <FrameLayout style="@style/mine_tab_fl">
+
+                <TextView
+                          android:drawableLeft="@drawable/icon_mine_like_normal"
+                          style="@style/mine_tab_text"
+                          android:text="赞过的帖子"/>
+
+                <ImageView android:layout_width="20dp"
+                           android:layout_height="20dp"
+                           android:layout_gravity="end|center_vertical"
+                           android:src="@drawable/icon_mine_arrows_normal"/>
+
+            </FrameLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/C3"/>
+
+            <FrameLayout style="@style/mine_tab_fl">
+
+                <TextView
+                    android:drawableLeft="@drawable/icon_mine_record_normal"
+                    style="@style/mine_tab_text"
+                    android:text="浏览历史"/>
+
+                <ImageView android:layout_width="20dp"
+                           android:layout_height="20dp"
+                           android:layout_gravity="end|center_vertical"
+                           android:src="@drawable/icon_mine_arrows_normal"/>
+
+            </FrameLayout>
+
         </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_marginTop="10dp"
+                      android:background="@color/white"
+                      android:orientation="vertical">
+
+            <FrameLayout android:layout_width="match_parent"
+                         android:layout_height="45dp"
+                         android:layout_marginLeft="15dp"
+                         android:layout_marginRight="15dp">
+
+                <TextView
+                    style="@style/mine_tab_text"
+                    android:drawableStart="@drawable/icon_mine_gold_normal"
+                    android:text="我的金币"/>
+
+                <ImageView android:layout_width="20dp"
+                           android:layout_height="20dp"
+                           android:layout_gravity="end|center_vertical"
+                           android:src="@drawable/icon_mine_arrows_normal"/>
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/C3"/>
+
+            <FrameLayout android:layout_width="match_parent"
+                         android:layout_height="45dp"
+                         android:layout_marginLeft="15dp"
+                         android:layout_marginRight="15dp">
+
+                <TextView
+                          android:drawableLeft="@drawable/icon_mine_vip_normal"
+                          style="@style/mine_tab_text"
+                          android:text="VIP会员申请"/>
+
+                <ImageView android:layout_width="20dp"
+                           android:layout_height="20dp"
+                           android:layout_gravity="end|center_vertical"
+                           android:src="@drawable/icon_mine_arrows_normal"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_marginTop="10dp"
+                      android:background="@color/white"
+                      android:orientation="vertical">
+
+            <FrameLayout style="@style/mine_tab_fl">
+
+                <TextView
+                    style="@style/mine_tab_text"
+                    android:drawableStart="@drawable/icon_mine_help_normal"
+                    android:text="帮助中心"/>
+
+                <ImageView android:layout_width="20dp"
+                           android:layout_height="20dp"
+                           android:layout_gravity="end|center_vertical"
+                           android:src="@drawable/icon_mine_arrows_normal"/>
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/C3"/>
+
+            <FrameLayout style="@style/mine_tab_fl">
+
+                <TextView
+                          android:drawableLeft="@drawable/icon_mine_feedback_normal"
+                          style="@style/mine_tab_text"
+                          android:text="问题反馈"/>
+
+                <ImageView android:layout_width="20dp"
+                           android:layout_height="20dp"
+                           android:layout_gravity="end|center_vertical"
+                           android:src="@drawable/icon_mine_arrows_normal"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 

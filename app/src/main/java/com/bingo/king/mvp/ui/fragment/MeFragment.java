@@ -11,7 +11,7 @@ import com.bingo.king.mvp.presenter.MePresenter;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
 
 /**
- * <请描述这个类是干什么的>
+ * <个人中心页面>
  * Created by wwb on 2017/11/29 11:23.
  */
 
@@ -39,8 +39,23 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     protected void initData(Bundle savedInstanceState)
     {
         setState(LoadingPage.STATE_SUCCESS);
-
     }
+
+    @Override
+    protected void onFragmentFirstVisible()
+    {
+        super.onFragmentFirstVisible();
+    }
+
+
+//    @OnClick({R.id.iv_title_setting})
+//    public void onClick(View view){
+//        switch (view.getId()){
+//            case R.id.iv_title_setting:
+//                startActivity(new Intent(getActivity(), SettingActivity.class));
+//                break;
+//        }
+//    }
 
     @Override
     public void hidePullLoading()

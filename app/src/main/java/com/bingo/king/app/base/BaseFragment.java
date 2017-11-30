@@ -276,7 +276,6 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         return mActivity;
     }
 
-
     protected AppComponent getAppComponent()
     {
         return App.getApplication().getAppComponent();

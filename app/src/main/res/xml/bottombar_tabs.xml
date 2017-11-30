@@ -12,11 +12,11 @@
         icon="@drawable/selector_main_make"
         id="@+id/tab_myfavourite"
         title="@string/title_favourite"/>
-    <tab
-        icon="@drawable/selector_main_message"
-        id="@+id/tab_message"
-        activeColor="#FFF"
-        title="@string/title_message"/>
+    <!--<tab-->
+        <!--icon="@drawable/selector_main_message"-->
+        <!--id="@+id/tab_message"-->
+        <!--activeColor="#FFF"-->
+        <!--title="@string/title_message"/>-->
     <tab
         icon="@drawable/selector_main_mine"
         id="@+id/tab_mycenter"

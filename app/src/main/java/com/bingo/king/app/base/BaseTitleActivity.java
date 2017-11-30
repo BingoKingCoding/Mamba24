@@ -17,7 +17,7 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
 {
     protected Toolbar toolbar;
     protected TextView tv_title;
-
+    protected TextView toolbar_right_action;
     @Override
     public int initView(Bundle savedInstanceState)
     {
@@ -43,7 +43,7 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
     {
         toolbar = findViewById(R.id.toolbar);
         tv_title = findViewById(R.id.toolbar_title);
-
+        toolbar_right_action = findViewById(R.id.toolbar_right_action);
         //设置相关默认操作
         setTitleNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         setTitleBgColor(R.color.base_title_color);
@@ -51,10 +51,11 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
         setInflateMenu();
 
         //左边Navigation Button监听回调
-        toolbar.setNavigationOnClickListener(v -> callbackOnClickNavigationAction(v));
+        toolbar.setNavigationOnClickListener(this::callbackOnClickNavigationAction);
         //右边菜单item监听回调
-        toolbar.setOnMenuItemClickListener(item -> callbackOnMenuAction(item));
+        toolbar.setOnMenuItemClickListener(this::callbackOnMenuAction);
 
+        clicks(toolbar_right_action).subscribe(o -> callbackOnClickRightAction(toolbar_right_action));
     }
 
     /**
@@ -118,8 +119,16 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
      * 设置中间标题
      *
      */
-    public void setToolbarTitleTv(Object object) {
+    public void setToolbarMiddleTitle(Object object) {
         tv_title.setText(CommonUtils.getResultString(object));
+    }
+
+    /**
+     * 设置右边单个按钮
+     *
+     */
+    public void setToolbarRightAction(Object object) {
+        toolbar_right_action.setText(CommonUtils.getResultString(object));
     }
 
     /**
@@ -162,6 +171,14 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
      */
     protected void callbackOnClickNavigationAction(View view) {
         onBackPressed();
+    }
+
+    /**
+     * 右边操作点击回调，其他操作子类可重写
+     *
+     */
+    protected void callbackOnClickRightAction(View view){
+
     }
 
 
