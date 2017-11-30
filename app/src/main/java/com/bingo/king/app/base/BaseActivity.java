@@ -103,7 +103,7 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
 
     protected void setStatusBar()
     {
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary));
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary),0);
     }
 
 
