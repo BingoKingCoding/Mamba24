@@ -103,7 +103,7 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
 
     protected void setStatusBar()
     {
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary),0);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 0);
     }
 
 
@@ -145,21 +145,21 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
     /**
      * 初始化 Toolbar
      */
-    public void initToolBar(Toolbar toolbar, boolean enable, String title)
+    public void initToolBar(Toolbar toolbar, String title)
     {
         toolbar.setTitle(title);
-        setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(enable);
-        getSupportActionBar().setDisplayShowHomeEnabled(enable);//2.显示toolbar的返回按钮12要一起用
-        getSupportActionBar().setDisplayShowTitleEnabled(enable);//显示toolbar的标题
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
-    public void initToolBar(Toolbar toolbar, boolean enable, int resTitle)
+    public void initToolBar(Toolbar toolbar, int resTitle)
     {
-        initToolBar(toolbar, enable, getString(resTitle));
+        initToolBar(toolbar, getString(resTitle));
     }
+
+
+
 
     @Override
     public void onBackPressed()

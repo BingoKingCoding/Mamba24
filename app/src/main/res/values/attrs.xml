@@ -31,7 +31,7 @@
             <attr name="animRepeatCount" format="integer"/>
         </declare-styleable>
     <declare-styleable name="CircleImageView">
-        <attr name="civ_border_width" format="reference|integer"/>
+        <attr name="civ_border_width" format="reference|dimension"/>
         <attr name="civ_border_color" format="reference|color"/>
         <attr name="civ_border_overlay" format="reference|boolean"/>
         <attr name="civ_circle_background_color" format="reference|color"/>
