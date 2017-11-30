@@ -15,6 +15,7 @@
     <tab
         icon="@drawable/selector_main_message"
         id="@+id/tab_message"
+        activeColor="#FFF"
         title="@string/title_message"/>
     <tab
         icon="@drawable/selector_main_mine"

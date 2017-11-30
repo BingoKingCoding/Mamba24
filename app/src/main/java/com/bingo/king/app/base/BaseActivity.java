@@ -145,21 +145,21 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
     /**
      * 初始化 Toolbar
      */
-    public void initToolBar(Toolbar toolbar, String title)
+    public void initToolBar(Toolbar toolbar, boolean enableBack, String title)
     {
         toolbar.setTitle(title);
         toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-        toolbar.setNavigationOnClickListener(view -> onBackPressed());
+        if (enableBack)
+        {
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+            toolbar.setNavigationOnClickListener(view -> onBackPressed());
+        }
     }
 
-    public void initToolBar(Toolbar toolbar, int resTitle)
+    public void initToolBar(Toolbar toolbar, boolean enableBack, int resTitle)
     {
-        initToolBar(toolbar, getString(resTitle));
+        initToolBar(toolbar, enableBack, getString(resTitle));
     }
-
-
-
 
     @Override
     public void onBackPressed()
