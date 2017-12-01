@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bingo.king.R;
-import com.bingo.king.app.base.BaseActivity;
+import com.bingo.king.app.base.BasePresenterActivity;
 import com.bingo.king.di.component.DaggerPhotoViewComponent;
 import com.bingo.king.di.module.PhotoViewModule;
 import com.bingo.king.mvp.contract.PhotoViewContract;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 
 
-public class PhotoViewActivity extends BaseActivity<PhotoViewPresenter> implements PhotoViewContract.View, View.OnClickListener
+public class PhotoViewActivity extends BasePresenterActivity<PhotoViewPresenter> implements PhotoViewContract.View, View.OnClickListener
 {
 
     /**

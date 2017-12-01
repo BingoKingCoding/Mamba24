@@ -11,12 +11,14 @@ import butterknife.ButterKnife;
  * <请描述这个类是干什么的>
  */
 
-public abstract class LoadingBaseActivity<P extends IPresenter> extends BaseActivity<P>
+public abstract class LoadingBaseActivity<P extends IPresenter> extends BasePresenterActivity<P>
 {
 
     protected LoadingPage mLoadingPage;
 
     protected FrameLayout flBaseContent;
+
+
 
     @Override
     public void initData(Bundle savedInstanceState)
@@ -56,6 +58,8 @@ public abstract class LoadingBaseActivity<P extends IPresenter> extends BaseActi
         mLoadingPage.state = state;
         mLoadingPage.showPage();
     }
+
+
 
     protected abstract void loadData(Bundle savedInstanceState);
 

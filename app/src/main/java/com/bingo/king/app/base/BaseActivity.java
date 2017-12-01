@@ -30,8 +30,6 @@ import org.simple.eventbus.ThreadMode;
 
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.Observable;
@@ -43,7 +41,7 @@ import static com.bingo.king.app.utils.ThirdViewUtil.convertAutoView;
  * Created by wang on 2017/11/1 16:55.
  */
 
-public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActivity implements StatefulCallback
+public abstract class BaseActivity extends RxAppCompatActivity implements StatefulCallback
 {
     protected final String TAG = this.getClass().getSimpleName();
     protected Unbinder mUnbinder;
@@ -53,9 +51,6 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
      */
     protected boolean mIsExitApp = false;
     protected long mExitTime = 0;
-
-    @Inject
-    protected P mPresenter;
 
 
     protected ProgressDialog mProgressDialog;
@@ -120,11 +115,6 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
             mUnbinder.unbind();
         }
         this.mUnbinder = null;
-        if (mPresenter != null)
-        {
-            mPresenter.onDestroy();
-        }//释放资源
-        this.mPresenter = null;
 
     }
 

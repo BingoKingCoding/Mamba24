@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 
 import com.bingo.king.R;
-import com.bingo.king.app.base.BaseActivity;
+import com.bingo.king.app.base.BasePresenterActivity;
 import com.bingo.king.app.utils.ResourcesUtil;
 import com.bingo.king.di.component.DaggerSplashComponent;
 import com.bingo.king.di.module.SplashModule;
@@ -26,7 +26,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 
-public class SplashActivity extends BaseActivity<SplashPresenter> implements SplashContract.View, EasyPermissions.PermissionCallbacks
+public class SplashActivity extends BasePresenterActivity<SplashPresenter> implements SplashContract.View, EasyPermissions.PermissionCallbacks
 {
 
     @BindView(R.id.splash_img)
