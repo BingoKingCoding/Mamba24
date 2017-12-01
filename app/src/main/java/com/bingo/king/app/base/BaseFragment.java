@@ -80,9 +80,11 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
                 }
             };
         }
-        initData(savedInstanceState);
         return mLoadingPage;
     }
+
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
@@ -107,6 +109,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         {
             rootView = view;
         }
+        initData(savedInstanceState);
         Timber.d(TAG, "onViewCreated");
         super.onViewCreated(isReuseView ? rootView : view, savedInstanceState);
     }

@@ -6,10 +6,11 @@ import android.os.IBinder;
 import android.view.inputmethod.InputMethodManager;
 
 import com.bingo.king.R;
-import com.bingo.king.app.base.BaseActivity;
+import com.bingo.king.app.base.BasePresenterActivity;
 import com.bingo.king.di.component.DaggerMainComponent;
 import com.bingo.king.di.module.MainModule;
 import com.bingo.king.mvp.contract.MainContract;
+import com.bingo.king.mvp.presenter.MainPresenter;
 import com.bingo.king.mvp.ui.fragment.CollectFragment;
 import com.bingo.king.mvp.ui.fragment.HomeFragment;
 import com.bingo.king.mvp.ui.fragment.MeFragment;
@@ -19,7 +20,7 @@ import com.roughike.bottombar.OnTabSelectListener;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity implements MainContract.View
+public class MainActivity extends BasePresenterActivity<MainPresenter> implements MainContract.View
 {
     @BindView(R.id.bottomBar)
     BottomBar mBottomBar;

@@ -22,7 +22,7 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:scaleType="fitXY"
-        android:src="@mipmap/ic_bg_spring" />
+        android:src="@mipmap/ic_splash_logo_bg" />
 
 
 </RelativeLayout>
