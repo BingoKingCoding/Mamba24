@@ -62,11 +62,13 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         if (mFragments == null)
         {
             mFragments = new ArrayList<>();
+            mFragments.add(CategoryFragment.newInstance(CategoryType.IOS_STR));
+            mFragments.add(CategoryFragment.newInstance(CategoryType.QIAN_STR));
             mFragments.add(CategoryFragment.newInstance(CategoryType.ANDROID_STR));
             mFragments.add(CategoryFragment.newInstance(CategoryType.IOS_STR));
             mFragments.add(CategoryFragment.newInstance(CategoryType.QIAN_STR));
         }
-        mainPager.setOffscreenPageLimit(mFragments.size());
+        mainPager.setOffscreenPageLimit(3);
         mainPager.setAdapter(new MianViewPagerAdapter(getChildFragmentManager(), mFragments));
         tabs.setupWithViewPager(mainPager);
     }

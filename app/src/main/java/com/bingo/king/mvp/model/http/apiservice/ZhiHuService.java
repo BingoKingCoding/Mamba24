@@ -1,6 +1,5 @@
-package com.bingo.king.mvp.model.http;
+package com.bingo.king.mvp.model.http.apiservice;
 
-import com.bingo.king.mvp.model.entity.GankEntity;
 import com.bingo.king.mvp.model.entity.zhihu.CommentBean;
 import com.bingo.king.mvp.model.entity.zhihu.DailyListBean;
 import com.bingo.king.mvp.model.entity.zhihu.DetailExtraBean;
@@ -12,69 +11,72 @@ import com.bingo.king.mvp.model.entity.zhihu.ThemeListBean;
 import com.bingo.king.mvp.model.entity.zhihu.ZhihuDetailBean;
 
 import io.reactivex.Observable;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 /**
- * <获取数据的接口>
- * Created by adou on 2017/11/2:22:25.
+ * <请描述这个类是干什么的>
+ * Created by wang on 2017/11/3 09:32.
  */
-public interface IRepository
+
+public interface ZhiHuService
 {
-    /**
-     * 干货
-     */
-    Observable<GankEntity> gank(String type,int pageSize,String page);
-    /**
-     * 福利
-     */
-    Observable<GankEntity> getRandomGirl();
     /**
      * 最新日报
      */
+    @GET("news/latest")
     Observable<DailyListBean> requestDailyList();
     /**
      * 主题日报
      */
+    @GET("themes")
     Observable<ThemeListBean> requestThemeList();
+
     /**
      * 主题日报详情
      */
-    Observable<ThemeChildListBean> requestThemeChildList(int id);
+    @GET("theme/{id}")
+    Observable<ThemeChildListBean> requestThemeChildList(@Path("id") int id);
 
     /**
      * 专栏日报
      */
+    @GET("sections")
     Observable<SectionListBean> requestSectionList();
-
 
     /**
      * 专栏日报详情
      */
-    Observable<SectionChildListBean> requestSectionChildList(int id);
+    @GET("section/{id}")
+    Observable<SectionChildListBean> requestSectionChildList(@Path("id") int id);
 
     /**
      * 热门日报
      */
+    @GET("news/hot")
     Observable<HotListBean> requestHotList();
 
     /**
      * 日报详情
      */
-    Observable<ZhihuDetailBean> requestDetailInfo(int id);
+    @GET("news/{id}")
+    Observable<ZhihuDetailBean> requestDetailInfo(@Path("id") int id);
 
     /**
      * 日报的额外信息
      */
-    Observable<DetailExtraBean> requestDetailExtraInfo(int id);
+    @GET("story-extra/{id}")
+    Observable<DetailExtraBean> requestDetailExtraInfo(@Path("id") int id);
 
     /**
      * 日报的长评论
      */
-    Observable<CommentBean> requestLongCommentInfo(int id);
+    @GET("story/{id}/long-comments")
+    Observable<CommentBean> requestLongCommentInfo(@Path("id") int id);
 
     /**
      * 日报的短评论
      */
-    Observable<CommentBean> requestShortCommentInfo(int id);
-
-
+    @GET("story/{id}/short-comments")
+    Observable<CommentBean> requestShortCommentInfo(@Path("id") int id);
 }

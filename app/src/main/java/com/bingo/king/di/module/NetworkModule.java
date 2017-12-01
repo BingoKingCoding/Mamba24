@@ -36,9 +36,9 @@ public class NetworkModule
 
     @Provides
     @Singleton
-    IRepository provideRepository(@Named("one") Retrofit kugou, @Named("two") Retrofit lastfm)
+    IRepository provideRepository(@Named("gankIo") Retrofit gankIoRetrofit, @Named("zhiHu") Retrofit zhiHuRetrofit)
     {
-        return new RepositoryImpl(mApp, kugou, lastfm);
+        return new RepositoryImpl(mApp, gankIoRetrofit, zhiHuRetrofit);
     }
 
 
@@ -59,9 +59,9 @@ public class NetworkModule
 
         builder.cache(new Cache(FileUtil.getHttpCacheDir(), Constants.HTTP_CACHE_SIZE));
         //设置超时
-        builder.connectTimeout(10, TimeUnit.SECONDS);
-        builder.readTimeout(20, TimeUnit.SECONDS);
-        builder.writeTimeout(20, TimeUnit.SECONDS);
+        builder.connectTimeout(Constants.HTTP_CONNECT_TIMEOUT, TimeUnit.SECONDS);
+        builder.readTimeout(Constants.HTTP_READ_TIMEOUT, TimeUnit.SECONDS);
+        builder.writeTimeout(Constants.HTTP_READ_TIMEOUT, TimeUnit.SECONDS);
         //错误重连
         builder.retryOnConnectionFailure(true);
         builder.addInterceptor(loggingInterceptor);
@@ -70,11 +70,11 @@ public class NetworkModule
 
 
     @Provides
-    @Named("one")
+    @Named("gankIo")
     @Singleton
     Retrofit provideOneRetrofit(OkHttpClient client)
     {
-        String baseUrl = Constants.BASE_API_URL_ONE;
+        String baseUrl = Constants.BASE_API_URL_GANKIO;
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
@@ -86,11 +86,11 @@ public class NetworkModule
     }
 
     @Provides
-    @Named("two")
+    @Named("zhiHu")
     @Singleton
     Retrofit provideTwoRetrofit(OkHttpClient client)
     {
-        String baseUrl = Constants.BASE_API_URL_TWO;
+        String baseUrl = Constants.BASE_API_URL_ZHIHU;
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)

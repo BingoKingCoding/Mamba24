@@ -7,23 +7,36 @@ package com.bingo.king.app.utils;
 public class CategoryType
 {
 
+    public static final String ZHIHU_NEWS = "知乎日报";
+    public static final String NEW_MOVIE = "最新电影";
     public static final String ANDROID_STR = "Android";
     public static final String IOS_STR = "iOS";
     public static final String QIAN_STR = "前端";
     public static final String GIRLS_STR = "福利";
 
-
     public static final int ANDROID_IOS = 1;
     public static final int GIRLS = 2;
 
-    public static String getPageTitleByPosition(int position) {
-        if (position == 0){
+    public static String getPageTitleByPosition(int position)
+    {
+        if (position == 0)
+        {
+            return ZHIHU_NEWS;
+        } else if (position == 1)
+        {
+            return NEW_MOVIE;
+        }
+        if (position == 2)
+        {
             return ANDROID_STR;
-        } else if (position == 1){
+        } else if (position == 3)
+        {
             return IOS_STR;
-        } else if (position == 2){
+        } else if (position == 4)
+        {
             return QIAN_STR;
-        } else {
+        } else
+        {
             return "";
         }
     }

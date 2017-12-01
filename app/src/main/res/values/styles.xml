@@ -34,7 +34,7 @@
     </style>
 
     <style name="TabLayoutTextStyle">
-        <item name="android:textSize">@dimen/f6</item>
+        <item name="android:textSize">@dimen/f4</item>
     </style>
 
 
