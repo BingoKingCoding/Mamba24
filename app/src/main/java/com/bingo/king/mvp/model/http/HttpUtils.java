@@ -22,9 +22,8 @@ public class HttpUtils
     /**
      * 页面初始化请求数据
      */
-    public static <T> void initializeRequestData(IView mView, Observable<T> observable, HttpCallback<T> httpCallback)
+    public static <T> void requestInitializeData(IView mView, Observable<T> observable, HttpCallback<T> httpCallback)
     {
-
         StatefulCallback target;
         if (mView instanceof StatefulCallback)
         {
@@ -53,10 +52,10 @@ public class HttpUtils
         observable.subscribeOn(Schedulers.io())
                 .doOnSubscribe(disposable ->
                 {
-                    if (mView instanceof StatefulCallback)
-                    {
-                        ((StatefulCallback) mView).setState(LoadingPage.STATE_LOADING);
-                    }
+//                    if (mView instanceof StatefulCallback)
+//                    {
+//                        ((StatefulCallback) mView).setState(LoadingPage.STATE_LOADING);
+//                    }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())

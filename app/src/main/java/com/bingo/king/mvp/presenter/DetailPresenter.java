@@ -33,7 +33,7 @@ public class DetailPresenter extends BasePresenter<DetailContract.Model, DetailC
     }
 
     public void getGirl(){
-        initializeRequestData(mModel.getRandomGirl(), new HttpCallback<GankEntity>()
+        requestInitializeData(mModel.getRandomGirl(), new HttpCallback<GankEntity>()
         {
             @Override
             public void onSuccess(GankEntity gankEntity)

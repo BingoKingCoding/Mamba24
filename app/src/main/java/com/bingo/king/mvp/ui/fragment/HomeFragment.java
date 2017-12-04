@@ -16,6 +16,7 @@ import com.bingo.king.mvp.contract.HomeContract;
 import com.bingo.king.mvp.presenter.HomePresenter;
 import com.bingo.king.mvp.ui.adapter.MianViewPagerAdapter;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
+import com.blankj.utilcode.util.SPUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,11 +59,18 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     @Override
     public void initData(Bundle savedInstanceState)
     {
-        ViewBinder.setTextView(toolbar_title,"首页");
+        ViewBinder.setTextView(toolbar_title, "首页");
+        //初始化首页栏目顺序
+        SPUtils spUtils = SPUtils.getInstance();
+        if (!spUtils.getBoolean(ZhiHuFragment.ZH_LIST_IS_CHANGE))
+        {
+            spUtils.put(ZhiHuFragment.ZH_LIST, "知乎日报&&知乎热门&&知乎主题&&知乎专栏&&");
+            spUtils.put(ZhiHuFragment.ZH_LIST_IS_CHANGE, true);
+        }
         if (mFragments == null)
         {
             mFragments = new ArrayList<>();
-            mFragments.add(CategoryFragment.newInstance(CategoryType.IOS_STR));
+            mFragments.add(new ZhiHuFragment());
             mFragments.add(CategoryFragment.newInstance(CategoryType.QIAN_STR));
             mFragments.add(CategoryFragment.newInstance(CategoryType.ANDROID_STR));
             mFragments.add(CategoryFragment.newInstance(CategoryType.IOS_STR));

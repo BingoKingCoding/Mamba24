@@ -98,11 +98,10 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
     /**
      * 页面初始化请求数据
      */
-    protected <T> void initializeRequestData(Observable<T> observable, HttpCallback<T> httpCallback)
+    protected <T> void requestInitializeData(Observable<T> observable, HttpCallback<T> httpCallback)
     {
-
         this.mHttpCallback = httpCallback;
-        HttpUtils.initializeRequestData(mRootView, observable, httpCallback);
+        HttpUtils.requestInitializeData(mRootView, observable, httpCallback);
     }
 
     /**

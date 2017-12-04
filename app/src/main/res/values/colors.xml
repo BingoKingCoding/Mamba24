@@ -24,6 +24,10 @@
     <color name="dialog_bg">#a6000000</color>
 
 
+    <color name="color_line">@color/C4</color>
+    <color name="color_zh">#ffce3d3a</color>
+
+
     <color name="white">#FFFFFF</color>
     <color name="C1">#2dbc6d</color>
     <color name="C2">#FFFEFE</color>

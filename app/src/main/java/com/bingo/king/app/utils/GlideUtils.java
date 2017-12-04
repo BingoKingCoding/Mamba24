@@ -47,15 +47,21 @@ public class GlideUtils
                 .into(image);
     }
 
-    public void loadImageCenterCrop(String url, ImageView image)
+
+    /**
+     * 首页zhihu item读取图片
+     *
+     * @param imgNumber 图片大小1最大 2中等 3最小 正方形的
+     */
+    public void loadImage(int imgNumber, String url, ImageView image)
     {
         Glide.with(image.getContext())
                 .load(url)
-                .centerCrop()
-                .placeholder(R.drawable.ic_bg_image_loading)
-                .error(R.drawable.ic_nopic)
+                .crossFade(1500)
+                .error(getDefaultPic(imgNumber))
                 .into(image);
     }
+
 
     private int getDefaultPic(int imgNumber)
     {
@@ -121,7 +127,6 @@ public class GlideUtils
                 .error(R.drawable.ic_nopic)
                 .dontAnimate();
     }
-
 
     public void clearMemory(boolean isClearDiskCache, boolean isClearMemory)
     {
