@@ -87,11 +87,10 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
         });
         TextView textView = new TextView(getContext());
         textView.setText("没有更多内容了");
-        textView.setTextColor(ResourcesUtil.getColor(R.color.C9));
+        textView.setTextColor(ResourcesUtil.getColor(R.color.C6));
         textView.setGravity(Gravity.CENTER);
-        mAdapter.setEmptyView(textView);
+        mAdapter.setEmptyView(R.layout.loadingpage_state_empty,mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
-
 
     }
 
@@ -99,12 +98,19 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
     protected void onFragmentFirstVisible()
     {
         super.onFragmentFirstVisible();
-        mPresenter.requestData(true);
+//        mPresenter.requestData(true);
     }
 
     @Override
     protected void retryRequestData()
     {
+        mPresenter.requestData(true);
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
         mPresenter.requestData(true);
     }
 
