@@ -88,12 +88,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     }
 
     @Override
-    public void endLoadMore()
-    {
-
-    }
-
-    @Override
     public void showMessage(String message)
     {
         showSnackbar(message);

@@ -78,12 +78,6 @@ public class CollectFragment extends BaseFragment<CollectPresenter> implements C
     }
 
     @Override
-    public void endLoadMore()
-    {
-
-    }
-
-    @Override
     public void showMessage(String message)
     {
         showSnackbar(message);

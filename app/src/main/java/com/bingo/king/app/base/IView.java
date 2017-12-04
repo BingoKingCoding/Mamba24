@@ -20,10 +20,6 @@ public interface IView
      */
     void hidePullLoading();
 
-    /**
-     * 隐藏加载更多
-     */
-    void endLoadMore();
 
     /**
      * 显示信息

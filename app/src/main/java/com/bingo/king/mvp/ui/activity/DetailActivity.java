@@ -118,11 +118,6 @@ public class DetailActivity extends CoordinatorBaseActivity<DetailPresenter> imp
 
     }
 
-    @Override
-    public void endLoadMore()
-    {
-
-    }
 
     @Override
     public void showMessage(@NonNull String message)

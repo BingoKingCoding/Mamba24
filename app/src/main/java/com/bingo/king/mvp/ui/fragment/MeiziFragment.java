@@ -130,12 +130,6 @@ public class MeiziFragment extends BaseFragment<MeiziPresenter> implements Meizi
     }
 
     @Override
-    public void endLoadMore()
-    {
-        mRefreshLayout.finishRefresh();
-    }
-
-    @Override
     public void setAdapter(List<DaoGankEntity> entity)
     {
         mAdapter.setNewData(entity);

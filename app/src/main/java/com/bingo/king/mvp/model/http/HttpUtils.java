@@ -119,8 +119,6 @@ public class HttpUtils
                 {
                     if (pullToRefresh)
                         mView.hidePullLoading();
-                    else
-                        mView.endLoadMore();
                 })
                 .compose(RxUtils.bindToLifecycle(mView))
                 .subscribe(httpCallback);

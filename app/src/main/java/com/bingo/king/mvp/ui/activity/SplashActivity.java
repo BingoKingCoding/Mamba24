@@ -80,12 +80,6 @@ public class SplashActivity extends BasePresenterActivity<SplashPresenter> imple
     }
 
     @Override
-    public void endLoadMore()
-    {
-
-    }
-
-    @Override
     public void showMessage(@NonNull String message)
     {
         showSnackbar(message);

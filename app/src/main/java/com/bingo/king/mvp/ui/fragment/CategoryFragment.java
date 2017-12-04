@@ -79,11 +79,6 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
         return R.layout.layout_refresh_list;
     }
 
-    @Override
-    public void endLoadMore()
-    {
-
-    }
 
     @Override
     protected void retryRequestData()

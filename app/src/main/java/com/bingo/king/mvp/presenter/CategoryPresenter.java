@@ -64,16 +64,16 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.Model, Cat
             mAdapter.isFirstOnly(false);
             mRootView.setAdapter(mAdapter);
         }
-        if (lastUserId == 10)
-        {
-            mAdapter.loadMoreEnd();
-            return;
-        }
         if (pullToRefresh)
         {
             lastUserId = 1;//上拉刷新默认只请求第一页
         } else
         {
+            if (lastUserId == 5)//这边设置只加载5页
+            {
+                mAdapter.loadMoreEnd();
+                return;
+            }
             if (NetworkUtils.isAvailableByPing())
             {
                 lastUserId++;

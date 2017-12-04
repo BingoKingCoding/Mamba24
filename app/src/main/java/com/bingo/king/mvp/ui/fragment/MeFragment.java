@@ -64,12 +64,6 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     }
 
     @Override
-    public void endLoadMore()
-    {
-
-    }
-
-    @Override
     public void showMessage(String message)
     {
         showSnackbar(message);

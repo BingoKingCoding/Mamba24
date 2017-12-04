@@ -102,12 +102,6 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
     }
 
     @Override
-    public void endLoadMore()
-    {
-        mWelfareAdapter.loadMoreComplete();
-    }
-
-    @Override
     public void setNewData(List<GankEntity.ResultsBean> mData)
     {
         CardItemTouchHelperCallback cardCallback = new CardItemTouchHelperCallback(mRecyclerView.getAdapter(), mData);

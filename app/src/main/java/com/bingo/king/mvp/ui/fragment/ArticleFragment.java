@@ -133,13 +133,6 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
         mPresenter.requestData(true);
     }
 
-
-    @Override
-    public void endLoadMore()
-    {
-        mRefreshLayout.finishRefresh();
-    }
-
     @Override
     public void setAdapter(List<DaoGankEntity> entity)
     {

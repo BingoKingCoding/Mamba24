@@ -83,9 +83,4 @@ public class ZhiHuFragment extends BaseFragment<ZhiHuPresenter> implements ZhiHu
 
     }
 
-    @Override
-    public void endLoadMore()
-    {
-
-    }
 }

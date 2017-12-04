@@ -81,11 +81,6 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
 
     }
 
-    @Override
-    public void endLoadMore()
-    {
-
-    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState)
