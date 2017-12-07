@@ -23,11 +23,10 @@
     <TextView
         android:id="@+id/tv_default"
         android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_gravity="center_horizontal"
-              android:layout_marginTop="50dp"
-              android:text="恢复默认排序"
-              android:textColor="@color/select_adjuest_default"
-              android:textSize="14sp"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:text="恢复默认排序"
+        android:textColor="@color/select_adjuest_default"/>
 
 </LinearLayout>
