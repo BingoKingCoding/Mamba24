@@ -47,37 +47,49 @@ public class ZhiHuPresenter extends BasePresenter<ZhiHuContract.Model, ZhiHuCont
         SPUtils spUtils = SPUtils.getInstance();
         String homeListString = spUtils.getString(ZhiHuFragment.ZH_LIST);
         String[] split = homeListString.split("&&");
-        for (int i = 0; i < split.length; i++) {
-            if ("知乎日报".equals(split[i])) {
+        //for循环确定位置
+        for (int i = 0; i < split.length; i++)
+        {
+            if ("知乎日报".equals(split[i]))
+            {
                 daily = i + 1;
                 continue;
             }
-            if ("知乎热门".equals(split[i])) {
+            if ("知乎热门".equals(split[i]))
+            {
                 hot = i + 1;
                 continue;
             }
-            if ("知乎主题".equals(split[i])) {
+            if ("知乎主题".equals(split[i]))
+            {
                 theme = i + 1;
                 continue;
             }
-            if ("知乎专栏".equals(split[i])) {
+            if ("知乎专栏".equals(split[i]))
+            {
                 section = i + 1;
             }
         }
-        for (int y = 1; y <= 4; y++) {
-            if (daily == y) {
+        //添加标题
+        for (int y = 1; y <= 4; y++)
+        {
+            if (daily == y)
+            {
                 checkAddToNewHomeList("知乎日报", 1, newHomeList);
                 continue;
             }
-            if (hot == y) {
+            if (hot == y)
+            {
                 checkAddToNewHomeList("知乎热门", 2, newHomeList);
                 continue;
             }
-            if (theme == y) {
+            if (theme == y)
+            {
                 checkAddToNewHomeList("知乎主题", 3, newHomeList);
                 continue;
             }
-            if (section == y) {
+            if (section == y)
+            {
                 checkAddToNewHomeList("知乎专栏", 4, newHomeList);
             }
         }
@@ -86,13 +98,15 @@ public class ZhiHuPresenter extends BasePresenter<ZhiHuContract.Model, ZhiHuCont
 
     private void checkAddToNewHomeList(String title, int type, List<ZhiHuListBean> newHomeList)
     {
-        for (int i = 1; i <= homeList.size(); i++) {
-            if (!TextUtils.isEmpty(title) &&
-                    title.equals(homeList.get(i - 1).getTitle())) {
+        for (int i = 1; i <= homeList.size(); i++)
+        {
+            if (!TextUtils.isEmpty(title) && title.equals(homeList.get(i - 1).getTitle()))
+            {
                 newHomeList.add(homeList.get(i - 1));
             }
 
-            if (homeList.get(i - 1).getType() == type) {
+            if (homeList.get(i - 1).getType() == type)
+            {
                 newHomeList.add(homeList.get(i - 1));
             }
         }
@@ -120,7 +134,8 @@ public class ZhiHuPresenter extends BasePresenter<ZhiHuContract.Model, ZhiHuCont
                 topStoriesList = data.getTop_stories();
                 List<DailyListBean.StoriesBean> storiesBeanList = data.getStories();
                 settitle("知乎日报");
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < 3; i++)
+                {
                     ZhiHuListBean homeListBean = settype(1);
                     homeListBean.setDailyList(storiesBeanList.get(i));
                     homeList.add(homeListBean);
@@ -141,10 +156,13 @@ public class ZhiHuPresenter extends BasePresenter<ZhiHuContract.Model, ZhiHuCont
                 settitle("知乎热门");
                 List<HotListBean.RecentBean> hotList = new ArrayList<>();
                 List<HotListBean.RecentBean> hotList2 = new ArrayList<>();
-                for (int i = 0; i < 6; i++) {
-                    if (i < 3) {
+                for (int i = 0; i < 6; i++)
+                {
+                    if (i < 3)
+                    {
                         hotList.add(recent.get(i));
-                    } else {
+                    } else
+                    {
                         hotList2.add(recent.get(i));
                     }
                 }
@@ -171,10 +189,13 @@ public class ZhiHuPresenter extends BasePresenter<ZhiHuContract.Model, ZhiHuCont
                 List<ThemeListBean.OthersBean> themeList = new ArrayList<>();
                 List<ThemeListBean.OthersBean> themeList2 = new ArrayList<>();
                 int random = new Random().nextInt(4);
-                for (int i = random; i < random + 4; i++) {
-                    if (i < random + 2) {
+                for (int i = random; i < random + 4; i++)
+                {
+                    if (i < random + 2)
+                    {
                         themeList.add(others.get(i));
-                    } else {
+                    } else
+                    {
                         themeList2.add(others.get(i));
                     }
                 }
@@ -200,7 +221,8 @@ public class ZhiHuPresenter extends BasePresenter<ZhiHuContract.Model, ZhiHuCont
                 settitle("知乎专栏");
                 List<SectionListBean.DataBean> sectionList = new ArrayList<>();
                 int random = new Random().nextInt(4);
-                for (int i = random; i < random + 3; i++) {
+                for (int i = random; i < random + 3; i++)
+                {
                     sectionList.add(data1.get(i));
                 }
                 ZhiHuListBean homeListBean = settype(4);

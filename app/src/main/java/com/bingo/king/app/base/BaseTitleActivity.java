@@ -78,7 +78,7 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
      * 设置主标题
      *
      */
-    public void setMainTitle(Object object) {
+    public void setToorBarTitle(Object object) {
         toolbar.setTitle(CommonUtils.getResultString(object));
     }
 
@@ -94,7 +94,7 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
      * 设置主标题字体颜色
      *
      */
-    public void setMainTitleColor(Object object) {
+    public void setToorBarTitleColor(Object object) {
         toolbar.setTitleTextColor(CommonUtils.getResultColor(object));
     }
 

@@ -1,9 +1,6 @@
 package com.bingo.king.mvp.ui.activity;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.view.inputmethod.InputMethodManager;
 
 import com.bingo.king.R;
 import com.bingo.king.app.base.BasePresenterActivity;
@@ -86,21 +83,6 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     protected void onSaveInstanceState(Bundle outState)
     {
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onDestroy()
-    {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        try
-        {
-            InputMethodManager.class.getDeclaredMethod("windowDismissed", IBinder.class).invoke(imm,
-                    getWindow().getDecorView().getWindowToken());
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        super.onDestroy();
     }
 
 

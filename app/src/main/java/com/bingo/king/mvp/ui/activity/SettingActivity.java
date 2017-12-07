@@ -41,7 +41,7 @@ public class SettingActivity extends BaseTitleActivity<SettingPresenter> impleme
         setState(LoadingPage.STATE_SUCCESS);
 //        setToolbarMiddleTitle("设置");
         setToolbarRightAction("保存");
-        setMainTitle("设置");
+        setToorBarTitle("设置");
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.bingo.king.mvp.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.bingo.king.mvp.model.entity.zhihu.DailyListBean;
 import com.bingo.king.mvp.model.entity.zhihu.ZhiHuListBean;
 import com.bingo.king.mvp.presenter.ZhiHuPresenter;
 import com.bingo.king.mvp.ui.activity.WebActivity;
+import com.bingo.king.mvp.ui.activity.ZhiHuAdjustmentListActivity;
 import com.bingo.king.mvp.ui.adapter.ZhiHuAdapter;
 import com.blankj.utilcode.util.SPUtils;
 import com.youth.banner.Banner;
@@ -64,6 +66,15 @@ public class ZhiHuFragment extends BaseFragment<ZhiHuPresenter> implements ZhiHu
     @Override
     public void onResume()
     {
+        SPUtils spUtils = SPUtils.getInstance();
+        if (spUtils.getBoolean(ZH_LIST_IS_CHANGE)) {
+            mZhiHuList = mPresenter.getListZhiHu();
+            if (mAdapter != null) {
+                mAdapter.setNewData(mZhiHuList);
+                mAdapter.notifyDataSetChanged();
+                spUtils.put(ZH_LIST_IS_CHANGE, false);
+            }
+        }
         super.onResume();
     }
 
@@ -117,10 +128,9 @@ public class ZhiHuFragment extends BaseFragment<ZhiHuPresenter> implements ZhiHu
             mAdapter.addFooterView(footerView);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             mRecyclerView.setAdapter(mAdapter);
-            tvZhihuFooter.setOnClickListener(v ->
-            {
-//                    startActivity(new Intent(getActivity(), HomeAdjustmentListActivity.class));
-            });
+
+            tvZhihuFooter.setOnClickListener(v ->startActivity(new Intent(getActivity(), ZhiHuAdjustmentListActivity.class)));
+
             mAdapter.setOnItemClickListener(new ZhiHuAdapter.OnItemClickListener()
             {
                 @Override
