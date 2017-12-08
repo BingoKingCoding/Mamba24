@@ -51,24 +51,20 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@style/FullScreenTheme"/>
-
         <activity
             android:name=".mvp.ui.activity.PhotoViewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@style/FullScreenTheme">
         </activity>
-
         <activity
             android:name=".mvp.ui.activity.WebActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".mvp.ui.activity.SettingActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".mvp.ui.activity.ZhiHuAdjustmentListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -86,6 +82,10 @@
             android:name="design_height"
             android:value="1920"/>
 
+        <activity android:name=".mvp.ui.activity.ZhihuDetailActivity"
+                  android:configChanges="orientation|screenSize|keyboardHidden"
+                  android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

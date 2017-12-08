@@ -22,7 +22,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
  * Created by wang on 2017/11/10 15:14.
  */
 
-public abstract class CoordinatorBaseActivity<P extends IPresenter> extends LoadingBaseActivity<P>
+public abstract class BaseCoordinatorActivity<P extends IPresenter> extends LoadingBaseActivity<P>
 {
 
     protected AppBarLayout app_bar;

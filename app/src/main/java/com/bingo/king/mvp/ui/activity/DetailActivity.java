@@ -9,7 +9,7 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bingo.king.R;
 import com.bingo.king.app.ARouterPaths;
-import com.bingo.king.app.base.CoordinatorBaseActivity;
+import com.bingo.king.app.base.BaseCoordinatorActivity;
 import com.bingo.king.di.component.DaggerDetailComponent;
 import com.bingo.king.di.module.DetailModule;
 import com.bingo.king.mvp.contract.DetailContract;
@@ -26,7 +26,7 @@ import static com.bingo.king.R.id.webview;
 import static com.bingo.king.app.EventBusTags.EXTRA_DETAIL;
 
 @Route(path = ARouterPaths.MAIN_DETAIL)
-public class DetailActivity extends CoordinatorBaseActivity<DetailPresenter> implements DetailContract.View
+public class DetailActivity extends BaseCoordinatorActivity<DetailPresenter> implements DetailContract.View
 {
     @BindView(webview)
     X5WebView mWebView;

@@ -2,6 +2,7 @@ package com.bingo.king.mvp.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.bingo.king.mvp.model.entity.zhihu.ZhiHuListBean;
 import com.bingo.king.mvp.presenter.ZhiHuPresenter;
 import com.bingo.king.mvp.ui.activity.WebActivity;
 import com.bingo.king.mvp.ui.activity.ZhiHuAdjustmentListActivity;
+import com.bingo.king.mvp.ui.activity.ZhihuDetailActivity;
 import com.bingo.king.mvp.ui.adapter.ZhiHuAdapter;
 import com.blankj.utilcode.util.SPUtils;
 import com.youth.banner.Banner;
@@ -183,9 +185,9 @@ public class ZhiHuFragment extends BaseFragment<ZhiHuPresenter> implements ZhiHu
 
     private void startZhiHuDetailActivity(int id, View view)
     {
-//        Intent intent = new Intent();
-//        intent.setClass(getActivity(), ZhiHuDetailActivity.class);
-//        intent.putExtra("id", id);
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), ZhihuDetailActivity.class);
+        intent.putExtra(ZhihuDetailActivity.EXTRA_ID, id);
 //        intent.putExtra("isNotTransition", true);
         /**
          * 用这个ActivityOptionsCompat比用ActivityOptions兼容性更好，前者是V4下的兼容到16后者到21.
@@ -195,9 +197,9 @@ public class ZhiHuFragment extends BaseFragment<ZhiHuPresenter> implements ZhiHu
          *       android:transitionName="transition_image"
          *       android:fitsSystemWindows="true">
          */
-//        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-//                view, getActivity().getResources().getString(R.string.transition_image));
-//        getActivity().startActivity(intent, options.toBundle());
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                view, getActivity().getResources().getString(R.string.transition_image));
+        getActivity().startActivity(intent, options.toBundle());
     }
 
     @Override

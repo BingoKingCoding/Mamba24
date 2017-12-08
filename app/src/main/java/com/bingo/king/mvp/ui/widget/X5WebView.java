@@ -99,6 +99,14 @@ public class X5WebView extends WebView {
 	}
 
 
+	public void setClient(){
+		setWebViewClient(client);
+	}
+	public void setClient(WebViewClient client){
+		setWebViewClient(client);
+	}
+
+
 	/**
 	 * 调试用，左上角出现的红色字体，发布前请注释掉
 	 */
