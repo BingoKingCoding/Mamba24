@@ -39,7 +39,11 @@ public class SettingActivity extends BaseTitleActivity<SettingPresenter> impleme
     {
         super.loadData(savedInstanceState);
         setState(LoadingPage.STATE_SUCCESS);
-//        setToolbarMiddleTitle("设置");
+        init();
+    }
+
+    private void init(){
+        setToolbarMiddleTitle("设置");
         setToolbarRightAction("保存");
         setToorBarTitle("设置");
     }
