@@ -1,10 +1,10 @@
 package ${modelPackageName};
 
 import android.app.Application;
-import com.bingo.king.mvp.model.http.IRepository;
-import com.bingo.king.app.base.BaseModel;
+import ${packageName}.mvp.model.http.IRepository;
+import ${packageName}.app.base.BaseModel;
 
-import com.bingo.king.di.scope.ActivityScope;
+import ${packageName}.di.scope.ActivityScope;
 import javax.inject.Inject;
 
 import ${contractPackageName}.${pageName}Contract;

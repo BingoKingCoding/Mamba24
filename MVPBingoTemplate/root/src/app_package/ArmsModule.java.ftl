@@ -1,9 +1,10 @@
 package ${moudlePackageName};
 
-import com.jess.arms.di.scope.ActivityScope;
 
 import dagger.Module;
 import dagger.Provides;
+
+import ${packageName}.di.scope.ActivityScope;
 
 import ${contractPackageName}.${pageName}Contract;
 import ${modelPackageName}.${pageName}Model;

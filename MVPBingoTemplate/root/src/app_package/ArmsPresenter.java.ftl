@@ -2,10 +2,8 @@ package ${presenterPackageName};
 
 import android.app.Application;
 
-
-import com.bingo.king.di.scope.ActivityScope;
-import com.bingo.king.app.base.BasePresenter;
-
+import ${packageName}.app.base.BasePresenter;
+import ${packageName}.di.scope.ActivityScope;
 import javax.inject.Inject;
 
 import ${contractPackageName}.${pageName}Contract;

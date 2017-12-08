@@ -1,15 +1,9 @@
 package ${fragmentPackageName};
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.jess.arms.base.BaseFragment;
-import com.jess.arms.di.component.AppComponent;
-import com.jess.arms.utils.ArmsUtils;
+import ${packageName}.app.base.BaseFragment;
+
 
 import ${componentPackageName}.Dagger${pageName}Component;
 import ${moudlePackageName}.${pageName}Module;
@@ -18,7 +12,6 @@ import ${presenterPackageName}.${pageName}Presenter;
 
 import ${packageName}.R;
 
-import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 
 public class ${pageName}Fragment extends BaseFragment<${pageName}Presenter> implements ${pageName}Contract.View{
@@ -30,22 +23,25 @@ public class ${pageName}Fragment extends BaseFragment<${pageName}Presenter> impl
     }
 
     @Override
-    public void setupFragmentComponent(AppComponent appComponent) {
+    public void initComponent() {
         Dagger${pageName}Component //如找不到该类,请编译一下项目
                 .builder()
-                .appComponent(appComponent)
+                .appComponent(getAppComponent())
                 .${extractLetters(pageName[0]?lower_case)}${pageName?substring(1,pageName?length)}Module(new ${pageName}Module(this))
                 .build()
                 .inject(this);
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.${fragmentLayoutName}, container, false);
+    protected int getContentLayoutId()
+    {
+        return R.layout.${fragmentLayoutName};
     }
+
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        //setState(LoadingPage.STATE_SUCCESS);//如果不需要网络请求的话可以去掉注释 直接设置成功状态
 
     }
 
@@ -61,37 +57,28 @@ public class ${pageName}Fragment extends BaseFragment<${pageName}Presenter> impl
      * @param data
      */
 
-    @Override
     public void setData(Object data) {
 
     }
 
+    @Override
+    protected void retryRequestData(){
+
+    }
+
 
     @Override
-    public void showLoading() {
+    public void hidePullLoading() {
 
     }
 
     @Override
-    public void hideLoading() {
-
+    public void showMessage(String message) {
+        showSnackbar(message);
     }
 
-    @Override
-    public void showMessage(@NonNull String message) {
-        checkNotNull(message);
-        ArmsUtils.snackbarText(message);
-    }
 
-    @Override
-    public void launchActivity(@NonNull Intent intent) {
-        checkNotNull(intent);
-        ArmsUtils.startActivity(intent);
-    }
 
-    @Override
-    public void killMyself() {
 
-    }
 
 }

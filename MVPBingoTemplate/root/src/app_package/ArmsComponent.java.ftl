@@ -1,9 +1,7 @@
 package ${componentPackageName};
 
-import com.jess.arms.di.scope.ActivityScope;
 import dagger.Component;
-import com.jess.arms.di.component.AppComponent;
-
+import ${packageName}.di.scope.ActivityScope;
 import ${moudlePackageName}.${pageName}Module;
 
 <#if needActivity && needFragment>
