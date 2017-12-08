@@ -1,7 +1,7 @@
-﻿package ${contractPackageName};
+package ${contractPackageName};
 
-import com.bingo.king.app.base.IModel;
-import com.bingo.king.app.base.IView;
+import ${packageName}.app.base.IView;
+import ${packageName}.app.base.IModel;
 
 
 public interface ${pageName}Contract {
@@ -9,7 +9,7 @@ public interface ${pageName}Contract {
     interface View extends IView {
 
     }
-    //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节
+    //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
     interface Model extends IModel{
 
     }
