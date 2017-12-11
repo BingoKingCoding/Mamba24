@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -16,15 +17,17 @@ import com.bingo.king.mvp.contract.ZhihuDetailContract;
 import com.bingo.king.mvp.model.entity.zhihu.DetailExtraBean;
 import com.bingo.king.mvp.model.entity.zhihu.ZhihuDetailBean;
 import com.bingo.king.mvp.presenter.ZhihuDetailPresenter;
-import com.bingo.king.mvp.ui.widget.X5WebView;
+import com.bingo.king.mvp.ui.widget.web.ShareUtils;
+
+import java.util.Locale;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import timber.log.Timber;
 
 
 public class ZhihuDetailActivity extends BaseCoordinatorActivity<ZhihuDetailPresenter> implements ZhihuDetailContract.View
 {
-
     @BindView(R.id.tv_detail_bottom_like)
     TextView tvDetailBottomLike;
     @BindView(R.id.tv_detail_bottom_comment)
@@ -34,14 +37,15 @@ public class ZhihuDetailActivity extends BaseCoordinatorActivity<ZhihuDetailPres
     @BindView(R.id.nsv_zhihu_detail)
     NestedScrollView nsvZhihuDetail;
     @BindView(R.id.wv_detail_content)
-    X5WebView wvDetailContent;
-
+    WebView wvDetailContent;
 
     private int id;
 
-
-
     boolean isBottomShow = true;//是否显示
+    int allNum = 0;
+    int shortNum = 0;
+    int longNum = 0;
+    private String mShareUrl;
 
     @Override
     public void setupActivityComponent()
@@ -70,14 +74,22 @@ public class ZhihuDetailActivity extends BaseCoordinatorActivity<ZhihuDetailPres
 
     private void init()
     {
+        if (toolbar != null)
+        {
+            initToolBar(toolbar, true, "加载中");
+        }
         getIntentData();
         initScrollView();
+
         mPresenter.requestDetailInfo(id);
+        mPresenter.requestDetailExtraInfo(id);
+        fab.setOnClickListener(v ->
+                ShareUtils.share(ZhihuDetailActivity.this, mShareUrl));
     }
 
     private void getIntentData()
     {
-        id = getIntent().getIntExtra(EXTRA_ID,0);
+        id = getIntent().getIntExtra(EXTRA_ID, 0);
     }
 
     private void initScrollView()
@@ -87,13 +99,14 @@ public class ZhihuDetailActivity extends BaseCoordinatorActivity<ZhihuDetailPres
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY)
             {
-                Timber.d(TAG,"scrollY = " +scrollY +"oldScrollY = " +oldScrollY);
-                if (scrollY - oldScrollY >0 && isBottomShow)//下移隐藏
+                Timber.d(TAG, "scrollY = " + scrollY + "oldScrollY = " + oldScrollY);
+                if (scrollY - oldScrollY > 0 && isBottomShow)//下移隐藏
                 {
                     isBottomShow = false;
                     flDetailBottom.animate().translationY(flDetailBottom.getHeight());
 
-                }else if(scrollY - oldScrollY < 0 && !isBottomShow){//上移出现
+                } else if (scrollY - oldScrollY < 0 && !isBottomShow)
+                {//上移出现
                     isBottomShow = true;
                     flDetailBottom.animate().translationY(0);
 
@@ -122,7 +135,9 @@ public class ZhihuDetailActivity extends BaseCoordinatorActivity<ZhihuDetailPres
     }
 
     public static final String EXTRA_ID = "id";
-    public static void start(Activity oldActivity,int id){
+
+    public static void start(Activity oldActivity, int id)
+    {
         Intent intent = new Intent();
         intent.setClass(oldActivity, ZhihuDetailActivity.class);
         intent.putExtra(EXTRA_ID, id);
@@ -131,8 +146,10 @@ public class ZhihuDetailActivity extends BaseCoordinatorActivity<ZhihuDetailPres
     @Override
     public void showDetailInfo(ZhihuDetailBean zhihuDetailBean)
     {
-        String shareUrl = zhihuDetailBean.getShare_url();
+        mShareUrl = zhihuDetailBean.getShare_url();
         loadImage(zhihuDetailBean.getImage());
+
+        ctl_toolbar.setTitle(zhihuDetailBean.getTitle());
         tv_copyright.setText(zhihuDetailBean.getImage_source());
 
         String htmlData = HtmlUtil.createHtmlData(zhihuDetailBean.getBody(), zhihuDetailBean.getCss(), zhihuDetailBean.getJs());
@@ -142,6 +159,31 @@ public class ZhihuDetailActivity extends BaseCoordinatorActivity<ZhihuDetailPres
     @Override
     public void showExtraInfo(DetailExtraBean detailExtraBean)
     {
-
+        tvDetailBottomLike.setText(String.format(Locale.getDefault(), getResources().getString(R.string.zh_like), detailExtraBean.getPopularity()));
+        tvDetailBottomComment.setText(String.format(Locale.getDefault(), getResources().getString(R.string.zh_comment), detailExtraBean.getComments()));
+        allNum = detailExtraBean.getComments();
+        shortNum = detailExtraBean.getShort_comments();
+        longNum = detailExtraBean.getLong_comments();
     }
+
+    @OnClick(R.id.tv_detail_bottom_share)
+    void shareUrl()
+    {
+        ShareUtils.share(this, mShareUrl);
+    }
+
+
+    @OnClick(R.id.tv_detail_bottom_comment)
+    void gotoComment()
+    {
+        Intent intent = new Intent();
+        intent.setClass(this, ZhiHuCommentActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("allNum", allNum);
+        intent.putExtra("shortNum", shortNum);
+        intent.putExtra("longNum", longNum);
+        startActivity(intent);
+    }
+
+
 }

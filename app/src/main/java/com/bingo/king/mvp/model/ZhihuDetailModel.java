@@ -41,7 +41,7 @@ public class ZhihuDetailModel extends BaseModel implements ZhihuDetailContract.M
     }
 
     @Override
-    public Observable<DetailExtraBean> fetchDetailExtraInfo(int id)
+    public Observable<DetailExtraBean> requestDetailExtraInfo(int id)
     {
         return mRepository.requestDetailExtraInfo(id);
     }

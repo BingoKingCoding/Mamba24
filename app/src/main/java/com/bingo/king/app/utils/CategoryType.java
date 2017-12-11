@@ -1,5 +1,13 @@
 package com.bingo.king.app.utils;
 
+import android.support.v4.app.Fragment;
+
+import com.bingo.king.mvp.ui.fragment.CategoryFragment;
+import com.bingo.king.mvp.ui.fragment.ZhiHuFragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/7/4.
  */
@@ -14,31 +22,29 @@ public class CategoryType
     public static final String QIAN_STR = "前端";
     public static final String GIRLS_STR = "福利";
 
-    public static final int ANDROID_IOS = 1;
-    public static final int GIRLS = 2;
 
-    public static String getPageTitleByPosition(int position)
+    public static List<Fragment> getFragments()
     {
-        if (position == 0)
-        {
-            return ZHIHU_NEWS;
-        } else if (position == 1)
-        {
-            return NEW_MOVIE;
-        }
-        if (position == 2)
-        {
-            return ANDROID_STR;
-        } else if (position == 3)
-        {
-            return IOS_STR;
-        } else if (position == 4)
-        {
-            return QIAN_STR;
-        } else
-        {
-            return "";
-        }
+        List<Fragment> mFragments = new ArrayList<>();
+        mFragments.add(new ZhiHuFragment());
+        mFragments.add(CategoryFragment.newInstance(CategoryType.QIAN_STR));
+        mFragments.add(CategoryFragment.newInstance(CategoryType.ANDROID_STR));
+        mFragments.add(CategoryFragment.newInstance(CategoryType.IOS_STR));
+        mFragments.add(CategoryFragment.newInstance(CategoryType.QIAN_STR));
+        mFragments.add(CategoryFragment.newInstance(CategoryType.QIAN_STR));
+        return mFragments;
+    }
+
+    public static List<String> getPageTitleList()
+    {
+        List<String> list = new ArrayList<>();
+        list.add(ZHIHU_NEWS);
+        list.add(NEW_MOVIE);
+        list.add(ANDROID_STR);
+        list.add(IOS_STR);
+        list.add(QIAN_STR);
+        list.add(QIAN_STR);
+        return list;
     }
 
 }

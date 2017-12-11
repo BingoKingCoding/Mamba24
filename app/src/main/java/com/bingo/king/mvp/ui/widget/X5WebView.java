@@ -24,6 +24,19 @@ public class X5WebView extends WebView {
 			view.loadUrl(url);
 			return true;
 		}
+
+		@Override
+		public void onPageFinished(WebView webView, String s)
+		{
+			super.onPageFinished(webView, s);
+			//这个是一定要加上那个的,配合scrollView和WebView的height=wrap_content属性使用
+			int w = View.MeasureSpec.makeMeasureSpec(0,
+					View.MeasureSpec.UNSPECIFIED);
+			int h = View.MeasureSpec.makeMeasureSpec(0,
+					View.MeasureSpec.UNSPECIFIED);
+			//重新测量
+			webView.measure(w, h);
+		}
 	};
 
 	@SuppressLint("SetJavaScriptEnabled")
@@ -92,14 +105,14 @@ public class X5WebView extends WebView {
 		// webview从5.0开始默认不允许混合模式,https中不能加载http资源,需要设置开启。
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
 		{
-//			webSetting.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+		//webSetting.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
 		}
-		/** 设置字体默认缩放大小(改变网页字体大小,setTextSize  api14被弃用)*/
+		// 设置字体默认缩放大小(改变网页字体大小,setTextSize  api14被弃用)
 		webSetting.setTextZoom(100);
 	}
 
 
-	public void setClient(){
+	public void setDefaultClient(){
 		setWebViewClient(client);
 	}
 	public void setClient(WebViewClient client){

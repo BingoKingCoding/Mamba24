@@ -18,4 +18,9 @@
     <string name="detail_bottom_like">点赞</string>
     <string name="detail_bottom_commit">评论</string>
     <string name="detail_bottom_share">分享</string>
+    <string name="comment_expand">收起</string>
+    <string name="zh_like">%1$d个喜欢</string>
+    <string name="zh_comment">%1$d条评论</string>
+    <string name="zh_short_comment">短评论(%1$d)</string>
+    <string name="zh_long_comment">长评论(%1$d)</string>
 </resources>

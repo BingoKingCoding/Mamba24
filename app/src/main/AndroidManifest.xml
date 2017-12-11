@@ -82,7 +82,13 @@
             android:name="design_height"
             android:value="1920"/>
 
-        <activity android:name=".mvp.ui.activity.ZhihuDetailActivity"
+        <activity
+            android:name=".mvp.ui.activity.ZhihuDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreenTheme">
+        </activity>
+        <activity android:name=".mvp.ui.activity.ZhiHuCommentActivity"
                   android:configChanges="orientation|screenSize|keyboardHidden"
                   android:screenOrientation="portrait">
         </activity>

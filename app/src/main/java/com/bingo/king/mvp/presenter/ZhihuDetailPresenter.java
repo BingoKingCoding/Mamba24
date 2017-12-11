@@ -5,6 +5,7 @@ import android.app.Application;
 import com.bingo.king.app.base.BasePresenter;
 import com.bingo.king.di.scope.ActivityScope;
 import com.bingo.king.mvp.contract.ZhihuDetailContract;
+import com.bingo.king.mvp.model.entity.zhihu.DetailExtraBean;
 import com.bingo.king.mvp.model.entity.zhihu.ZhihuDetailBean;
 import com.bingo.king.mvp.model.http.rxerrorhandler.HttpCallback;
 
@@ -38,6 +39,19 @@ public class ZhihuDetailPresenter extends BasePresenter<ZhihuDetailContract.Mode
         });
 
     }
+
+
+    public void requestDetailExtraInfo(int id) {
+        requestInitializeData(mModel.requestDetailExtraInfo(id), new HttpCallback<DetailExtraBean>()
+        {
+            @Override
+            public void onSuccess(DetailExtraBean data)
+            {
+                mRootView.showExtraInfo(data);
+            }
+        });
+    }
+
 
     @Override
     public void onDestroy()

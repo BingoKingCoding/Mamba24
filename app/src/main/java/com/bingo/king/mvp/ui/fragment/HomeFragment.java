@@ -2,7 +2,6 @@ package com.bingo.king.mvp.ui.fragment;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.widget.TextView;
 
@@ -14,12 +13,9 @@ import com.bingo.king.di.component.DaggerHomeComponent;
 import com.bingo.king.di.module.HomeModule;
 import com.bingo.king.mvp.contract.HomeContract;
 import com.bingo.king.mvp.presenter.HomePresenter;
-import com.bingo.king.mvp.ui.adapter.MianViewPagerAdapter;
+import com.bingo.king.mvp.ui.adapter.MainViewPagerAdapter;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
 import com.blankj.utilcode.util.SPUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -36,7 +32,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     TabLayout tabs;
     @BindView(R.id.mainPager)
     ViewPager mainPager;
-    private List<Fragment> mFragments;
 
 
     @Override
@@ -67,17 +62,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             spUtils.put(ZhiHuFragment.ZH_LIST, "知乎日报&&知乎热门&&知乎主题&&知乎专栏&&");
             spUtils.put(ZhiHuFragment.ZH_LIST_IS_CHANGE, true);
         }
-        if (mFragments == null)
-        {
-            mFragments = new ArrayList<>();
-            mFragments.add(new ZhiHuFragment());
-            mFragments.add(CategoryFragment.newInstance(CategoryType.QIAN_STR));
-            mFragments.add(CategoryFragment.newInstance(CategoryType.ANDROID_STR));
-            mFragments.add(CategoryFragment.newInstance(CategoryType.IOS_STR));
-            mFragments.add(CategoryFragment.newInstance(CategoryType.QIAN_STR));
-        }
+
         mainPager.setOffscreenPageLimit(3);
-        mainPager.setAdapter(new MianViewPagerAdapter(getChildFragmentManager(), mFragments));
+        mainPager.setAdapter(new MainViewPagerAdapter(getChildFragmentManager(),CategoryType.getFragments(), CategoryType.getPageTitleList()));
         tabs.setupWithViewPager(mainPager);
     }
 

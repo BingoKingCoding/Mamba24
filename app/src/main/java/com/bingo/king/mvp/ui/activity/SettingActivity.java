@@ -45,7 +45,7 @@ public class SettingActivity extends BaseTitleActivity<SettingPresenter> impleme
     private void init(){
         setToolbarMiddleTitle("设置");
         setToolbarRightAction("保存");
-        setToorBarTitle("设置");
+        setToolBarTitle("设置");
     }
 
     @Override

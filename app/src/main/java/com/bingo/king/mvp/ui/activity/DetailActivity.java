@@ -22,13 +22,12 @@ import com.tencent.smtt.sdk.WebViewClient;
 
 import butterknife.BindView;
 
-import static com.bingo.king.R.id.webview;
 import static com.bingo.king.app.EventBusTags.EXTRA_DETAIL;
 
 @Route(path = ARouterPaths.MAIN_DETAIL)
 public class DetailActivity extends BaseCoordinatorActivity<DetailPresenter> implements DetailContract.View
 {
-    @BindView(webview)
+    @BindView(R.id.webview)
     X5WebView mWebView;
     private GankEntity.ResultsBean entity;
     private boolean isFavorite;

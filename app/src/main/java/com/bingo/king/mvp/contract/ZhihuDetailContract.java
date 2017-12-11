@@ -21,6 +21,6 @@ public interface ZhihuDetailContract
     interface Model extends IModel
     {
         Observable<ZhihuDetailBean> requestDetailInfo(int id);
-        Observable<DetailExtraBean> fetchDetailExtraInfo(int id);
+        Observable<DetailExtraBean> requestDetailExtraInfo(int id);
     }
 }

@@ -78,7 +78,7 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
      * 设置主标题
      *
      */
-    public void setToorBarTitle(Object object) {
+    public void setToolBarTitle(Object object) {
         toolbar.setTitle(CommonUtils.getResultString(object));
     }
 

@@ -58,7 +58,7 @@ public class ZhiHuAdjustmentListActivity extends BaseTitleActivity
         super.loadData(savedInstanceState);
         setState(LoadingPage.STATE_SUCCESS);
 //        setToolbarMiddleTitle("调整栏目顺序");
-        setToorBarTitle("调整栏目顺序");
+        setToolBarTitle("调整栏目顺序");
         init();
     }
 
