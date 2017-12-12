@@ -1,24 +1,38 @@
 package com.bingo.king.mvp.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
+import com.bingo.king.R;
 import com.bingo.king.app.base.BaseFragment;
-
-
 import com.bingo.king.di.component.DaggerZhiHuCommentComponent;
 import com.bingo.king.di.module.ZhiHuCommentModule;
 import com.bingo.king.mvp.contract.ZhiHuCommentContract;
+import com.bingo.king.mvp.model.entity.zhihu.CommentBean;
 import com.bingo.king.mvp.presenter.ZhiHuCommentPresenter;
+import com.bingo.king.mvp.ui.activity.ZhiHuCommentActivity;
+import com.bingo.king.mvp.ui.adapter.ZhiHuCommentAdapter;
 
-import com.bingo.king.R;
+import java.util.List;
+
+import butterknife.BindView;
 
 
 public class ZhiHuCommentFragment extends BaseFragment<ZhiHuCommentPresenter> implements ZhiHuCommentContract.View
 {
 
+    @BindView(R.id.rv_zhihu_comment)
+    RecyclerView mRecyclerView;
+
+    ZhiHuCommentAdapter mAdapter;
+
+    private boolean isShort;
+
     public static ZhiHuCommentFragment newInstance(boolean isShort)
     {
         ZhiHuCommentFragment fragment = new ZhiHuCommentFragment();
+        fragment.isShort = isShort;
         return fragment;
     }
 
@@ -44,7 +58,11 @@ public class ZhiHuCommentFragment extends BaseFragment<ZhiHuCommentPresenter> im
     public void initData(Bundle savedInstanceState)
     {
         //setState(LoadingPage.STATE_SUCCESS);//如果不需要网络请求的话可以去掉注释 直接设置成功状态
-
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mAdapter = new ZhiHuCommentAdapter(null);
+        mAdapter.setDefaultEmptyView(mRecyclerView);
+        mRecyclerView.setAdapter(mAdapter);
+        requestData();
     }
 
     /**
@@ -64,10 +82,21 @@ public class ZhiHuCommentFragment extends BaseFragment<ZhiHuCommentPresenter> im
 
     }
 
+    public void requestData(){
+        ZhiHuCommentActivity mZhiHuCommentActivity = (ZhiHuCommentActivity) getActivity();
+        int id = mZhiHuCommentActivity.getId();
+        if (isShort) {//懒加载在可见的时候加载，会让非静态变量最终都是同一个值所以只能用静态变量。
+            mPresenter.requestShortCommentInfo(id);
+        } else {
+            mPresenter.requestLongCommentInfo(id);
+        }
+    }
+
+
     @Override
     protected void retryRequestData()
     {
-
+        requestData();
     }
 
 
@@ -83,5 +112,10 @@ public class ZhiHuCommentFragment extends BaseFragment<ZhiHuCommentPresenter> im
         showSnackbar(message);
     }
 
-
+    @Override
+    public void refreshView(List<CommentBean.CommentsBean> list)
+    {
+        mAdapter.setNewData(list);
+        mAdapter.notifyDataSetChanged();
+    }
 }

@@ -4,9 +4,9 @@ import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
 import com.bingo.king.R;
+import com.bingo.king.app.base.BaseAdapter;
 import com.bingo.king.app.utils.CategoryType;
 import com.bingo.king.mvp.model.entity.GankEntity;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
  * Created by wwb on 2017/9/27 17:12.
  */
 
-public class CategoryAdapter extends BaseQuickAdapter<GankEntity.ResultsBean, BaseViewHolder>
+public class CategoryAdapter extends BaseAdapter<GankEntity.ResultsBean, BaseViewHolder>
 {
     public CategoryAdapter(@Nullable List<GankEntity.ResultsBean> data)
     {

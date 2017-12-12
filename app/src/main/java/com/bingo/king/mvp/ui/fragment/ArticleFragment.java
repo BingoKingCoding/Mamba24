@@ -3,8 +3,6 @@ package com.bingo.king.mvp.ui.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bingo.king.R;
@@ -12,7 +10,6 @@ import com.bingo.king.app.ARouterPaths;
 import com.bingo.king.app.EventBusTags;
 import com.bingo.king.app.base.BaseFragment;
 import com.bingo.king.app.utils.CommonUtils;
-import com.bingo.king.app.utils.ResourcesUtil;
 import com.bingo.king.di.component.DaggerArticleComponent;
 import com.bingo.king.di.module.ArticleModule;
 import com.bingo.king.mvp.contract.ArticleContract;
@@ -65,6 +62,7 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
         CommonUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
 
         mAdapter = new ArticleAdapter(null);
+        mAdapter.setDefaultEmptyView(mRecyclerView);
         mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
         mAdapter.setOnItemClickListener((adapter, view, position) ->
         {
@@ -85,11 +83,6 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
                     .withSerializable(EventBusTags.EXTRA_DETAIL, intentArticle)
                     .navigation();
         });
-        TextView textView = new TextView(getContext());
-        textView.setText("没有更多内容了");
-        textView.setTextColor(ResourcesUtil.getColor(R.color.C6));
-        textView.setGravity(Gravity.CENTER);
-        mAdapter.setEmptyView(R.layout.loadingpage_state_empty,mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
 
     }

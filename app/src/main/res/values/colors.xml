@@ -72,5 +72,5 @@
     <color name="comment_reply">#9ba4a3</color>
     <color name="comment_btn">#bfbfbf</color>
     <color name="comment_line">#dddddd</color>
-
+    <color name="comment_at">#5d8698</color>
 </resources>

@@ -8,7 +8,6 @@ import android.support.v4.view.ViewPager;
 
 import com.bingo.king.R;
 import com.bingo.king.app.base.BaseTitleActivity;
-import com.bingo.king.mvp.contract.ZhiHuCommentContract;
 import com.bingo.king.mvp.ui.adapter.MainViewPagerAdapter;
 import com.bingo.king.mvp.ui.fragment.ZhiHuCommentFragment;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
@@ -20,9 +19,8 @@ import java.util.Locale;
 import butterknife.BindView;
 
 
-public class ZhiHuCommentActivity extends BaseTitleActivity implements ZhiHuCommentContract.View
+public class ZhiHuCommentActivity extends BaseTitleActivity
 {
-
     @BindView(R.id.tab_zhihu_comment)
     TabLayout tabZhihuComment;
     @BindView(R.id.vp_zhihu_comment)
@@ -83,11 +81,9 @@ public class ZhiHuCommentActivity extends BaseTitleActivity implements ZhiHuComm
         mTitleList.add(String.format(Locale.getDefault(),getString(R.string.zh_long_comment),longNum));
         mFragmentList.add(ZhiHuCommentFragment.newInstance(false));
 
-
         mAdapter = new MainViewPagerAdapter(getSupportFragmentManager(),mFragmentList,mTitleList);
         vpZhihuComment.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
-        tabZhihuComment.setTabMode(TabLayout.MODE_FIXED);
         tabZhihuComment.setupWithViewPager(vpZhihuComment);
     }
 
@@ -97,18 +93,8 @@ public class ZhiHuCommentActivity extends BaseTitleActivity implements ZhiHuComm
 
     }
 
-
-    @Override
-    public void hidePullLoading()
+    public int getId()
     {
-
+        return id;
     }
-
-    @Override
-    public void showMessage(String message)
-    {
-        showSnackbar(message);
-    }
-
-
 }

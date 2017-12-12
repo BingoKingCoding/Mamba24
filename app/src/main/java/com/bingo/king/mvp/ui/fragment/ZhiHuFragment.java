@@ -69,9 +69,11 @@ public class ZhiHuFragment extends BaseFragment<ZhiHuPresenter> implements ZhiHu
     public void onResume()
     {
         SPUtils spUtils = SPUtils.getInstance();
-        if (spUtils.getBoolean(ZH_LIST_IS_CHANGE)) {
+        if (spUtils.getBoolean(ZH_LIST_IS_CHANGE))
+        {
             mZhiHuList = mPresenter.getListZhiHu();
-            if (mAdapter != null) {
+            if (mAdapter != null)
+            {
                 mAdapter.setNewData(mZhiHuList);
                 mAdapter.notifyDataSetChanged();
                 spUtils.put(ZH_LIST_IS_CHANGE, false);
@@ -83,7 +85,49 @@ public class ZhiHuFragment extends BaseFragment<ZhiHuPresenter> implements ZhiHu
     @Override
     protected void initData(Bundle savedInstanceState)
     {
+        initView();
         mPresenter.requestZhiHuData();
+    }
+
+    private void initView()
+    {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        View footerView = getActivity().getLayoutInflater().inflate(R.layout.item_zhihu_footer, (ViewGroup) mRecyclerView.getParent(), false);
+        View headerView = getActivity().getLayoutInflater().inflate(R.layout.item_zhihu_header, (ViewGroup) mRecyclerView.getParent(), false);
+
+        mAdapter = new ZhiHuAdapter(null);
+        mAdapter.addHeaderView(headerView);
+        mAdapter.addFooterView(footerView);
+
+        mBanner = headerView.findViewById(R.id.banner);
+
+        ImageButton ibXiandu = headerView.findViewById(R.id.ib_xiandu);
+        TextView tvZhihuFooter = footerView.findViewById(R.id.tv_zhihu_footer);
+        tvZhihuFooter.setOnClickListener(v -> startActivity(new Intent(getActivity(), ZhiHuAdjustmentListActivity.class)));
+        ibXiandu.setOnClickListener(v -> WebActivity.loadUrl(getActivity(), "https://gank.io/xiandu", "加载中..."));
+
+        mAdapter.setOnItemClickListener(new ZhiHuAdapter.OnItemClickListener()
+        {
+            @Override
+            public void onItemClickListener(int id, View view)
+            {
+                startZhiHuDetailActivity(id, view);
+            }
+
+            @Override
+            public void OnItemThemeClickListener(int id, View view)
+            {
+                startZhihuThemeActivity("id", id, view);
+            }
+
+            @Override
+            public void OnItemSectionClickListener(int id, View view)
+            {
+                startZhihuThemeActivity("section_id", id, view);
+            }
+        });
+
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -111,48 +155,8 @@ public class ZhiHuFragment extends BaseFragment<ZhiHuPresenter> implements ZhiHu
         List<DailyListBean.TopStoriesBean> topStoriesList = mPresenter.getTopStoriesList();
         if (mZhiHuList.size() == 12)
         {
-            View footerView = getActivity().getLayoutInflater().inflate(R.layout.item_zhihu_footer, (ViewGroup) mRecyclerView.getParent(), false);
-            View headerView = getActivity().getLayoutInflater().inflate(R.layout.item_zhihu_header, (ViewGroup) mRecyclerView.getParent(), false);
-
-            mBanner = headerView.findViewById(R.id.banner);
-            ImageButton ibXiandu = headerView.findViewById(R.id.ib_xiandu);
-            TextView tvZhihuFooter = footerView.findViewById(R.id.tv_zhihu_footer);
-
-            ibXiandu.setOnClickListener(v -> WebActivity.loadUrl(getActivity(), "https://gank.io/xiandu", "加载中..."));
-
             initBanner(topStoriesList);
-            if (mAdapter == null)
-            {
-                mAdapter = new ZhiHuAdapter(new ArrayList<>());
-            }
             mAdapter.setNewData(mZhiHuList);
-            mAdapter.addHeaderView(headerView);
-            mAdapter.addFooterView(footerView);
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            mRecyclerView.setAdapter(mAdapter);
-
-            tvZhihuFooter.setOnClickListener(v ->startActivity(new Intent(getActivity(), ZhiHuAdjustmentListActivity.class)));
-
-            mAdapter.setOnItemClickListener(new ZhiHuAdapter.OnItemClickListener()
-            {
-                @Override
-                public void onItemClickListener(int id, View view)
-                {
-                    startZhiHuDetailActivity(id, view);
-                }
-
-                @Override
-                public void OnItemThemeClickListener(int id, View view)
-                {
-                    startZhihuThemeActivity("id", id, view);
-                }
-
-                @Override
-                public void OnItemSectionClickListener(int id, View view)
-                {
-                    startZhihuThemeActivity("section_id", id, view);
-                }
-            });
         }
     }
 
@@ -215,7 +219,6 @@ public class ZhiHuFragment extends BaseFragment<ZhiHuPresenter> implements ZhiHu
                 if (mAdapter != null)
                 {
                     mAdapter.setNewData(mZhiHuList);
-                    mAdapter.notifyDataSetChanged();
                     spUtils.put(ZH_LIST_IS_CHANGE, false);
                 }
             }

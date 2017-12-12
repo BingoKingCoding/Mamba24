@@ -90,6 +90,7 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
     public void setAdapter(CategoryAdapter mAdapter)
     {
         this.mAdapter = mAdapter;
+        mAdapter.setDefaultEmptyView(mRecyclerView);
         mAdapter.setOnLoadMoreListener(this, mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((adapter, view, position) ->

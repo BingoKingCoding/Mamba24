@@ -9,11 +9,9 @@ import com.bingo.king.mvp.model.entity.GankEntity;
 import com.bingo.king.mvp.model.http.rxerrorhandler.HttpCallback;
 import com.bingo.king.mvp.model.http.rxerrorhandler.StatefulCallback;
 import com.bingo.king.mvp.ui.adapter.CategoryAdapter;
-import com.bingo.king.mvp.ui.widget.EasyLoadMoreView;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,10 +56,6 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.Model, Cat
         if (mAdapter == null)
         {
             mAdapter = new CategoryAdapter(mData);
-            EasyLoadMoreView easyLoadMoreView = new EasyLoadMoreView();
-            mAdapter.setLoadMoreView(easyLoadMoreView);
-            mAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
-            mAdapter.isFirstOnly(false);
             mRootView.setAdapter(mAdapter);
         }
         if (pullToRefresh)

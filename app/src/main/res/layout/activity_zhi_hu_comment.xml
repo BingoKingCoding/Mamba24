@@ -11,6 +11,7 @@
         android:id="@+id/tab_zhihu_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:tabMode="fixed"
         app:tabBackground="@drawable/ripple_tab_theme_color_bg"
         app:tabIndicatorColor="@color/white"
         app:tabSelectedTextColor="@color/white"

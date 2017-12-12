@@ -5,9 +5,12 @@ import android.app.Application;
 import com.bingo.king.app.base.BaseModel;
 import com.bingo.king.di.scope.ActivityScope;
 import com.bingo.king.mvp.contract.ZhiHuCommentContract;
+import com.bingo.king.mvp.model.entity.zhihu.CommentBean;
 import com.bingo.king.mvp.model.http.IRepository;
 
 import javax.inject.Inject;
+
+import io.reactivex.Observable;
 
 
 @ActivityScope
@@ -30,4 +33,15 @@ public class ZhiHuCommentModel extends BaseModel implements ZhiHuCommentContract
         this.mApplication = null;
     }
 
+    @Override
+    public Observable<CommentBean> requestLongCommentInfo(int id)
+    {
+        return mRepository.requestLongCommentInfo(id);
+    }
+
+    @Override
+    public Observable<CommentBean> requestShortCommentInfo(int id)
+    {
+        return mRepository.requestShortCommentInfo(id);
+    }
 }

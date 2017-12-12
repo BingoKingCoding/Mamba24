@@ -5,6 +5,8 @@ import android.app.Application;
 import com.bingo.king.app.base.BasePresenter;
 import com.bingo.king.di.scope.ActivityScope;
 import com.bingo.king.mvp.contract.ZhiHuCommentContract;
+import com.bingo.king.mvp.model.entity.zhihu.CommentBean;
+import com.bingo.king.mvp.model.http.rxerrorhandler.HttpCallback;
 
 import javax.inject.Inject;
 
@@ -32,4 +34,27 @@ public class ZhiHuCommentPresenter extends BasePresenter<ZhiHuCommentContract.Mo
 
     }
 
+    public void requestShortCommentInfo(int id)
+    {
+        requestInitializeData(mModel.requestShortCommentInfo(id), new HttpCallback<CommentBean>()
+        {
+            @Override
+            public void onSuccess(CommentBean data)
+            {
+                mRootView.refreshView(data.getComments());
+            }
+        });
+    }
+
+    public void requestLongCommentInfo(int id)
+    {
+        requestInitializeData(mModel.requestLongCommentInfo(id), new HttpCallback<CommentBean>()
+        {
+            @Override
+            public void onSuccess(CommentBean data)
+            {
+                mRootView.refreshView(data.getComments());
+            }
+        });
+    }
 }

@@ -4,9 +4,9 @@ import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
 import com.bingo.king.R;
+import com.bingo.king.app.base.BaseAdapter;
 import com.bingo.king.app.utils.CategoryType;
 import com.bingo.king.mvp.model.entity.DaoGankEntity;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
  * Created by wwb on 2017/9/27 17:12.
  */
 
-public class ArticleAdapter extends BaseQuickAdapter<DaoGankEntity,BaseViewHolder>
+public class ArticleAdapter extends BaseAdapter<DaoGankEntity,BaseViewHolder>
 {
     public ArticleAdapter(@Nullable List<DaoGankEntity> data)
     {
