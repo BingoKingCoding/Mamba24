@@ -234,4 +234,8 @@ public class ZhiHuFragment extends BaseFragment<ZhiHuPresenter> implements ZhiHu
             }
         }
     }
+
+    private void test(){
+
+    }
 }
