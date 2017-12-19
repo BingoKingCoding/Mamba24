@@ -21,6 +21,7 @@ import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.squareup.leakcanary.LeakCanary;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
 
 import butterknife.ButterKnife;
@@ -46,6 +47,7 @@ public class App extends Application
         initLeakCanary();
         setupInjector();
         initX5();
+        initBugLy();
         GreenDaoHelper.getInstance().initDatabase(this);
         if (BuildConfig.DEBUG)
         {
@@ -54,6 +56,16 @@ public class App extends Application
             ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
         }
         ARouter.init(this); // 尽可能早，推荐在Application中初始化
+    }
+
+    private void initBugLy()
+    {
+        //第三个参数为SDK调试模式开关，调试模式的行为特性如下：
+//        输出详细的Bugly SDK的Log；
+//        每一条Crash都会被立即上报；
+//        自定义日志将会在Logcat中输出。
+//        建议在测试阶段建议设置成true，发布时设置为false。
+        CrashReport.initCrashReport(getApplicationContext(), Constants.APPID_BUGLY, BuildConfig.DEBUG);
     }
 
     private void initX5()
