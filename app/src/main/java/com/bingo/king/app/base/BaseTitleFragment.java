@@ -1,6 +1,7 @@
 package com.bingo.king.app.base;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,10 +21,18 @@ public abstract class BaseTitleFragment<P extends IPresenter> extends BaseFragme
     protected TextView tv_title;
     protected TextView toolbar_right_action;
 
+
     @Override
-    protected void initData(Bundle savedInstanceState)
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
+        super.onViewCreated(view, savedInstanceState);
         initControlViews();
+        initTitle();
+    }
+
+
+    protected void initTitle(){
+
     }
 
     @Override
