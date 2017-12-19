@@ -94,23 +94,19 @@ public class ZhihuDetailActivity extends BaseCoordinatorActivity<ZhihuDetailPres
 
     private void initScrollView()
     {
-        nsvZhihuDetail.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener()
+        nsvZhihuDetail.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) ->
         {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY)
+            Timber.d(TAG, "scrollY = " + scrollY + "oldScrollY = " + oldScrollY);
+            if (scrollY - oldScrollY > 0 && isBottomShow)//下移隐藏
             {
-                Timber.d(TAG, "scrollY = " + scrollY + "oldScrollY = " + oldScrollY);
-                if (scrollY - oldScrollY > 0 && isBottomShow)//下移隐藏
-                {
-                    isBottomShow = false;
-                    flDetailBottom.animate().translationY(flDetailBottom.getHeight());
+                isBottomShow = false;
+                flDetailBottom.animate().translationY(flDetailBottom.getHeight());
 
-                } else if (scrollY - oldScrollY < 0 && !isBottomShow)
-                {//上移出现
-                    isBottomShow = true;
-                    flDetailBottom.animate().translationY(0);
+            } else if (scrollY - oldScrollY < 0 && !isBottomShow)
+            {//上移出现
+                isBottomShow = true;
+                flDetailBottom.animate().translationY(0);
 
-                }
             }
         });
     }
