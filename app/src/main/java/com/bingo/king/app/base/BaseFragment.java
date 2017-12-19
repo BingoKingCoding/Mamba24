@@ -8,6 +8,7 @@ import android.support.v4.util.Preconditions;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.bingo.king.app.App;
 import com.bingo.king.di.component.AppComponent;
@@ -80,10 +81,27 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
                 }
             };
         }
-        return mLoadingPage;
+        return addTitleView(mLoadingPage);
     }
 
+    private View addTitleView(View contentView) {
+        View viewFinal = contentView;
+        int resId = this.onCreateTitleViewResId();
+        if(resId != 0) {
+            View titleView = LayoutInflater.from(getActivity()).inflate(resId, (ViewGroup)contentView, false);
+            LinearLayout linAll = new LinearLayout(getActivity());
+            linAll.setOrientation(LinearLayout.VERTICAL);
+            linAll.addView(titleView);
+            linAll.addView(contentView);
+            viewFinal = linAll;
+        }
+        return viewFinal;
+    }
 
+    protected int onCreateTitleViewResId()
+    {
+        return 0;
+    }
 
 
     @Override
@@ -97,6 +115,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         }//注册到事件主线
         initVariable();
         initComponent();
+
     }
 
 
@@ -109,9 +128,10 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         {
             rootView = view;
         }
-        initData(savedInstanceState);
         Timber.d(TAG, "onViewCreated");
         super.onViewCreated(isReuseView ? rootView : view, savedInstanceState);
+
+        initData(savedInstanceState);
     }
 
 
@@ -186,7 +206,6 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
 
 
     /**
-     *
      * 去除setUserVisibleHint()多余的回调场景，保证只有当fragment可见状态发生变化时才回调
      * 回调时机在view创建完后，所以支持ui操作，解决在setUserVisibleHint()里进行ui操作有可能报null异常的问题
      * <p>
@@ -203,7 +222,6 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
 
     /**
      * 在fragment首次可见时回调，可在这里进行加载数据，保证只在第一次打开Fragment时才会加载数据，
-     *
      */
     protected void onFragmentFirstVisible()
     {
