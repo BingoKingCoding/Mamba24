@@ -31,7 +31,6 @@ public class CategoryType
         mFragments.add(CategoryFragment.newInstance(CategoryType.ANDROID_STR));
         mFragments.add(CategoryFragment.newInstance(CategoryType.IOS_STR));
         mFragments.add(CategoryFragment.newInstance(CategoryType.QIAN_STR));
-        mFragments.add(CategoryFragment.newInstance(CategoryType.QIAN_STR));
         return mFragments;
     }
 
@@ -42,7 +41,6 @@ public class CategoryType
         list.add(NEW_MOVIE);
         list.add(ANDROID_STR);
         list.add(IOS_STR);
-        list.add(QIAN_STR);
         list.add(QIAN_STR);
         return list;
     }
