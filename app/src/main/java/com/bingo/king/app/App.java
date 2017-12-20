@@ -65,7 +65,7 @@ public class App extends Application
 //        每一条Crash都会被立即上报；
 //        自定义日志将会在Logcat中输出。
 //        建议在测试阶段建议设置成true，发布时设置为false。
-        CrashReport.initCrashReport(getApplicationContext(), Constants.APPID_BUGLY, BuildConfig.DEBUG);
+        CrashReport.initCrashReport(getApplicationContext(), Constants.APP_ID_BUGLY, !BuildConfig.DEBUG);
     }
 
     private void initX5()
