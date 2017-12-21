@@ -3,6 +3,8 @@ package com.bingo.king.mvp.model.http;
 import android.content.Context;
 
 import com.bingo.king.mvp.model.entity.GankEntity;
+import com.bingo.king.mvp.model.entity.douban.HotMovieBean;
+import com.bingo.king.mvp.model.entity.douban.MovieDetailBean;
 import com.bingo.king.mvp.model.entity.zhihu.CommentBean;
 import com.bingo.king.mvp.model.entity.zhihu.DailyListBean;
 import com.bingo.king.mvp.model.entity.zhihu.DetailExtraBean;
@@ -12,6 +14,7 @@ import com.bingo.king.mvp.model.entity.zhihu.SectionListBean;
 import com.bingo.king.mvp.model.entity.zhihu.ThemeChildListBean;
 import com.bingo.king.mvp.model.entity.zhihu.ThemeListBean;
 import com.bingo.king.mvp.model.entity.zhihu.ZhihuDetailBean;
+import com.bingo.king.mvp.model.http.apiservice.DoubanService;
 import com.bingo.king.mvp.model.http.apiservice.GankIoService;
 import com.bingo.king.mvp.model.http.apiservice.ZhiHuService;
 
@@ -25,87 +28,107 @@ import retrofit2.Retrofit;
 
 public class RepositoryImpl implements IRepository
 {
-    private GankIoService gankIoRetrofit;
-    private ZhiHuService zhiHuRetrofit;
+    private GankIoService mGankIoService;
+    private ZhiHuService mZhiHuService;
+    private DoubanService mDoubanService;
     private Context mContext;
 
-    public RepositoryImpl(Context context, Retrofit gankIoRetrofit,Retrofit zhiHuRetrofit)
+    public RepositoryImpl(Context context, Retrofit gankIoRetrofit,Retrofit zhiHuRetrofit,Retrofit doubanRetrofit)
     {
         this.mContext = context;
-        this.gankIoRetrofit = gankIoRetrofit.create(GankIoService.class);
-        this.zhiHuRetrofit = zhiHuRetrofit.create(ZhiHuService.class);
+        this.mGankIoService = gankIoRetrofit.create(GankIoService.class);
+        this.mZhiHuService = zhiHuRetrofit.create(ZhiHuService.class);
+        this.mDoubanService = doubanRetrofit.create(DoubanService.class);
     }
 
     @Override
     public Observable<GankEntity> gank(String type, int pageSize, String page)
     {
-        return gankIoRetrofit.gank(type,pageSize,page);
+        return mGankIoService.gank(type,pageSize,page);
     }
 
     @Override
     public Observable<GankEntity> getRandomGirl()
     {
-        return gankIoRetrofit.getRandomGirl();
+        return mGankIoService.getRandomGirl();
     }
 
     @Override
     public Observable<DailyListBean> requestDailyList()
     {
-        return zhiHuRetrofit.requestDailyList();
+        return mZhiHuService.requestDailyList();
     }
 
     @Override
     public Observable<ThemeListBean> requestThemeList()
     {
-        return zhiHuRetrofit.requestThemeList();
+        return mZhiHuService.requestThemeList();
     }
 
     @Override
     public Observable<ThemeChildListBean> requestThemeChildList(int id)
     {
-        return zhiHuRetrofit.requestThemeChildList(id);
+        return mZhiHuService.requestThemeChildList(id);
     }
 
     @Override
     public Observable<SectionListBean> requestSectionList()
     {
-        return zhiHuRetrofit.requestSectionList();
+        return mZhiHuService.requestSectionList();
     }
 
     @Override
     public Observable<SectionChildListBean> requestSectionChildList(int id)
     {
-        return zhiHuRetrofit.requestSectionChildList(id);
+        return mZhiHuService.requestSectionChildList(id);
     }
 
     @Override
     public Observable<HotListBean> requestHotList()
     {
-        return zhiHuRetrofit.requestHotList();
+        return mZhiHuService.requestHotList();
     }
 
     @Override
     public Observable<ZhihuDetailBean> requestDetailInfo(int id)
     {
-        return zhiHuRetrofit.requestDetailInfo(id);
+        return mZhiHuService.requestDetailInfo(id);
     }
 
     @Override
     public Observable<DetailExtraBean> requestDetailExtraInfo(int id)
     {
-        return zhiHuRetrofit.requestDetailExtraInfo(id);
+        return mZhiHuService.requestDetailExtraInfo(id);
     }
 
     @Override
     public Observable<CommentBean> requestLongCommentInfo(int id)
     {
-        return zhiHuRetrofit.requestLongCommentInfo(id);
+        return mZhiHuService.requestLongCommentInfo(id);
     }
 
     @Override
     public Observable<CommentBean> requestShortCommentInfo(int id)
     {
-        return zhiHuRetrofit.requestShortCommentInfo(id);
+        return mZhiHuService.requestShortCommentInfo(id);
+    }
+
+    @Override
+    public Observable<HotMovieBean> requestHotMovie()
+    {
+        return mDoubanService.requestHotMovie();
+    }
+
+    @Override
+    public Observable<MovieDetailBean> requestMovieDetail(String id)
+    {
+        return mDoubanService.requestMovieDetail(id);
+    }
+
+    @Override
+    public Observable<HotMovieBean> requestMovieTop250(int start, int count)
+    {
+        return mDoubanService.requestMovieTop250(start,count);
     }
 
 

@@ -10,6 +10,7 @@ public class Constants
     public static final String BASE_API_URL_GANKIO = "http://gank.io/";
     public static final String BASE_API_URL_ZHIHU = "http://news-at.zhihu.com/api/4/";
     public static final String BASE_API_URL_TEST = "http://ws.audioscrobbler.com/2.0/";
+    public static final String BASE_API_URL_DOUBAN = "https://api.douban.com/";
     public static final int HTTP_CACHE_SIZE = 20 * 1024 * 1024;
     public static final int HTTP_CONNECT_TIMEOUT = 10;
     public static final int HTTP_READ_TIMEOUT = 20;

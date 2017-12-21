@@ -36,9 +36,9 @@ public class NetworkModule
 
     @Provides
     @Singleton
-    IRepository provideRepository(@Named("gankIo") Retrofit gankIoRetrofit, @Named("zhiHu") Retrofit zhiHuRetrofit)
+    IRepository provideRepository(@Named("gankIo") Retrofit gankIoRetrofit, @Named("zhiHu") Retrofit zhiHuRetrofit, @Named("douBan") Retrofit doubanRetrofit)
     {
-        return new RepositoryImpl(mApp, gankIoRetrofit, zhiHuRetrofit);
+        return new RepositoryImpl(mApp, gankIoRetrofit, zhiHuRetrofit, doubanRetrofit);
     }
 
 
@@ -72,7 +72,7 @@ public class NetworkModule
     @Provides
     @Named("gankIo")
     @Singleton
-    Retrofit provideOneRetrofit(OkHttpClient client)
+    Retrofit provideGankIoRetrofit(OkHttpClient client)
     {
         String baseUrl = Constants.BASE_API_URL_GANKIO;
 
@@ -88,9 +88,25 @@ public class NetworkModule
     @Provides
     @Named("zhiHu")
     @Singleton
-    Retrofit provideTwoRetrofit(OkHttpClient client)
+    Retrofit provideZhiHuRetrofit(OkHttpClient client)
     {
         String baseUrl = Constants.BASE_API_URL_ZHIHU;
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+        return retrofit;
+    }
+
+    @Provides
+    @Named("douBan")
+    @Singleton
+    Retrofit provideDouBanRetrofit(OkHttpClient client)
+    {
+        String baseUrl = Constants.BASE_API_URL_DOUBAN;
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)

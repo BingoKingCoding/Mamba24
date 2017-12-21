@@ -1,6 +1,8 @@
 package com.bingo.king.mvp.model.http;
 
 import com.bingo.king.mvp.model.entity.GankEntity;
+import com.bingo.king.mvp.model.entity.douban.HotMovieBean;
+import com.bingo.king.mvp.model.entity.douban.MovieDetailBean;
 import com.bingo.king.mvp.model.entity.zhihu.CommentBean;
 import com.bingo.king.mvp.model.entity.zhihu.DailyListBean;
 import com.bingo.king.mvp.model.entity.zhihu.DetailExtraBean;
@@ -12,6 +14,8 @@ import com.bingo.king.mvp.model.entity.zhihu.ThemeListBean;
 import com.bingo.king.mvp.model.entity.zhihu.ZhihuDetailBean;
 
 import io.reactivex.Observable;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * <获取数据的接口>
@@ -76,5 +80,26 @@ public interface IRepository
      */
     Observable<CommentBean> requestShortCommentInfo(int id);
 
+
+
+    /**
+     * 豆瓣热映电影，每日更新
+     */
+    Observable<HotMovieBean> requestHotMovie();
+
+    /**
+     * 获取电影详情
+     *
+     * @param id 电影bean里的id
+     */
+    Observable<MovieDetailBean> requestMovieDetail(@Path("id") String id);
+
+    /**
+     * 获取豆瓣电影top250
+     *
+     * @param start 从多少开始，如从"0"开始
+     * @param count 一次请求的数目，如"10"条，最多100
+     */
+    Observable<HotMovieBean> requestMovieTop250(@Query("start") int start, @Query("count") int count);
 
 }

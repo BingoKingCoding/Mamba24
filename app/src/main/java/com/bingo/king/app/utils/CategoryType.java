@@ -3,6 +3,7 @@ package com.bingo.king.app.utils;
 import android.support.v4.app.Fragment;
 
 import com.bingo.king.mvp.ui.fragment.CategoryFragment;
+import com.bingo.king.mvp.ui.fragment.DBMovieFragment;
 import com.bingo.king.mvp.ui.fragment.ZhiHuFragment;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class CategoryType
     {
         List<Fragment> mFragments = new ArrayList<>();
         mFragments.add(new ZhiHuFragment());
-        mFragments.add(CategoryFragment.newInstance(CategoryType.QIAN_STR));
+        mFragments.add(new DBMovieFragment());
         mFragments.add(CategoryFragment.newInstance(CategoryType.ANDROID_STR));
         mFragments.add(CategoryFragment.newInstance(CategoryType.IOS_STR));
         mFragments.add(CategoryFragment.newInstance(CategoryType.QIAN_STR));
