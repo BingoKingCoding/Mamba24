@@ -25,3 +25,7 @@
 #-renamesourcefileattribute SourceFile
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
+-keep public class cn.waps.** {*;}
+-keep public interface cn.waps.** {*;}
+#对于使用 4.0.3 以上 android-sdk 进行项目编译时产生异常的情况时,加入以下内容：
+-dontwarn cn.waps.**

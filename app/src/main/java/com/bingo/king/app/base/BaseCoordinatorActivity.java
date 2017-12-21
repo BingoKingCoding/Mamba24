@@ -40,7 +40,7 @@ public abstract class BaseCoordinatorActivity<P extends IPresenter> extends Load
     }
 
     @Override
-    public int initView(Bundle savedInstanceState)
+    public int onCreateContentView(Bundle savedInstanceState)
     {
         return R.layout.activity_coordinator_base;
     }
@@ -52,7 +52,7 @@ public abstract class BaseCoordinatorActivity<P extends IPresenter> extends Load
     }
 
     @Override
-    protected void loadData(Bundle savedInstanceState)
+    protected void initUI()
     {
         app_bar = findViewById(R.id.app_bar);
         ctl_toolbar = findViewById(R.id.ctl_toolbar);

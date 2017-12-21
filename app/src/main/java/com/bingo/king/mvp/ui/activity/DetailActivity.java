@@ -47,7 +47,6 @@ public class DetailActivity extends BaseCoordinatorActivity<DetailPresenter> imp
     @Override
     public void loadData(Bundle savedInstanceState)
     {
-        super.loadData(savedInstanceState);
         entity = (GankEntity.ResultsBean) getIntent().getExtras().getSerializable(EXTRA_DETAIL);
         mPresenter.getGirl();
         mPresenter.getQuery(entity._id);

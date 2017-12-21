@@ -69,7 +69,7 @@ public class PhotoViewActivity extends BasePresenterActivity<PhotoViewPresenter>
     }
 
     @Override
-    public int initView(Bundle savedInstanceState)
+    public int onCreateContentView(Bundle savedInstanceState)
     {
         return R.layout.activity_photo_view; //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
     }

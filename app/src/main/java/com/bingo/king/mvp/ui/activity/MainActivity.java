@@ -42,7 +42,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     };
 
     @Override
-    public int initView(Bundle savedInstanceState)
+    public int onCreateContentView(Bundle savedInstanceState)
     {
         return R.layout.activity_main;
     }

@@ -19,7 +19,6 @@ public abstract class LoadingBaseActivity<P extends IPresenter> extends BasePres
     protected FrameLayout flBaseContent;
 
 
-
     @Override
     public void initData(Bundle savedInstanceState)
     {
@@ -48,17 +47,20 @@ public abstract class LoadingBaseActivity<P extends IPresenter> extends BasePres
             };
         }
         flBaseContent.addView(mLoadingPage);
+        initUI();
         loadData(savedInstanceState);
     }
 
-
+    protected void initUI(){
+        
+    }
 
     @Override
-    public void setState(int state) {
+    public void setState(int state)
+    {
         mLoadingPage.state = state;
         mLoadingPage.showPage();
     }
-
 
 
     protected abstract void loadData(Bundle savedInstanceState);

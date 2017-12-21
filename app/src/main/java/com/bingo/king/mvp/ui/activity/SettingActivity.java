@@ -43,7 +43,7 @@ public class SettingActivity extends BaseTitleActivity<SettingPresenter> impleme
     }
 
     private void init(){
-        setToolbarMiddleTitle("设置");
+//        setToolbarMiddleTitle("设置");
         setToolbarRightAction("保存");
         setToolBarTitle("设置");
     }

@@ -69,7 +69,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Statef
         super.onCreate(savedInstanceState);
         try
         {
-            int layoutResID = initView(savedInstanceState);
+            int layoutResID = onCreateContentView(savedInstanceState);
             if (layoutResID != 0)
             {//如果initView返回0,框架则不会调用setContentView(),当然也不会 Bind ButterKnife
                 setContentView(layoutResID);
@@ -260,7 +260,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Statef
     /**
      * 初始化 View,
      */
-    public abstract int initView(Bundle savedInstanceState);
+    public abstract int onCreateContentView(Bundle savedInstanceState);
 
     public abstract void setupActivityComponent();
 

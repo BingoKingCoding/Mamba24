@@ -19,7 +19,7 @@ public abstract class BaseTitleActivity<P extends IPresenter> extends LoadingBas
     protected TextView tv_title;
     protected TextView toolbar_right_action;
     @Override
-    public int initView(Bundle savedInstanceState)
+    public int onCreateContentView(Bundle savedInstanceState)
     {
         return R.layout.activity_base_toolbar;
     }

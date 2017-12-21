@@ -1,6 +1,8 @@
 package com.bingo.king.mvp.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.bingo.king.R;
 import com.bingo.king.app.base.BaseFragment;
@@ -8,7 +10,10 @@ import com.bingo.king.di.component.DaggerMeComponent;
 import com.bingo.king.di.module.MeModule;
 import com.bingo.king.mvp.contract.MeContract;
 import com.bingo.king.mvp.presenter.MePresenter;
+import com.bingo.king.mvp.ui.activity.SettingActivity;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
+
+import butterknife.OnClick;
 
 /**
  * <个人中心页面>
@@ -17,7 +22,6 @@ import com.bingo.king.mvp.ui.widget.LoadingPage;
 
 public class MeFragment extends BaseFragment<MePresenter> implements MeContract.View
 {
-
 
     @Override
     protected int getContentLayoutId()
@@ -48,14 +52,14 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     }
 
 
-//    @OnClick({R.id.iv_title_setting})
-//    public void onClick(View view){
-//        switch (view.getId()){
-//            case R.id.iv_title_setting:
-//                startActivity(new Intent(getActivity(), SettingActivity.class));
-//                break;
-//        }
-//    }
+    @OnClick({R.id.iv_title_setting})
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.iv_title_setting:
+                startActivity(new Intent(getActivity(), SettingActivity.class));
+                break;
+        }
+    }
 
     @Override
     public void hidePullLoading()

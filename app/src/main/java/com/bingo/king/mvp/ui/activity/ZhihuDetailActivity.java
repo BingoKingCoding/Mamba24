@@ -67,7 +67,6 @@ public class ZhihuDetailActivity extends BaseCoordinatorActivity<ZhihuDetailPres
     @Override
     public void loadData(Bundle savedInstanceState)
     {
-        super.loadData(savedInstanceState);
         //setState(LoadingPage.STATE_SUCCESS);//如果不需要网络请求的话可以去掉注释 直接设置成功状态
         init();//可以在此进行初始化
     }

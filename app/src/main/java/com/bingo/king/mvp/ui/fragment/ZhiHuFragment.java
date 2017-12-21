@@ -22,6 +22,7 @@ import com.bingo.king.mvp.presenter.ZhiHuPresenter;
 import com.bingo.king.mvp.ui.activity.WebActivity;
 import com.bingo.king.mvp.ui.activity.ZhiHuAdjustmentListActivity;
 import com.bingo.king.mvp.ui.activity.ZhihuDetailActivity;
+import com.bingo.king.mvp.ui.activity.ZhihuThemeActivity;
 import com.bingo.king.mvp.ui.adapter.ZhiHuAdapter;
 import com.blankj.utilcode.util.SPUtils;
 import com.youth.banner.Banner;
@@ -179,12 +180,12 @@ public class ZhiHuFragment extends BaseFragment<ZhiHuPresenter> implements ZhiHu
 
     private void startZhihuThemeActivity(String name, int id, View view)
     {
-//        Intent intent = new Intent();
-//        intent.setClass(getActivity(), ZhihuThemeActivity.class);
-//        intent.putExtra(name, id);
-//        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-//                view, getActivity().getResources().getString(R.string.transition_image));
-//        getActivity().startActivity(intent, options.toBundle());
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), ZhihuThemeActivity.class);
+        intent.putExtra(name, id);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                view, getActivity().getResources().getString(R.string.transition_image));
+        getActivity().startActivity(intent, options.toBundle());
     }
 
     private void startZhiHuDetailActivity(int id, View view)
