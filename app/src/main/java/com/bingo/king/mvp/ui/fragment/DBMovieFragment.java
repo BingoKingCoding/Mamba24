@@ -1,7 +1,9 @@
 package com.bingo.king.mvp.ui.fragment;
 
 import android.animation.Animator;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,6 +15,7 @@ import com.bingo.king.di.module.DBMovieModule;
 import com.bingo.king.mvp.contract.DBMovieContract;
 import com.bingo.king.mvp.model.entity.douban.HotMovieBean;
 import com.bingo.king.mvp.presenter.DBMoviePresenter;
+import com.bingo.king.mvp.ui.activity.MovieTopDetailActivity;
 import com.bingo.king.mvp.ui.adapter.MovieLatestAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
@@ -66,7 +69,6 @@ public class DBMovieFragment extends BaseFragment<DBMoviePresenter> implements D
 
     private void initUI()
     {
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new MovieLatestAdapter(null);
         mRecyclerView.setAdapter(mAdapter);
@@ -122,9 +124,9 @@ public class DBMovieFragment extends BaseFragment<DBMoviePresenter> implements D
 
     private void startMovieTopDetailActivity(HotMovieBean.SubjectsBean positionData, View view)
     {
-//        Intent intent = new Intent();
-//        intent.setClass(getActivity(), MovieTopDetailActivity.class);
-//        intent.putExtra("bean", positionData);
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), MovieTopDetailActivity.class);
+        intent.putExtra("bean", positionData);
         /**
          * 用这个ActivityOptionsCompat比用ActivityOptions兼容性更好，前者是V4下的兼容到16后者到21.
          * ActivityOptionsCompat.makeSceneTransitionAnimation(）的第三个参数则是跳转后图片显示的transitionName的值
@@ -133,9 +135,9 @@ public class DBMovieFragment extends BaseFragment<DBMoviePresenter> implements D
          android:fitsSystemWindows="true">
          跳转到目标ImageView不能是addview进来的
          */
-//        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-//                view, getActivity().getResources().getString(R.string.transition_image));
-//        getActivity().startActivity(intent, options.toBundle());
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                view, getActivity().getResources().getString(R.string.transition_image));
+        getActivity().startActivity(intent, options.toBundle());
     }
 
 }

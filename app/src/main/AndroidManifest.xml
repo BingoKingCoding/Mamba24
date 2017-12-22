@@ -94,8 +94,14 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".mvp.ui.activity.ZhihuThemeActivity"
+        <activity
+            android:name=".mvp.ui.activity.ZhihuThemeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".mvp.ui.activity.MovieTopDetailActivity"
                   android:configChanges="orientation|screenSize|keyboardHidden"
+                  android:theme="@style/FullScreenTheme"
                   android:screenOrientation="portrait">
         </activity>
     </application>
