@@ -38,16 +38,10 @@ android {
     //签名
     signingConfigs {
         release {
-            storeFile file("fanwe.keystore")
-            storePassword "fanwe99cnlin"
-            keyAlias "fanwe"
-            keyPassword "fanwe99cnlin"
-        }
-        release {
-            storeFile file("fanwe.keystore")
-            storePassword "fanwe99cnlin"
-            keyAlias "fanwe"
-            keyPassword "fanwe99cnlin"
+            storeFile file("bingo.jks")
+            storePassword 'bingo123'
+            keyAlias 'bingo'
+            keyPassword 'bingo123'
         }
     }
 
@@ -107,7 +101,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:$supportVersion"
     compile "com.android.support:palette-v7:$supportVersion"
     compile "com.android.support:design:$supportVersion"
-    compile "com.zhy:autolayout:1.4.5"
+    compile 'com.zhy:autolayout:1.4.5'
     compile 'com.jakewharton.timber:timber:4.5.1'
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
@@ -115,8 +109,10 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     compile 'com.google.dagger:dagger:2.12'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.12'
-    compile 'com.blankj:utilcode:1.9.1'//工具类
-    compile 'org.simple:androideventbus:1.0.5.1'//轻量级的Eventbus
+    compile 'com.blankj:utilcode:1.9.1'
+    //工具类
+    compile 'org.simple:androideventbus:1.0.5.1'
+    //轻量级的Eventbus
     compile 'io.reactivex.rxjava2:rxjava:2.1.3'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'com.trello.rxlifecycle2:rxlifecycle:2.2.0'
@@ -128,25 +124,25 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
-    compile 'com.roughike:bottom-bar:2.3.1' //底部导航
+    compile 'com.roughike:bottom-bar:2.3.1'
+    //底部导航
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
     compile 'org.greenrobot:greendao:3.2.2'
-    compile 'me.yuqirong:cardswipelayout:1.0.0'//仿探探
-
+    compile 'me.yuqirong:cardswipelayout:1.0.0'
+    //仿探探
     //图片加载
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
-
     compile 'com.alibaba:arouter-api:1.2.2'
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.3'
-
     compile 'pub.devrel:easypermissions:1.0.1'
     compile 'com.jaeger.statusbarutil:library:1.4.0'
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
-    compile 'com.youth.banner:banner:1.4.9'  //最新版本
-
-    compile 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
-    compile 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
-
+    compile 'com.youth.banner:banner:1.4.9'
+    //最新版本
+    compile 'com.tencent.bugly:crashreport:latest.release'
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    compile 'com.tencent.bugly:nativecrashreport:latest.release'
+    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
 }
