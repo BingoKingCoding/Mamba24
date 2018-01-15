@@ -35,6 +35,22 @@ android {
 
     }
 
+    //签名
+    signingConfigs {
+        release {
+            storeFile file("fanwe.keystore")
+            storePassword "fanwe99cnlin"
+            keyAlias "fanwe"
+            keyPassword "fanwe99cnlin"
+        }
+        release {
+            storeFile file("fanwe.keystore")
+            storePassword "fanwe99cnlin"
+            keyAlias "fanwe"
+            keyPassword "fanwe99cnlin"
+        }
+    }
+
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
@@ -56,17 +72,21 @@ android {
 
     buildTypes {
         debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-DEBUG'
             buildConfigField "boolean", "LOG_DEBUG", "true"
             buildConfigField "boolean", "USE_CANARY", "true"
             minifyEnabled false
+            zipAlignEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "boolean", "USE_CANARY", "false"
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
             zipAlignEnabled true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
