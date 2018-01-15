@@ -61,6 +61,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     @Override
     public void initData(Bundle savedInstanceState)
     {
+        mIsExitApp = true;
         mBottomBar.setOnTabSelectListener(mOnTabSelectListener);
         mBottomBar.selectTabAtPosition(0);
     }

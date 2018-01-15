@@ -7,8 +7,8 @@ import android.os.Message;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.util.Preconditions;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -19,7 +19,6 @@ import com.bingo.king.app.utils.SDFragmentManager;
 import com.bingo.king.di.component.AppComponent;
 import com.bingo.king.mvp.model.http.rxerrorhandler.StatefulCallback;
 import com.bingo.king.mvp.ui.widget.ProgressDialog;
-import com.blankj.utilcode.util.AppUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -167,12 +166,15 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Statef
     {
         if (System.currentTimeMillis() - mExitTime > 2000)
         {
-            showSnackbar("再按一次退出!");
+            showSnackbar("再按一次返回桌面!");
         } else
         {
             //发送事件,参考下面的方法onExitAppReceive
-            EventBus.getDefault().post(new Message(), EventBusTags.EXITAPP_MESSAGE);
-            AppUtils.exitApp();
+//            EventBus.getDefault().post(new Message(), EventBusTags.EXITAPP_MESSAGE);
+//            AppUtils.exitApp();
+
+            //使App不退出，而是进入后台运行
+            moveTaskToBack(false);
         }
         mExitTime = System.currentTimeMillis();
     }
@@ -210,7 +212,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Statef
      */
     protected void showSnackbar(String message, boolean isLong)
     {
-        Preconditions.checkNotNull(message);
+        TextUtils.isEmpty(message);
         View view = getWindow().getDecorView().findViewById(android.R.id.content);
         Snackbar.make(view, message, isLong ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
     }
