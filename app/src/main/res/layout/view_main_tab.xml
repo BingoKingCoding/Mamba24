@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
-        android:background="@color/white"
+        android:background="@color/bg_bottom_navigation"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
