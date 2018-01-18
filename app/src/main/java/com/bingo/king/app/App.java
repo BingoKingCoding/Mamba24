@@ -2,7 +2,7 @@ package com.bingo.king.app;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
@@ -17,9 +17,6 @@ import com.bingo.king.di.module.NetworkModule;
 import com.bingo.king.mvp.ui.widget.CustomRefreshHeader;
 import com.blankj.utilcode.util.Utils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
@@ -120,16 +117,11 @@ public class App extends Application
     static
     {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-        SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater()
+        SmartRefreshLayout.setDefaultRefreshHeaderCreater((context, layout) ->
         {
-            @NonNull
-            @Override
-            public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout)
-            {
-                layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);//全局设置主题颜色
+            layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);//全局设置主题颜色
 //                return new ClassicsHeader(context).setTimeFormat(new DynamicTimeFormat("更新于 %s"));
-                return new CustomRefreshHeader(context);
-            }
+            return new CustomRefreshHeader(context);
         });
     }
 
@@ -138,6 +130,7 @@ public class App extends Application
     {
         super.attachBaseContext(base);
         // 这里比 onCreate 先执行,常用于 MultiDex 初始化,插件化框架的初始化
+        MultiDex.install(this);
     }
 
     @Override

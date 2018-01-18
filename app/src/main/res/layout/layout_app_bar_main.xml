@@ -51,12 +51,15 @@
         android:layout_height="0dp"
         android:layout_weight="1">
     </FrameLayout>
-    <com.roughike.bottombar.BottomBar
-        android:id="@+id/bottomBar"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:bb_tabXmlResource="@xml/bottombar_tabs"
-        app:bb_activeTabColor="@color/colorAccent"
-        android:layout_gravity="bottom"/>
+        android:layout_height="50dp"
+        android:background="@android:color/transparent">
+
+        <com.bingo.king.mvp.ui.widget.BottomNavigationView
+            android:id="@+id/bottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
 
 </LinearLayout>

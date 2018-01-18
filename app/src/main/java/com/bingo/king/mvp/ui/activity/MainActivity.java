@@ -12,41 +12,20 @@ import com.bingo.king.mvp.ui.fragment.CollectFragment;
 import com.bingo.king.mvp.ui.fragment.HomeFragment;
 import com.bingo.king.mvp.ui.fragment.MeFragment;
 import com.bingo.king.mvp.ui.fragment.WelfareFragment;
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
+import com.bingo.king.mvp.ui.widget.BottomNavigationView;
 
 import butterknife.BindView;
 
 public class MainActivity extends BasePresenterActivity<MainPresenter> implements MainContract.View
 {
     @BindView(R.id.bottomBar)
-    BottomBar mBottomBar;
-
-    private OnTabSelectListener mOnTabSelectListener = tabId ->
-    {
-        switch (tabId)
-        {
-            case R.id.tab_home:
-                getSDFragmentManager().toggle(R.id.main_frame, null, HomeFragment.class);
-                break;
-            case R.id.tab_dashboard:
-                getSDFragmentManager().toggle(R.id.main_frame, null, WelfareFragment.class);
-                break;
-            case R.id.tab_myfavourite:
-                getSDFragmentManager().toggle(R.id.main_frame, null, CollectFragment.class);
-                break;
-            case R.id.tab_mycenter:
-                getSDFragmentManager().toggle(R.id.main_frame, null, MeFragment.class);
-                break;
-        }
-    };
+    BottomNavigationView mBottomBar;
 
     @Override
     public int onCreateContentView(Bundle savedInstanceState)
     {
         return R.layout.activity_main;
     }
-
 
     @Override
     public void setupActivityComponent()
@@ -61,9 +40,41 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     @Override
     public void initData(Bundle savedInstanceState)
     {
-        mIsExitApp = true;
-        mBottomBar.setOnTabSelectListener(mOnTabSelectListener);
-        mBottomBar.selectTabAtPosition(0);
+//        mIsExitApp = true;
+        initTab();
+    }
+
+    private void initTab()
+    {
+        mBottomBar.setCallback(new BottomNavigationView.Callback()
+        {
+            @Override
+            public void onTabSelected(int index)
+            {
+                switch (index)
+                {
+                    case BottomNavigationView.INDEX_HOME:
+                        getSDFragmentManager().toggle(R.id.main_frame, null, HomeFragment.class);
+                        break;
+                    case BottomNavigationView.INDEX_DASHBOARD:
+                        getSDFragmentManager().toggle(R.id.main_frame, null, WelfareFragment.class);
+                        break;
+                    case BottomNavigationView.INDEX_FAVOURITE:
+                        getSDFragmentManager().toggle(R.id.main_frame, null, CollectFragment.class);
+                        break;
+                    case BottomNavigationView.INDEX_ME:
+                        getSDFragmentManager().toggle(R.id.main_frame, null, MeFragment.class);
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabReselected(int index)
+            {
+
+            }
+        });
+        mBottomBar.selectTab(BottomNavigationView.INDEX_HOME);
     }
 
     @Override
