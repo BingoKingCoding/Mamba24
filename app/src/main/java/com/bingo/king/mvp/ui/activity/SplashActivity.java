@@ -70,6 +70,7 @@ public class SplashActivity extends BasePresenterActivity<SplashPresenter> imple
     @Override
     public void initData(Bundle savedInstanceState)
     {
+        requestInit();
     }
 
 
@@ -93,17 +94,24 @@ public class SplashActivity extends BasePresenterActivity<SplashPresenter> imple
         requestPermissions();
     }
 
-    @AfterPermissionGranted(PERMISSON_REQUESTCODE)
+
     public void requestPermissions()
     {
         if (!EasyPermissions.hasPermissions(this, needPermissions))
         {
-            EasyPermissions.requestPermissions(this, "应用需要这些权限", PERMISSON_REQUESTCODE, needPermissions);
+            EasyPermissions.requestPermissions(this, "应用需要申请权限", PERMISSON_REQUESTCODE, needPermissions);
         } else
         {
             splashImg.setImageDrawable(ResourcesUtil.getDrawable(R.drawable.window_static_bg_normal_mid));
             animWelcomeImage();
         }
+    }
+
+
+    @AfterPermissionGranted(PERMISSON_REQUESTCODE)
+    private void afterGet(){
+//        Toast.makeText(this, "已获取权限，让我们干爱干的事吧！", Toast.LENGTH_SHORT).show();
+        animWelcomeImage();
     }
 
     public void showMissingPermissionDialog()
@@ -121,50 +129,6 @@ public class SplashActivity extends BasePresenterActivity<SplashPresenter> imple
         builder.show();
 
     }
-
-//    @Override
-//    public void delaySplash(List<String> picList)
-//    {
-//        if (picList.size() > 0) {
-//            Random random = new Random();
-//            int index = random.nextInt(picList.size());
-//            int imgIndex = SPUtils.getInstance().getInt("splash_img_index", 0);
-//            Timber.i("当前的imgIndex=" + imgIndex);
-//            if (index == imgIndex) {
-//                if (index >= picList.size()) {
-//                    index--;
-//                } else if (imgIndex == 0) {
-//                    if (index + 1 < picList.size()) {
-//                        index++;
-//                    }
-//                }
-//            }
-//            SPUtils.getInstance().put("splash_img_index", index);
-//            Timber.i("当前的picList.size=" + picList.size() + ",index = " + index);
-//            File file = new File(picList.get(index));
-//            try {
-//                InputStream fis = new FileInputStream(file);
-//                splashImg.setImageDrawable(InputStream2Drawable(fis));
-//                animWelcomeImage();
-//                fis.close();
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//
-//            }
-//        } else {
-//            try {
-//                AssetManager assetManager = this.getAssets();
-//                InputStream in = assetManager.open("welcome_default.jpg");
-//                splashImg.setImageDrawable(InputStream2Drawable(in));
-//                animWelcomeImage();
-//                in.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
 
     /**
      * 启动应用的设置
@@ -219,7 +183,7 @@ public class SplashActivity extends BasePresenterActivity<SplashPresenter> imple
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms)
     {
-        recreate();
+
     }
 
     @Override
@@ -256,6 +220,16 @@ public class SplashActivity extends BasePresenterActivity<SplashPresenter> imple
     @Override
     public void setState(int state)
     {
+
+    }
+
+
+    /**
+     * 请求初始化接口获取APP的初始化数据
+     */
+    private void requestInit(){
+        //为了方便此处就直接本地初始化，项目中需求通过请求接口获取
+
 
     }
 
