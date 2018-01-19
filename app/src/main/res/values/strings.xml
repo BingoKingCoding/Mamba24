@@ -23,4 +23,17 @@
     <string name="zh_comment">%1$d条评论</string>
     <string name="zh_short_comment">短评论(%1$d)</string>
     <string name="zh_long_comment">长评论(%1$d)</string>
+
+    <!-- 微信配置 -->
+    <string name="wx_app_id">wx35c6c77293983275</string>
+    <string name="wx_app_secret">80d9d4026fe15d63245f44819b3fe315</string>
+    <!-- QQ配置 -->
+    <string name="qq_auth_scheme">tencent1105454078</string>
+    <string name="qq_app_id">1105454078</string>
+    <string name="qq_app_key">9TIcsfE9EpeamO4R</string>
+    <!-- 新浪配置 -->
+    <string name="sina_app_key">3310867184</string>
+    <string name="sina_app_secret">94ccd4786bdaf1967fb2f4d9b2531ae8</string>
+    <string name="umeng_appkey">5a4ddbe78f4a9d034000006b</string>
+
 </resources>

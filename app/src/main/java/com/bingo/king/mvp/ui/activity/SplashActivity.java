@@ -12,10 +12,15 @@ import android.support.v7.app.AlertDialog;
 
 import com.bingo.king.R;
 import com.bingo.king.app.base.BasePresenterActivity;
+import com.bingo.king.app.umeng.UmengSocialManager;
 import com.bingo.king.app.utils.ResourcesUtil;
 import com.bingo.king.di.component.DaggerSplashComponent;
 import com.bingo.king.di.module.SplashModule;
 import com.bingo.king.mvp.contract.SplashContract;
+import com.bingo.king.mvp.model.entity.InitActBean;
+import com.bingo.king.mvp.model.entity.UserBean;
+import com.bingo.king.mvp.model.entity.dao.InitActBeanDao;
+import com.bingo.king.mvp.model.entity.dao.UserBeanDao;
 import com.bingo.king.mvp.presenter.SplashPresenter;
 import com.bingo.king.mvp.ui.widget.FixedImageView;
 
@@ -70,7 +75,7 @@ public class SplashActivity extends BasePresenterActivity<SplashPresenter> imple
     @Override
     public void initData(Bundle savedInstanceState)
     {
-        requestInit();
+        UmengSocialManager.init(getApplication());
     }
 
 
@@ -109,7 +114,8 @@ public class SplashActivity extends BasePresenterActivity<SplashPresenter> imple
 
 
     @AfterPermissionGranted(PERMISSON_REQUESTCODE)
-    private void afterGet(){
+    private void afterGet()
+    {
 //        Toast.makeText(this, "已获取权限，让我们干爱干的事吧！", Toast.LENGTH_SHORT).show();
         animWelcomeImage();
     }
@@ -162,7 +168,7 @@ public class SplashActivity extends BasePresenterActivity<SplashPresenter> imple
             @Override
             public void onAnimationEnd(Animator animation)
             {
-                startMainOrLogin();
+                requestInit();
             }
 
             @Override
@@ -200,14 +206,14 @@ public class SplashActivity extends BasePresenterActivity<SplashPresenter> imple
 
     private void startMainOrLogin()
     {
-//        UserEntity user = UserModelDao.query();
-//        if (user != null)
-//        {
-        startMainActivity();
-//        } else
-//        {
-//            startLoginActivity();
-//        }
+        UserBean user = UserBeanDao.query();
+        if (user != null)
+        {
+            startMainActivity();
+        } else
+        {
+            startLoginActivity();
+        }
     }
 
     private void startMainActivity()
@@ -227,15 +233,37 @@ public class SplashActivity extends BasePresenterActivity<SplashPresenter> imple
     /**
      * 请求初始化接口获取APP的初始化数据
      */
-    private void requestInit(){
+    private void requestInit()
+    {
         //为了方便此处就直接本地初始化，项目中需求通过请求接口获取
 
+        InitActBean initActBean = new InitActBean();
+        initActBean.setHas_mobile_login(1);
+        initActBean.setHas_qq_login(1);
+        initActBean.setHas_wx_login(1);
+        initActBean.setHas_sina_login(1);
+        initActBean.setHas_visitors_login(1);
+        initActBean.setQq_app_key("");
+        initActBean.setQq_app_secret("");
+        initActBean.setSina_app_key("");
+        initActBean.setSina_app_secret("");
+        initActBean.setWx_app_key("");
+        initActBean.setWx_app_secret("");
+        initActBean.setPrivacy_title("用户隐私政策");
+        initActBean.setPrivacy_link("https://www.jianshu.com/u/243819ed1836");
+
+        InitActBeanDao.insertOrUpdate(initActBean);
+
+
+        //初始化接口成功后调用
+        startMainOrLogin();
 
     }
 
-//    private void startLoginActivity(){
-//        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-//        startActivity(intent);
-//        finish();
-//    }
+    private void startLoginActivity()
+    {
+        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

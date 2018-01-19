@@ -22,6 +22,9 @@ public class InitActBean
     private int has_mobile_login;//是否显示手机登录
     private int has_visitors_login;//是否显示游客登录
 
+    private String privacy_title;//注册协议标题
+    private String privacy_link;//注册协议链接
+
     public String getSina_app_key()
     {
         return sina_app_key;
@@ -150,5 +153,25 @@ public class InitActBean
     public void setHas_visitors_login(int has_visitors_login)
     {
         this.has_visitors_login = has_visitors_login;
+    }
+
+    public String getPrivacy_title()
+    {
+        return privacy_title;
+    }
+
+    public void setPrivacy_title(String privacy_title)
+    {
+        this.privacy_title = privacy_title;
+    }
+
+    public String getPrivacy_link()
+    {
+        return privacy_link;
+    }
+
+    public void setPrivacy_link(String privacy_link)
+    {
+        this.privacy_link = privacy_link;
     }
 }

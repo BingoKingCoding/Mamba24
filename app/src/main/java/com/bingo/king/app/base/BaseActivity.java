@@ -40,7 +40,7 @@ import static com.bingo.king.app.utils.ThirdViewUtil.convertAutoView;
  * Created by wang on 2017/11/1 16:55.
  */
 
-public abstract class BaseActivity extends RxAppCompatActivity implements StatefulCallback
+public abstract class BaseActivity extends RxAppCompatActivity implements StatefulCallback,View.OnClickListener
 {
     protected final String TAG = this.getClass().getSimpleName();
     protected Unbinder mUnbinder;
@@ -271,5 +271,9 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Statef
      */
     public abstract void initData(Bundle savedInstanceState);
 
+    @Override
+    public void onClick(View v)
+    {
 
+    }
 }

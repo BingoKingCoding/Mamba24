@@ -14,12 +14,15 @@ import com.bingo.king.di.component.AppComponent;
 import com.bingo.king.di.component.DaggerAppComponent;
 import com.bingo.king.di.module.AppModule;
 import com.bingo.king.di.module.NetworkModule;
+import com.bingo.king.mvp.model.entity.GsonObjectConverter;
 import com.bingo.king.mvp.ui.widget.CustomRefreshHeader;
 import com.blankj.utilcode.util.Utils;
+import com.fanwe.lib.cache.SDDisk;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
+import com.umeng.socialize.UMShareAPI;
 
 import butterknife.ButterKnife;
 import timber.log.Timber;
@@ -53,6 +56,12 @@ public class App extends Application
             ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
         }
         ARouter.init(this); // 尽可能早，推荐在Application中初始化
+
+        SDDisk.init(this);
+        SDDisk.setGlobalObjectConverter(new GsonObjectConverter());
+        SDDisk.setDebug(BuildConfig.DEBUG);
+
+        UMShareAPI.get(this);
     }
 
     private void initBugLy()

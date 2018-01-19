@@ -109,8 +109,19 @@
         </activity>
         <activity android:name=".mvp.ui.activity.LoginActivity"
                   android:configChanges="orientation|screenSize|keyboardHidden"
+                  android:theme="@style/FullScreenTheme"
                   android:screenOrientation="portrait">
         </activity>
+
+        <!-- 友盟配置Meta Start============================================= -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="@string/umeng_appkey"/>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Channel ID"/>
+        <!-- 友盟Share组件End=============================================================== -->
+
     </application>
 
 </manifest>

@@ -150,4 +150,5 @@ dependencies {
     compile 'com.github.BingoKingCoding:SmartDialog:v1.0.1'
     compile 'com.github.BingoKingCoding:viewselect:1.0.3'
     compile 'com.github.zj565061763:cache:1.0.14'
+    compile 'com.github.zj565061763:blocker:1.0.3'
 }
