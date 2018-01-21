@@ -1,27 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/color_page_bg">
 
-
-    <FrameLayout android:layout_width="match_parent"
-                 android:layout_height="45dp">
-
-        <TextView android:layout_width="wrap_content"
+    <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:text="清除缓存"/>
+                  android:orientation="vertical">
 
-    </FrameLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:background="@color/white"
+                      android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_logout"
+            <FrameLayout android:layout_width="match_parent"
+                         android:layout_height="45dp"
+                         android:layout_marginLeft="15dp"
+                         android:layout_marginRight="15dp">
+
+                <TextView
+                    style="@style/mine_tab_text"
+                    android:text="个人资料"/>
+
+                <ImageView android:layout_width="20dp"
+                           android:layout_height="20dp"
+                           android:layout_gravity="end|center_vertical"
+                           android:src="@drawable/icon_mine_arrows_normal"/>
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/C3"/>
+
+            <FrameLayout android:layout_width="match_parent"
+                         android:layout_height="45dp"
+                         android:layout_marginLeft="15dp"
+                         android:layout_marginRight="15dp">
+
+                <TextView
+                    style="@style/mine_tab_text"
+                    android:text="帐号绑定"/>
+
+                <ImageView android:layout_width="20dp"
+                           android:layout_height="20dp"
+                           android:layout_gravity="end|center_vertical"
+                           android:src="@drawable/icon_mine_arrows_normal"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="10dp"
+                      android:background="@color/white"
+                      android:orientation="vertical">
+
+            <FrameLayout android:layout_width="match_parent"
+                         android:layout_height="45dp"
+                         android:layout_marginLeft="15dp"
+                         android:layout_marginRight="15dp">
+
+                <TextView
+                    style="@style/mine_tab_text"
+                    android:text="清除缓存"/>
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_gravity="end|center"
+                          android:layout_marginEnd="20dp"
+                          android:textColor="@color/C13"
+                          tools:text="2M"/>
+
+                <ImageView android:layout_width="20dp"
+                           android:layout_height="20dp"
+                           android:layout_gravity="end|center_vertical"
+                           android:src="@drawable/icon_mine_arrows_normal"/>
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/C3"/>
+
+            <FrameLayout android:layout_width="match_parent"
+                         android:layout_height="45dp"
+                         android:layout_marginLeft="15dp"
+                         android:layout_marginRight="15dp">
+
+                <TextView
+                    style="@style/mine_tab_text"
+                    android:text="黑名单"/>
+
+                <ImageView android:layout_width="20dp"
+                           android:layout_height="20dp"
+                           android:layout_gravity="end|center_vertical"
+                           android:src="@drawable/icon_mine_arrows_normal"/>
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/C3"/>
+
+            <FrameLayout android:layout_width="match_parent"
+                         android:layout_height="45dp"
+                         android:layout_marginLeft="15dp"
+                         android:layout_marginRight="15dp">
+
+                <TextView
+                    style="@style/mine_tab_text"
+                    android:text="推送通知设置"/>
+
+                <ImageView android:layout_width="20dp"
+                           android:layout_height="20dp"
+                           android:layout_gravity="end|center_vertical"
+                           android:src="@drawable/icon_mine_arrows_normal"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="10dp"
+                      android:background="@color/white"
+                      android:orientation="vertical">
+
+            <FrameLayout android:layout_width="match_parent"
+                         android:layout_height="45dp"
+                         android:layout_marginLeft="15dp"
+                         android:layout_marginRight="15dp">
+
+                <TextView
+                    style="@style/mine_tab_text"
+                    android:text="条款"/>
+
+                <ImageView android:layout_width="20dp"
+                           android:layout_height="20dp"
+                           android:layout_gravity="end|center_vertical"
+                           android:src="@drawable/icon_mine_arrows_normal"/>
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/C3"/>
+
+            <FrameLayout android:layout_width="match_parent"
+                         android:layout_height="45dp"
+                         android:layout_marginLeft="15dp"
+                         android:layout_marginRight="15dp">
+
+                <TextView
+                    style="@style/mine_tab_text"
+                    android:text="关于我们"/>
+
+                <ImageView android:layout_width="20dp"
+                           android:layout_height="20dp"
+                           android:layout_gravity="end|center_vertical"
+                           android:src="@drawable/icon_mine_arrows_normal"/>
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/C3"/>
+
+            <FrameLayout android:layout_width="match_parent"
+                         android:layout_height="45dp"
+                         android:layout_marginLeft="15dp"
+                         android:layout_marginRight="15dp">
+
+                <TextView
+                    style="@style/mine_tab_text"
+                    android:text="关于此版本"/>
+
+                <ImageView android:layout_width="20dp"
+                           android:layout_height="20dp"
+                           android:layout_gravity="end|center_vertical"
+                           android:src="@drawable/icon_mine_arrows_normal"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/colorPrimary"
-        android:text="退出登录"
-        android:textColor="@color/white"/>
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardCornerRadius="5dp">
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="退出登录"
+            android:textColor="@color/white"/>
+
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>

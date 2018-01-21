@@ -47,9 +47,9 @@ public class SettingActivity extends BaseTitleActivity<SettingPresenter> impleme
     }
 
     private void init(){
-//        setToolbarMiddleTitle("设置");
-        setToolbarRightAction("保存");
-        setToolBarTitle("设置");
+        setToolbarMiddleTitle("设置");
+//        setToolbarRightAction("保存");
+//        setToolBarTitle("设置");
 
         btn_logout = findViewById(R.id.btn_logout);
         btn_logout.setOnClickListener(this);
@@ -88,6 +88,7 @@ public class SettingActivity extends BaseTitleActivity<SettingPresenter> impleme
         super.onClick(v);
         if (v == btn_logout){
             App.getApplication().logout(true);
+            finish();
         }
 
     }
