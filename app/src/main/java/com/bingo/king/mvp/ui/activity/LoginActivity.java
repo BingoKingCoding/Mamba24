@@ -1,5 +1,6 @@
 package com.bingo.king.mvp.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,7 +18,9 @@ import com.bingo.king.di.component.DaggerLoginComponent;
 import com.bingo.king.di.module.LoginModule;
 import com.bingo.king.mvp.contract.LoginContract;
 import com.bingo.king.mvp.model.entity.InitActBean;
+import com.bingo.king.mvp.model.entity.UserBean;
 import com.bingo.king.mvp.model.entity.dao.InitActBeanDao;
+import com.bingo.king.mvp.model.entity.dao.UserBeanDao;
 import com.bingo.king.mvp.presenter.LoginPresenter;
 import com.blankj.utilcode.util.ToastUtils;
 import com.fanwe.lib.blocker.SDDurationBlocker;
@@ -239,8 +242,7 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter> impleme
     {
         //游客登录，项目中做请求接口进行用户初始化
         //本项目直接在本地进行初始化
-
-//        startMainActivity(actModel);
+        loginSuccess();
     }
 
     private void clickLoginShouJi()
@@ -372,6 +374,30 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter> impleme
         iv_sina.setClickable(enable);
         iv_shouji.setClickable(enable);
         tv_visitors.setClickable(enable);
+    }
+
+
+    private void loginSuccess()
+    {
+        //此处做本地处理，项目中需要从接口获取
+        UserBean user = new UserBean();
+        user.setUser_id("25426598");
+        user.setNick_name("余温");
+        user.setSex(1);
+        user.setHead_image("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2144884291,2915597647&fm=27&gp=0.jpg");
+        user.setCity("厦门");
+        user.setProvince("福建");
+        UserBeanDao.insertOrUpdate(user);
+
+        startMainActivity();
+    }
+
+
+    private void startMainActivity()
+    {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }

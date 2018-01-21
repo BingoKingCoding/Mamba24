@@ -2,8 +2,10 @@ package com.bingo.king.mvp.ui.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import com.bingo.king.R;
+import com.bingo.king.app.App;
 import com.bingo.king.app.base.BaseTitleActivity;
 import com.bingo.king.di.component.DaggerSettingComponent;
 import com.bingo.king.di.module.SettingModule;
@@ -18,6 +20,8 @@ import com.blankj.utilcode.util.ToastUtils;
 
 public class SettingActivity extends BaseTitleActivity<SettingPresenter> implements SettingContract.View
 {
+    private Button btn_logout;
+
     @Override
     public int getContentLayoutId()
     {
@@ -46,6 +50,9 @@ public class SettingActivity extends BaseTitleActivity<SettingPresenter> impleme
 //        setToolbarMiddleTitle("设置");
         setToolbarRightAction("保存");
         setToolBarTitle("设置");
+
+        btn_logout = findViewById(R.id.btn_logout);
+        btn_logout.setOnClickListener(this);
     }
 
     @Override
@@ -72,5 +79,16 @@ public class SettingActivity extends BaseTitleActivity<SettingPresenter> impleme
     public void showMessage(String message)
     {
         showSnackbar(message);
+    }
+
+
+    @Override
+    public void onClick(View v)
+    {
+        super.onClick(v);
+        if (v == btn_logout){
+            App.getApplication().logout(true);
+        }
+
     }
 }

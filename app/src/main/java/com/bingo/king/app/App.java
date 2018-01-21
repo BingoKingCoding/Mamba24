@@ -2,6 +2,7 @@ package com.bingo.king.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
@@ -15,7 +16,11 @@ import com.bingo.king.di.component.DaggerAppComponent;
 import com.bingo.king.di.module.AppModule;
 import com.bingo.king.di.module.NetworkModule;
 import com.bingo.king.mvp.model.entity.GsonObjectConverter;
+import com.bingo.king.mvp.model.entity.dao.UserBeanDao;
+import com.bingo.king.mvp.model.entity.event.EUserLogout;
+import com.bingo.king.mvp.ui.activity.LoginActivity;
 import com.bingo.king.mvp.ui.widget.CustomRefreshHeader;
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.Utils;
 import com.fanwe.lib.cache.SDDisk;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -23,6 +28,8 @@ import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.socialize.UMShareAPI;
+
+import org.simple.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 import timber.log.Timber;
@@ -164,6 +171,20 @@ public class App extends Application
     public AppComponent getAppComponent()
     {
         return mAppComponent;
+    }
+
+    public void logout(boolean post){
+        UserBeanDao.delete();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        ActivityUtils.getTopActivity().startActivity(intent);
+
+        if (post)
+        {
+            EUserLogout event = new EUserLogout();
+            EventBus.getDefault().post(event);
+        }
     }
 
 }

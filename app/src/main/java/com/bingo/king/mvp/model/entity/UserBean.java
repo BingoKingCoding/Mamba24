@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 public class UserBean implements FSelectManager.Selectable, Serializable
 {
-    static final long serialVersionUID = 0;
+    private static final long serialVersionUID = 0;
     private boolean selected;
 
     private String user_id = ""; // 用户id
