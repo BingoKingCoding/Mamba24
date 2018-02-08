@@ -57,6 +57,7 @@ public class DDViewUtil
         view.setBackgroundDrawable(drawable);
         view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
     }
+
     /**
      * 设置view的背景
      *
@@ -76,6 +77,7 @@ public class DDViewUtil
         view.setBackgroundResource(resId);
         view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
     }
+
     /**
      * 设置view的背景颜色
      *
@@ -86,6 +88,7 @@ public class DDViewUtil
     {
         view.setBackgroundColor(ResourcesUtil.getColor(resId));
     }
+
     /**
      * 设置textView的字体颜色
      *
@@ -96,6 +99,7 @@ public class DDViewUtil
     {
         textView.setTextColor(ResourcesUtil.getColor(resId));
     }
+
     /**
      * 设置textView的字体大小
      *
@@ -117,6 +121,7 @@ public class DDViewUtil
     {
         textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, sizeDp);
     }
+
     /**
      * 设置textView的字体大小
      *
@@ -127,6 +132,7 @@ public class DDViewUtil
     {
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, sizePx);
     }
+
     /**
      * 设置view的左边margin（当view的LayoutParams instanceof MarginLayoutParams才有效）
      *
@@ -146,6 +152,7 @@ public class DDViewUtil
             view.setLayoutParams(params);
         }
     }
+
     /**
      * 设置view的顶部margin（当view的LayoutParams instanceof MarginLayoutParams才有效）
      *
@@ -165,6 +172,7 @@ public class DDViewUtil
             view.setLayoutParams(params);
         }
     }
+
     /**
      * 设置view的右边margin（当view的LayoutParams instanceof MarginLayoutParams才有效）
      *
@@ -184,6 +192,7 @@ public class DDViewUtil
             view.setLayoutParams(params);
         }
     }
+
     /**
      * 设置view的底部margin（当view的LayoutParams instanceof MarginLayoutParams才有效）
      *
@@ -280,6 +289,7 @@ public class DDViewUtil
             return null;
         }
     }
+
     /**
      * 设置该view在父布局中的gravity
      *
@@ -317,6 +327,7 @@ public class DDViewUtil
             }
         }
     }
+
     /**
      * 设置view的左边padding
      *
@@ -331,6 +342,7 @@ public class DDViewUtil
         }
         view.setPadding(left, view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
     }
+
     /**
      * 设置view的顶部padding
      *
@@ -345,6 +357,7 @@ public class DDViewUtil
         }
         view.setPadding(view.getPaddingLeft(), top, view.getPaddingRight(), view.getPaddingBottom());
     }
+
     /**
      * 设置view的右边padding
      *
@@ -359,6 +372,7 @@ public class DDViewUtil
         }
         view.setPadding(view.getPaddingLeft(), view.getPaddingTop(), right, view.getPaddingBottom());
     }
+
     /**
      * 设置view的底部padding
      *
@@ -373,6 +387,7 @@ public class DDViewUtil
         }
         view.setPadding(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(), bottom);
     }
+
     /**
      * 设置view的上下左右padding
      *
@@ -387,6 +402,7 @@ public class DDViewUtil
         }
         view.setPadding(paddings, paddings, paddings, paddings);
     }
+
     // ------------------------layoutInflater
     public static LayoutInflater getLayoutInflater()
     {
@@ -505,6 +521,7 @@ public class DDViewUtil
         }
         return result;
     }
+
     /**
      * 判断当前线程是否是主线程.
      *
@@ -720,6 +737,7 @@ public class DDViewUtil
         }
         view.setLayoutParams(params);
     }
+
     /**
      * view是否处于VISIBLE状态
      *
@@ -907,6 +925,7 @@ public class DDViewUtil
         }
         return visible;
     }
+
     /**
      * 获得view在屏幕上的x坐标
      *
@@ -1611,6 +1630,20 @@ public class DDViewUtil
                 }
             }
         }
+        return false;
+    }
+
+    private static long lastClickTime;
+
+    public synchronized static boolean isFastClick()
+    {
+        long time = System.currentTimeMillis();
+        if (time - lastClickTime < 500)
+        {
+
+            return true;
+        }
+        lastClickTime = time;
         return false;
     }
 
