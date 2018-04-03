@@ -1,6 +1,7 @@
 package com.bingo.king.app.base;
 
 /**
+ *
  * Created by wang on 2017/11/2 17:29.
  */
 
@@ -12,7 +13,7 @@ public interface IPresenter
     void onStart();
 
     /**
-     * 在框架中 Activity#onDestroy() 时会默认调用 {@link IPresenter#onDestroy()}
+     * 在框架中 Activity#onDestroy() 时会默认调用 { IPresenter#onDestroy()}
      */
     void onDestroy();
 

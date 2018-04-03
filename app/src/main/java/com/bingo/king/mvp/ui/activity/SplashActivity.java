@@ -229,6 +229,16 @@ public class SplashActivity extends BasePresenterActivity<SplashPresenter> imple
 
     }
 
+    @Override
+    public void showLoadingDialog(String msg) {
+
+    }
+
+    @Override
+    public void closeLoadingDialog() {
+
+    }
+
 
     /**
      * 请求初始化接口获取APP的初始化数据

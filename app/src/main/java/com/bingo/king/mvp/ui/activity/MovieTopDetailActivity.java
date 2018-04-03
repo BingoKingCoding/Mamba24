@@ -152,6 +152,16 @@ public class MovieTopDetailActivity extends LoadingBaseActivity<MovieTopDetailPr
 
 
     @Override
+    public void showLoadingDialog(String msg) {
+
+    }
+
+    @Override
+    public void closeLoadingDialog() {
+
+    }
+
+    @Override
     public void hidePullLoading()
     {
 

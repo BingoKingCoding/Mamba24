@@ -118,6 +118,16 @@ public class ZhihuDetailActivity extends BaseCoordinatorActivity<ZhihuDetailPres
 
 
     @Override
+    public void showLoadingDialog(String msg) {
+
+    }
+
+    @Override
+    public void closeLoadingDialog() {
+
+    }
+
+    @Override
     public void hidePullLoading()
     {
 

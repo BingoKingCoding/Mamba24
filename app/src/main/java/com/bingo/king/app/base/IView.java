@@ -15,6 +15,23 @@ package com.bingo.king.app.base;
 
 public interface IView
 {
+
+    /**
+     * 设置页面状态
+     */
+    void setState(int state);
+
+    /**
+     * 显示进度框
+     */
+    void showLoadingDialog(String msg);
+
+    /**
+     * 隐藏进度框
+     */
+    void closeLoadingDialog();
+
+
     /**
      * 隐藏下拉加载
      */

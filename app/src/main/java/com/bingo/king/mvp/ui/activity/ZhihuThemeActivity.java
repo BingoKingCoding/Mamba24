@@ -138,6 +138,16 @@ public class ZhihuThemeActivity extends BaseZhihuThemeActivity<ZhihuThemePresent
 
 
     @Override
+    public void showLoadingDialog(String msg) {
+
+    }
+
+    @Override
+    public void closeLoadingDialog() {
+
+    }
+
+    @Override
     public void hidePullLoading()
     {
 

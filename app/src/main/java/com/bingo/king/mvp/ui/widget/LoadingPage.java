@@ -85,7 +85,7 @@ public abstract class LoadingPage extends FrameLayout
             initView();
         }
 
-        showPage();//根据状态显示界面
+         showPage();//根据状态显示界面
     }
 
     private View createLoadingView()

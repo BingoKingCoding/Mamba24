@@ -147,4 +147,14 @@ public class PhotoViewActivity extends BasePresenterActivity<PhotoViewPresenter>
     {
 
     }
+
+    @Override
+    public void showLoadingDialog(String msg) {
+
+    }
+
+    @Override
+    public void closeLoadingDialog() {
+
+    }
 }

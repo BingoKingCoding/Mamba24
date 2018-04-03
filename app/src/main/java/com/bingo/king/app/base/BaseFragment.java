@@ -235,20 +235,17 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     }
 
 
-    @Override
     public void setState(int state)
     {
         mLoadingPage.state = state;
         mLoadingPage.showPage();
     }
 
-    @Override
     public void showLoadingDialog(String msg)
     {
         getBaseActivity().showLoadingDialog(msg);
     }
 
-    @Override
     public void closeLoadingDialog()
     {
         getBaseActivity().closeLoadingDialog();
@@ -325,7 +322,6 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
      */
     protected void showSnackbar(String message, boolean isLong)
     {
-        Preconditions.checkNotNull(message);
         View view = getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
         Snackbar.make(view, message, isLong ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
     }

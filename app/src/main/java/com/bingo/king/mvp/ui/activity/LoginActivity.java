@@ -31,6 +31,7 @@ import java.util.Map;
 
 
 public class LoginActivity extends BasePresenterActivity<LoginPresenter> implements LoginContract.View
+
 {
     //微信
     private LinearLayout ll_weixin;
@@ -100,6 +101,16 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter> impleme
     @Override
     public void setState(int state)
     {
+
+    }
+
+    @Override
+    public void showLoadingDialog(String msg) {
+
+    }
+
+    @Override
+    public void closeLoadingDialog() {
 
     }
 

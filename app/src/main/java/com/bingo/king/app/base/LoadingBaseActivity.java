@@ -55,7 +55,6 @@ public abstract class LoadingBaseActivity<P extends IPresenter> extends BasePres
         
     }
 
-    @Override
     public void setState(int state)
     {
         mLoadingPage.state = state;

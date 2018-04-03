@@ -40,8 +40,7 @@ import static com.bingo.king.app.utils.ThirdViewUtil.convertAutoView;
  * Created by wang on 2017/11/1 16:55.
  */
 
-public abstract class BaseActivity extends RxAppCompatActivity implements StatefulCallback,View.OnClickListener
-{
+public abstract class BaseActivity extends RxAppCompatActivity implements View.OnClickListener {
     protected final String TAG = this.getClass().getSimpleName();
     protected Unbinder mUnbinder;
 
@@ -56,31 +55,25 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Statef
 
 
     @Override
-    public View onCreateView(String name, Context context, AttributeSet attrs)
-    {
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
         View view = convertAutoView(name, context, attrs);
         return view == null ? super.onCreateView(name, context, attrs) : view;
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState)
-    {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try
-        {
+        try {
             int layoutResID = onCreateContentView(savedInstanceState);
-            if (layoutResID != 0)
-            {//如果initView返回0,框架则不会调用setContentView(),当然也不会 Bind ButterKnife
+            if (layoutResID != 0) {//如果initView返回0,框架则不会调用setContentView(),当然也不会 Bind ButterKnife
                 setContentView(layoutResID);
                 //绑定到butterknife
                 mUnbinder = ButterKnife.bind(this);
             }
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if (useEventBus())
-        {
+        if (useEventBus()) {
             EventBus.getDefault().register(this);
         }
         setupActivityComponent();
@@ -89,44 +82,37 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Statef
 
 
     @Override
-    public void setContentView(@LayoutRes int layoutResID)
-    {
+    public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
         setStatusBar();
     }
 
-    protected void setStatusBar()
-    {
+    protected void setStatusBar() {
         StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 0);
     }
 
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         super.onDestroy();
-        if (useEventBus())
-        {
+        if (useEventBus()) {
             EventBus.getDefault().unregister(this);
         }
-        if (mUnbinder != null && mUnbinder != Unbinder.EMPTY)
-        {
+        if (mUnbinder != null && mUnbinder != Unbinder.EMPTY) {
             mUnbinder.unbind();
         }
         this.mUnbinder = null;
 
     }
 
-    protected AppComponent getAppComponent()
-    {
+    protected AppComponent getAppComponent() {
         return App.getApplication().getAppComponent();
     }
 
     /**
      * 是否使用eventBus,默认为使用(true)，
      */
-    public boolean useEventBus()
-    {
+    public boolean useEventBus() {
         return true;
     }
 
@@ -134,41 +120,32 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Statef
     /**
      * 初始化 Toolbar
      */
-    public void initToolBar(Toolbar toolbar, boolean enableBack, String title)
-    {
+    public void initToolBar(Toolbar toolbar, boolean enableBack, String title) {
         toolbar.setTitle(title);
         toolbar.setTitleTextColor(Color.WHITE);
-        if (enableBack)
-        {
+        if (enableBack) {
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
             toolbar.setNavigationOnClickListener(view -> onBackPressed());
         }
     }
 
-    public void initToolBar(Toolbar toolbar, boolean enableBack, int resTitle)
-    {
+    public void initToolBar(Toolbar toolbar, boolean enableBack, int resTitle) {
         initToolBar(toolbar, enableBack, getString(resTitle));
     }
 
     @Override
-    public void onBackPressed()
-    {
-        if (mIsExitApp)
-        {
+    public void onBackPressed() {
+        if (mIsExitApp) {
             exitApp();
-        } else
-        {
+        } else {
             super.onBackPressed();
         }
     }
 
-    public void exitApp()
-    {
-        if (System.currentTimeMillis() - mExitTime > 2000)
-        {
+    public void exitApp() {
+        if (System.currentTimeMillis() - mExitTime > 2000) {
             showSnackbar("再按一次返回桌面!");
-        } else
-        {
+        } else {
             //发送事件,参考下面的方法onExitAppReceive
 //            EventBus.getDefault().post(new Message(), EventBusTags.EXITAPP_MESSAGE);
 //            AppUtils.exitApp();
@@ -183,8 +160,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Statef
      * 通过eventbus post事件,远程遥控执行对应方法
      */
     @Subscriber(tag = EventBusTags.EXITAPP_MESSAGE, mode = ThreadMode.MAIN)
-    public void onExitAppReceive(Message message)
-    {
+    public void onExitAppReceive(Message message) {
         //可以在工具类或者其他类中做相应的退出逻辑
         Timber.d(TAG, "exit_app");
     }
@@ -193,16 +169,14 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Statef
     /**
      * 用snackbar显示
      */
-    protected void showSnackbar(String message)
-    {
+    protected void showSnackbar(String message) {
         showSnackbar(message, false);
     }
 
     /**
      * 用snackbar显示
      */
-    protected void showSnackbarWithLong(String message)
-    {
+    protected void showSnackbarWithLong(String message) {
         showSnackbar(message, true);
     }
 
@@ -210,50 +184,41 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Statef
     /**
      * 使用snackbar显示内容
      */
-    protected void showSnackbar(String message, boolean isLong)
-    {
+    protected void showSnackbar(String message, boolean isLong) {
         TextUtils.isEmpty(message);
         View view = getWindow().getDecorView().findViewById(android.R.id.content);
         Snackbar.make(view, message, isLong ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
     }
 
 
-    @Override
-    public void showLoadingDialog(String msg)
-    {
-        if (mProgressDialog == null)
-        {
+    protected void showLoadingDialog(String msg) {
+        if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
         }
         mProgressDialog.setTextMsg(msg);
+        mProgressDialog.setCancelable(false);
         mProgressDialog.show();
     }
 
-    @Override
-    public void closeLoadingDialog()
-    {
-        if (mProgressDialog != null)
-        {
+
+    protected void closeLoadingDialog() {
+        if (mProgressDialog != null) {
             mProgressDialog.dismiss();
         }
     }
 
-    public Observable<Object> clicks(int viewId)
-    {
+    public Observable<Object> clicks(int viewId) {
         return clicks(findViewById(viewId));
     }
 
-    public Observable<Object> clicks(View view)
-    {
+    public Observable<Object> clicks(View view) {
         return RxView.clicks(view).throttleFirst(500, TimeUnit.MILLISECONDS).compose(bindToLifecycle());
     }
 
     private SDFragmentManager mFragmentManager;
 
-    public SDFragmentManager getSDFragmentManager()
-    {
-        if (mFragmentManager == null)
-        {
+    public SDFragmentManager getSDFragmentManager() {
+        if (mFragmentManager == null) {
             mFragmentManager = new SDFragmentManager(getSupportFragmentManager());
         }
         return mFragmentManager;
@@ -272,8 +237,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Statef
     public abstract void initData(Bundle savedInstanceState);
 
     @Override
-    public void onClick(View v)
-    {
+    public void onClick(View v) {
 
     }
 }

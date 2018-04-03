@@ -25,8 +25,7 @@ import io.reactivex.annotations.NonNull;
  * Created by wwb on 2017/9/20 18:00.
  */
 @ActivityScope
-public class CategoryPresenter extends BasePresenter<CategoryContract.Model, CategoryContract.View>
-{
+public class CategoryPresenter extends BasePresenter<CategoryContract.Model, CategoryContract.View> {
     private Application mApplication;
     private int lastUserId = 1;
     private CategoryAdapter mAdapter;
@@ -36,79 +35,61 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.Model, Cat
 
     @Inject
     public CategoryPresenter(CategoryContract.Model model, CategoryContract.View rootView
-            , Application application)
-    {
+            , Application application) {
         super(model, rootView);
         this.mApplication = application;
     }
 
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
         this.mApplication = null;
     }
 
-    public void requestData(String type, boolean pullToRefresh)
-    {
+    public void requestData(String type, boolean pullToRefresh) {
 
-        if (mAdapter == null)
-        {
+        if (mAdapter == null) {
             mAdapter = new CategoryAdapter(mData);
             mRootView.setAdapter(mAdapter);
         }
-        if (pullToRefresh)
-        {
+        if (pullToRefresh) {
             lastUserId = 1;//上拉刷新默认只请求第一页
-        } else
-        {
+        } else {
             if (lastUserId == 5)//这边设置只加载5页
             {
                 mAdapter.loadMoreEnd();
                 return;
             }
-            if (NetworkUtils.isAvailableByPing())
-            {
+            if (NetworkUtils.isAvailableByPing()) {
                 lastUserId++;
             }
         }
 
-        requestDataOnPullToRefresh(pullToRefresh, mModel.gank(type, String.valueOf(lastUserId)), new HttpCallback<GankEntity>()
-        {
+        requestDataOnPullToRefresh(pullToRefresh, mModel.gank(type, String.valueOf(lastUserId)), new HttpCallback<GankEntity>() {
             @Override
-            public void onSuccess(GankEntity gankEntity)
-            {
+            public void onSuccess(GankEntity gankEntity) {
                 preEndIndex = mData.size();
-                if (pullToRefresh)
-                {
+                if (pullToRefresh) {
                     mData.clear();
                 }
                 mData.addAll(gankEntity.results);
-                if (pullToRefresh)
-                {
+                if (pullToRefresh) {
                     mAdapter.notifyDataSetChanged();
-                } else
-                {
+                } else {
                     mAdapter.notifyItemRangeInserted(preEndIndex, gankEntity.results.size());
                 }
                 mAdapter.loadMoreComplete();
             }
 
             @Override
-            public void onError(@NonNull Throwable e)
-            {
+            public void onError(@NonNull Throwable e) {
                 e.printStackTrace();
                 //判断是否有数据，如果有数据就让列表底部提示，如果没数据就显示重新加载
-                if (mAdapter.getData().size() > 0)
-                {
+                if (mAdapter.getData().size() > 0) {
                     mAdapter.loadMoreFail();
-                } else
-                {
-                    if (mRootView instanceof StatefulCallback)
-                    {
-                        ((StatefulCallback) mRootView).setState(LoadingPage.STATE_ERROR);
-                    }
+                } else {
+                    mRootView.setState(LoadingPage.STATE_ERROR);
                 }
                 ToastUtils.showShort("获取数据有误，请检查网络是否连接");
             }

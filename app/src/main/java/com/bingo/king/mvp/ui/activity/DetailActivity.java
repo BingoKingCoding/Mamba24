@@ -111,6 +111,16 @@ public class DetailActivity extends BaseCoordinatorActivity<DetailPresenter> imp
 
 
     @Override
+    public void showLoadingDialog(String msg) {
+
+    }
+
+    @Override
+    public void closeLoadingDialog() {
+
+    }
+
+    @Override
     public void hidePullLoading()
     {
 

@@ -12,17 +12,5 @@ package com.bingo.king.mvp.model.http.rxerrorhandler;
 
 public interface StatefulCallback
 {
-    /**
-     * 设置页面初始化状态
-     */
-    void setState(int state);
-    /**
-     * 显示进度框
-     */
-    void showLoadingDialog(String msg);
 
-    /**
-     * 隐藏进度框
-     */
-    void closeLoadingDialog();
 }

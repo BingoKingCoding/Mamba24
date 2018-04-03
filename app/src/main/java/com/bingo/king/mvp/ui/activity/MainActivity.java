@@ -103,4 +103,14 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     {
 
     }
+
+    @Override
+    public void showLoadingDialog(String msg) {
+
+    }
+
+    @Override
+    public void closeLoadingDialog() {
+
+    }
 }
