@@ -5,7 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.bingo.king.R;
-import com.bingo.king.app.base.BaseFragment;
+import com.bingo.king.app.base.BaseLazyFragment;
 import com.bingo.king.di.component.DaggerZhiHuCommentComponent;
 import com.bingo.king.di.module.ZhiHuCommentModule;
 import com.bingo.king.mvp.contract.ZhiHuCommentContract;
@@ -19,7 +19,7 @@ import java.util.List;
 import butterknife.BindView;
 
 
-public class ZhiHuCommentFragment extends BaseFragment<ZhiHuCommentPresenter> implements ZhiHuCommentContract.View
+public class ZhiHuCommentFragment extends BaseLazyFragment<ZhiHuCommentPresenter> implements ZhiHuCommentContract.View
 {
 
     @BindView(R.id.rv_zhihu_comment)
@@ -106,11 +106,6 @@ public class ZhiHuCommentFragment extends BaseFragment<ZhiHuCommentPresenter> im
 
     }
 
-    @Override
-    public void showMessage(String message)
-    {
-        showSnackbar(message);
-    }
 
     @Override
     public void refreshView(List<CommentBean.CommentsBean> list)

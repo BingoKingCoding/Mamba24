@@ -15,7 +15,7 @@ import com.bingo.king.app.utils.CommonUtils;
  * Created by wwb on 2017/11/19 17:16.
  */
 
-public abstract class BaseTitleFragment<P extends IPresenter> extends BaseFragment<P>
+public abstract class BaseTitleFragment<P extends IPresenter> extends BaseLazyFragment<P>
 {
     protected Toolbar toolbar;
     protected TextView tv_title;

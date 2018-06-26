@@ -30,7 +30,7 @@ public class AppJsHandler extends BaseJsHandler
     }
 
     /**
-     * @Description 检查网络
+     *  检查网络
      */
     @JavascriptInterface
     public void check_network()
@@ -44,7 +44,7 @@ public class AppJsHandler extends BaseJsHandler
     }
 
     /**
-     * @Description 重新加载
+     *  重新加载
      */
     @JavascriptInterface
     public void refresh_reload()

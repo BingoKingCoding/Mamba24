@@ -22,7 +22,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ moduleName : project.getName() ]
+                arguments = [moduleName: project.getName()]
             }
         }
 
@@ -50,10 +50,10 @@ android {
     }
 
     lintOptions {
-            disable 'InvalidPackage'
-            disable "ResourceType"
-            abortOnError false
-        }
+        disable 'InvalidPackage'
+        disable "ResourceType"
+        abortOnError false
+    }
 
     greendao {
         schemaVersion 1//数据库版本号

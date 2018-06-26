@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import com.bingo.king.R;
-import com.bingo.king.app.base.BaseFragment;
+import com.bingo.king.app.base.BaseLazyFragment;
 import com.bingo.king.app.utils.CommonUtils;
 import com.bingo.king.di.component.DaggerMeiziComponent;
 import com.bingo.king.di.module.MeiziModule;
@@ -33,7 +33,7 @@ import butterknife.BindView;
  * Created by wwb on 2017/9/27 16:33.
  */
 
-public class MeiziFragment extends BaseFragment<MeiziPresenter> implements MeiziContract.View, OnRefreshListener
+public class MeiziFragment extends BaseLazyFragment<MeiziPresenter> implements MeiziContract.View, OnRefreshListener
 {
 
     @BindView(R.id.recyclerView)
@@ -78,15 +78,9 @@ public class MeiziFragment extends BaseFragment<MeiziPresenter> implements Meizi
         mRecyclerView.addItemDecoration(decoration);
 
         mRecyclerView.setAdapter(mAdapter);
-
-    }
-
-    @Override
-    protected void onFragmentFirstVisible()
-    {
-        super.onFragmentFirstVisible();
         mPresenter.requestData(true);
     }
+
 
     @Override
     protected void retryRequestData()
@@ -106,11 +100,6 @@ public class MeiziFragment extends BaseFragment<MeiziPresenter> implements Meizi
         mRefreshLayout.finishRefresh();
     }
 
-    @Override
-    public void showMessage(String message)
-    {
-        showSnackbar(message);
-    }
 
     @Override
     public void onRefresh(RefreshLayout refreshlayout)

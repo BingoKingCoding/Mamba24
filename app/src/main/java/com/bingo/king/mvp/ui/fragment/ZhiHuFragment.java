@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bingo.king.R;
-import com.bingo.king.app.base.BaseFragment;
+import com.bingo.king.app.base.BaseLazyFragment;
 import com.bingo.king.app.utils.GlideImageLoader;
 import com.bingo.king.di.component.DaggerZhiHuComponent;
 import com.bingo.king.di.module.ZhiHuModule;
@@ -37,8 +37,7 @@ import butterknife.BindView;
  * Created by wwb on 2017/12/1 17:18.
  */
 
-public class ZhiHuFragment extends BaseFragment<ZhiHuPresenter> implements ZhiHuContract.View
-{
+public class ZhiHuFragment extends BaseLazyFragment<ZhiHuPresenter> implements ZhiHuContract.View {
     public final static String ZH_LIST_IS_CHANGE = "zh_list_is_change";
     public final static String ZH_LIST = "zh_list";
 
@@ -51,14 +50,12 @@ public class ZhiHuFragment extends BaseFragment<ZhiHuPresenter> implements ZhiHu
     private List<ZhiHuListBean> mZhiHuList;
 
     @Override
-    protected int getContentLayoutId()
-    {
+    protected int getContentLayoutId() {
         return R.layout.fragment_zhihu;
     }
 
     @Override
-    protected void initComponent()
-    {
+    protected void initComponent() {
         DaggerZhiHuComponent.builder()
                 .appComponent(getAppComponent())
                 .zhiHuModule(new ZhiHuModule(this))
@@ -67,31 +64,47 @@ public class ZhiHuFragment extends BaseFragment<ZhiHuPresenter> implements ZhiHu
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         SPUtils spUtils = SPUtils.getInstance();
-        if (spUtils.getBoolean(ZH_LIST_IS_CHANGE))
-        {
+        if (spUtils.getBoolean(ZH_LIST_IS_CHANGE)) {
             mZhiHuList = mPresenter.getListZhiHu();
-            if (mAdapter != null)
-            {
+            if (mAdapter != null) {
                 mAdapter.setNewData(mZhiHuList);
                 mAdapter.notifyDataSetChanged();
                 spUtils.put(ZH_LIST_IS_CHANGE, false);
             }
         }
+        if (mBanner != null) {
+            mBanner.start();
+        }
         super.onResume();
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState)
-    {
-        initView();
-        mPresenter.requestZhiHuData();
+    public void onPause() {
+        super.onPause();
+        if (mBanner != null) {
+            mBanner.stopAutoPlay();
+        }
     }
 
-    private void initView()
-    {
+    @Override
+    protected void initData(Bundle savedInstanceState) {
+        initView();
+        mPresenter.requestZhiHuData();
+        SPUtils spUtils = SPUtils.getInstance();
+        if (spUtils.getBoolean(ZH_LIST_IS_CHANGE)) {
+            if (mPresenter != null) {
+                mZhiHuList = mPresenter.getListZhiHu();
+            }
+            if (mAdapter != null) {
+                mAdapter.setNewData(mZhiHuList);
+                spUtils.put(ZH_LIST_IS_CHANGE, false);
+            }
+        }
+    }
+
+    private void initView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         View footerView = getActivity().getLayoutInflater().inflate(R.layout.item_zhihu_footer, (ViewGroup) mRecyclerView.getParent(), false);
         View headerView = getActivity().getLayoutInflater().inflate(R.layout.item_zhihu_header, (ViewGroup) mRecyclerView.getParent(), false);
@@ -107,23 +120,19 @@ public class ZhiHuFragment extends BaseFragment<ZhiHuPresenter> implements ZhiHu
         tvZhihuFooter.setOnClickListener(v -> startActivity(new Intent(getActivity(), ZhiHuAdjustmentListActivity.class)));
         ibXiandu.setOnClickListener(v -> WebActivity.loadUrl(getActivity(), "https://gank.io/xiandu", "加载中..."));
 
-        mAdapter.setOnItemClickListener(new ZhiHuAdapter.OnItemClickListener()
-        {
+        mAdapter.setOnItemClickListener(new ZhiHuAdapter.OnItemClickListener() {
             @Override
-            public void onItemClickListener(int id, View view)
-            {
+            public void onItemClickListener(int id, View view) {
                 startZhiHuDetailActivity(id, view);
             }
 
             @Override
-            public void OnItemThemeClickListener(int id, View view)
-            {
+            public void OnItemThemeClickListener(int id, View view) {
                 startZhihuThemeActivity("id", id, view);
             }
 
             @Override
-            public void OnItemSectionClickListener(int id, View view)
-            {
+            public void OnItemSectionClickListener(int id, View view) {
                 startZhihuThemeActivity("section_id", id, view);
             }
         });
@@ -132,42 +141,31 @@ public class ZhiHuFragment extends BaseFragment<ZhiHuPresenter> implements ZhiHu
     }
 
     @Override
-    protected void retryRequestData()
-    {
+    protected void retryRequestData() {
         mPresenter.requestZhiHuData();
     }
 
-    @Override
-    public void showMessage(String message)
-    {
-        showSnackbar(message);
-    }
 
     @Override
-    public void hidePullLoading()
-    {
+    public void hidePullLoading() {
 
     }
 
     @Override
-    public void refreshView(List<ZhiHuListBean> zhiHuList)
-    {
+    public void refreshView(List<ZhiHuListBean> zhiHuList) {
         mZhiHuList = zhiHuList;
         List<DailyListBean.TopStoriesBean> topStoriesList = mPresenter.getTopStoriesList();
-        if (mZhiHuList.size() == 12)
-        {
+        if (mZhiHuList.size() == 12) {
             initBanner(topStoriesList);
             mAdapter.setNewData(mZhiHuList);
         }
     }
 
-    private void initBanner(final List<DailyListBean.TopStoriesBean> topStoriesList)
-    {
+    private void initBanner(final List<DailyListBean.TopStoriesBean> topStoriesList) {
         mBanner.startAutoPlay();
         mBanner.setDelayTime(3000);
         List<String> imageList = new ArrayList<>();
-        for (DailyListBean.TopStoriesBean topStoriesBean : topStoriesList)
-        {
+        for (DailyListBean.TopStoriesBean topStoriesBean : topStoriesList) {
             imageList.add(topStoriesBean.getImage());
         }
         mBanner.setImages(imageList).setImageLoader(new GlideImageLoader()).start();
@@ -178,8 +176,7 @@ public class ZhiHuFragment extends BaseFragment<ZhiHuPresenter> implements ZhiHu
         });
     }
 
-    private void startZhihuThemeActivity(String name, int id, View view)
-    {
+    private void startZhihuThemeActivity(String name, int id, View view) {
         Intent intent = new Intent();
         intent.setClass(getActivity(), ZhihuThemeActivity.class);
         intent.putExtra(name, id);
@@ -188,8 +185,7 @@ public class ZhiHuFragment extends BaseFragment<ZhiHuPresenter> implements ZhiHu
         getActivity().startActivity(intent, options.toBundle());
     }
 
-    private void startZhiHuDetailActivity(int id, View view)
-    {
+    private void startZhiHuDetailActivity(int id, View view) {
         Intent intent = new Intent();
         intent.setClass(getActivity(), ZhihuDetailActivity.class);
         intent.putExtra(ZhihuDetailActivity.EXTRA_ID, id);
@@ -207,37 +203,5 @@ public class ZhiHuFragment extends BaseFragment<ZhiHuPresenter> implements ZhiHu
         getActivity().startActivity(intent, options.toBundle());
     }
 
-    @Override
-    protected void onFragmentVisibleChange(boolean isVisible)
-    {
-        super.onFragmentVisibleChange(isVisible);
-        if (isVisible)
-        {
-            SPUtils spUtils = SPUtils.getInstance();
-            if (spUtils.getBoolean(ZH_LIST_IS_CHANGE))
-            {
-                mZhiHuList = mPresenter.getListZhiHu();
-                if (mAdapter != null)
-                {
-                    mAdapter.setNewData(mZhiHuList);
-                    spUtils.put(ZH_LIST_IS_CHANGE, false);
-                }
-            }
-            if (mBanner != null)
-            {
-                mBanner.start();
-            }
-        } else
-        {
-            if (mBanner != null)
-            {
-                mBanner.stopAutoPlay();
-            }
-        }
-    }
-
-    private void test1(){
-
-    }
 
 }

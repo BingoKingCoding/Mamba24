@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bingo.king.R;
-import com.bingo.king.app.base.BaseFragment;
+import com.bingo.king.app.base.BaseLazyFragment;
 import com.bingo.king.app.utils.GlideUtils;
 import com.bingo.king.app.utils.ViewBinder;
 import com.bingo.king.di.component.DaggerMeComponent;
@@ -27,7 +27,7 @@ import butterknife.OnClick;
  * Created by wwb on 2017/11/29 11:23.
  */
 
-public class MeFragment extends BaseFragment<MePresenter> implements MeContract.View
+public class MeFragment extends BaseLazyFragment<MePresenter> implements MeContract.View
 {
     private CircleImageView civ_head;
     private TextView tv_name;
@@ -77,12 +77,6 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     }
 
 
-    @Override
-    protected void onFragmentFirstVisible()
-    {
-        super.onFragmentFirstVisible();
-    }
-
 
     @OnClick({R.id.iv_title_setting})
     public void onClick(View view)
@@ -101,11 +95,6 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
 
     }
 
-    @Override
-    public void showMessage(String message)
-    {
-        showSnackbar(message);
-    }
 
     @Override
     protected void retryRequestData()

@@ -8,7 +8,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.bingo.king.R;
 import com.bingo.king.app.ARouterPaths;
 import com.bingo.king.app.EventBusTags;
-import com.bingo.king.app.base.BaseFragment;
+import com.bingo.king.app.base.BaseLazyFragment;
 import com.bingo.king.app.utils.CommonUtils;
 import com.bingo.king.di.component.DaggerArticleComponent;
 import com.bingo.king.di.module.ArticleModule;
@@ -32,7 +32,7 @@ import butterknife.BindView;
  * Created by wwb on 2017/9/27 17:08.
  */
 
-public class ArticleFragment extends BaseFragment<ArticlePresenter> implements ArticleContract.View,OnRefreshListener
+public class ArticleFragment extends BaseLazyFragment<ArticlePresenter> implements ArticleContract.View,OnRefreshListener
 {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -84,14 +84,7 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
                     .navigation();
         });
         mRecyclerView.setAdapter(mAdapter);
-
-    }
-
-    @Override
-    protected void onFragmentFirstVisible()
-    {
-        super.onFragmentFirstVisible();
-//        mPresenter.requestData(true);
+        mPresenter.requestData(true);
     }
 
     @Override
@@ -100,12 +93,6 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
         mPresenter.requestData(true);
     }
 
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        mPresenter.requestData(true);
-    }
 
     @Override
     protected int getContentLayoutId()
@@ -120,11 +107,6 @@ public class ArticleFragment extends BaseFragment<ArticlePresenter> implements A
         mRefreshLayout.finishRefresh();
     }
 
-    @Override
-    public void showMessage(String message)
-    {
-       showSnackbar(message);
-    }
 
     @Override
     public void onRefresh(RefreshLayout refreshLayout)

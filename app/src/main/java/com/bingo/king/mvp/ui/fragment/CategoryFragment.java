@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bingo.king.R;
 import com.bingo.king.app.ARouterPaths;
-import com.bingo.king.app.base.BaseFragment;
+import com.bingo.king.app.base.BaseLazyFragment;
 import com.bingo.king.app.utils.CommonUtils;
 import com.bingo.king.di.component.DaggerCategoryComponent;
 import com.bingo.king.di.module.CategoryModule;
@@ -29,7 +29,7 @@ import static com.bingo.king.app.EventBusTags.EXTRA_DETAIL;
  * Created by wwb on 2017/9/20 17:19.
  */
 
-public class CategoryFragment extends BaseFragment<CategoryPresenter> implements CategoryContract.View,BaseQuickAdapter.RequestLoadMoreListener,OnRefreshListener
+public class CategoryFragment extends BaseLazyFragment<CategoryPresenter> implements CategoryContract.View,BaseQuickAdapter.RequestLoadMoreListener,OnRefreshListener
 {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -63,15 +63,9 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
         type = getArguments().getString("type");
         mRefreshLayout.setOnRefreshListener(this);
         CommonUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
-    }
-
-
-    @Override
-    protected void onFragmentFirstVisible()
-    {
-        super.onFragmentFirstVisible();
         mPresenter.requestData(type,true);
     }
+
 
     @Override
     protected int getContentLayoutId()
@@ -110,11 +104,6 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
         mRefreshLayout.finishRefresh();
     }
 
-    @Override
-    public void showMessage(String message)
-    {
-        showSnackbar(message);
-    }
 
     @Override
     public void onLoadMoreRequested()

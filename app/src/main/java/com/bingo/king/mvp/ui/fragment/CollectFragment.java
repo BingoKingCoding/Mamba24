@@ -7,7 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.widget.TextView;
 
 import com.bingo.king.R;
-import com.bingo.king.app.base.BaseFragment;
+import com.bingo.king.app.base.BaseLazyFragment;
 import com.bingo.king.app.utils.ViewBinder;
 import com.bingo.king.di.component.DaggerCollectComponent;
 import com.bingo.king.di.module.CollectModule;
@@ -27,7 +27,7 @@ import butterknife.BindView;
  * Created by wwb on 2017/9/20 16:13.
  */
 
-public class CollectFragment extends BaseFragment<CollectPresenter> implements CollectContract.View
+public class CollectFragment extends BaseLazyFragment<CollectPresenter> implements CollectContract.View
 {
     @BindView(R.id.toolbar_title)
     TextView toolbar_title;
@@ -75,12 +75,6 @@ public class CollectFragment extends BaseFragment<CollectPresenter> implements C
     public void hidePullLoading()
     {
 
-    }
-
-    @Override
-    public void showMessage(String message)
-    {
-        showSnackbar(message);
     }
 
 

@@ -57,8 +57,7 @@ public abstract class LoadingBaseActivity<P extends IPresenter> extends BasePres
 
     public void setState(int state)
     {
-        mLoadingPage.state = state;
-        mLoadingPage.showPage();
+        mLoadingPage.showPage(state);
     }
 
 

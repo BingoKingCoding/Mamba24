@@ -107,10 +107,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/FullScreenTheme">
         </activity>
-        <activity android:name=".mvp.ui.activity.LoginActivity"
-                  android:configChanges="orientation|screenSize|keyboardHidden"
-                  android:theme="@style/FullScreenTheme"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".mvp.ui.activity.LoginActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreenTheme">
         </activity>
 
         <!-- 友盟配置Meta Start============================================= -->
@@ -121,6 +122,7 @@
             android:name="UMENG_CHANNEL"
             android:value="Channel ID"/>
         <!-- 友盟Share组件End=============================================================== -->
+
 
         <!-- 腾讯 start -->
         <activity
@@ -152,24 +154,24 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
-
         <activity
             android:name="com.sina.weibo.sdk.web.WeiboSdkWebActivity"
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
             android:windowSoftInputMode="adjustResize">
         </activity>
-
         <activity
             android:name="com.sina.weibo.sdk.share.WbShareTransActivity"
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <!-- 新浪 end -->
+
 
         <!-- 微信 start -->
         <activity

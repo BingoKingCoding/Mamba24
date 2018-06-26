@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.bingo.king.R;
-import com.bingo.king.app.base.BaseFragment;
+import com.bingo.king.app.base.BaseLazyFragment;
 import com.bingo.king.di.component.DaggerDBMovieComponent;
 import com.bingo.king.di.module.DBMovieModule;
 import com.bingo.king.mvp.contract.DBMovieContract;
@@ -24,7 +24,7 @@ import java.util.List;
 import butterknife.BindView;
 
 
-public class DBMovieFragment extends BaseFragment<DBMoviePresenter> implements DBMovieContract.View
+public class DBMovieFragment extends BaseLazyFragment<DBMoviePresenter> implements DBMovieContract.View
 {
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
@@ -113,12 +113,6 @@ public class DBMovieFragment extends BaseFragment<DBMoviePresenter> implements D
     public void hidePullLoading()
     {
 
-    }
-
-    @Override
-    public void showMessage(String message)
-    {
-        showSnackbar(message);
     }
 
 

@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.widget.TextView;
 
 import com.bingo.king.R;
-import com.bingo.king.app.base.BaseFragment;
+import com.bingo.king.app.base.BaseLazyFragment;
 import com.bingo.king.app.utils.CategoryType;
 import com.bingo.king.app.utils.ViewBinder;
 import com.bingo.king.di.component.DaggerHomeComponent;
@@ -24,7 +24,7 @@ import butterknife.BindView;
  * Created by adou on 2017/11/6:20:26.
  */
 
-public class HomeFragment extends BaseFragment<HomePresenter> implements HomeContract.View
+public class HomeFragment extends BaseLazyFragment<HomePresenter> implements HomeContract.View
 {
     @BindView(R.id.toolbar_title)
     TextView toolbar_title;
@@ -63,15 +63,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             spUtils.put(ZhiHuFragment.ZH_LIST_IS_CHANGE, true);
         }
 
-        mainPager.setOffscreenPageLimit(3);
+        mainPager.setOffscreenPageLimit(5);
         mainPager.setAdapter(new MainViewPagerAdapter(getChildFragmentManager(),CategoryType.getFragments(), CategoryType.getPageTitleList()));
         tabs.setupWithViewPager(mainPager);
-    }
-
-    @Override
-    protected void onFragmentFirstVisible()
-    {
-        super.onFragmentFirstVisible();
         setState(LoadingPage.STATE_SUCCESS);
     }
 
@@ -80,12 +74,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     public void hidePullLoading()
     {
 
-    }
-
-    @Override
-    public void showMessage(String message)
-    {
-        showSnackbar(message);
     }
 
     @Override

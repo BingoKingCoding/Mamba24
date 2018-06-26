@@ -18,8 +18,7 @@ import com.bingo.king.R;
  * Created by wwb on 2017/6/22 15:26.
  */
 
-public abstract class LoadingPage extends FrameLayout
-{
+public abstract class LoadingPage extends FrameLayout {
     public static final int STATE_UNKNOWN = 0;
     public static final int STATE_LOADING = 1;
     public static final int STATE_ERROR = 2;
@@ -33,158 +32,141 @@ public abstract class LoadingPage extends FrameLayout
     private AnimationDrawable mAnimationDrawable;
     private ImageView img;
 
-    public int state = STATE_UNKNOWN;
+    private int state = STATE_UNKNOWN;
 
     private Context mContext;
 
 
-    public LoadingPage(Context context)
-    {
+    public LoadingPage(Context context) {
         this(context, null);
     }
 
-    public LoadingPage(Context context, @Nullable AttributeSet attrs)
-    {
+    public LoadingPage(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public LoadingPage(Context context, @Nullable AttributeSet attrs, int defStyleAttr)
-    {
+    public LoadingPage(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.mContext = context;
         init();
     }
 
-    private void init()
-    {
+    private void init() {
         this.setBackgroundColor(getResources().getColor(R.color.color_page_bg));
         //把loadingView添加到frameLayout上
-        if (loadingView == null)
-        {
+        if (loadingView == null) {
             loadingView = createLoadingView();
             this.addView(loadingView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         }
         //把emptyView添加到frameLayout上
-        if (emptyView == null)
-        {
+        if (emptyView == null) {
             emptyView = createEmptyView();
             this.addView(emptyView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
         }
         //把errorView添加到frameLayout上
-        if (errorView == null)
-        {
+        if (errorView == null) {
             errorView = createErrorView();
             this.addView(errorView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         }
 
-        if (contentView == null)
-        {
-            contentView = creatContentView();
+        if (contentView == null) {
+            contentView = createContentView();
             this.addView(contentView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
             initView();
         }
 
-         showPage();//根据状态显示界面
+        showPage();//根据状态显示界面
     }
 
-    private View createLoadingView()
-    {
+    private View createLoadingView() {
         loadingView = LayoutInflater.from(mContext).inflate(R.layout.loadingpage_state_loading, null);
         img = (ImageView) loadingView.getRootView().findViewById(R.id.img_progress);
         // 加载动画 这边也可以直接用progressbar
         mAnimationDrawable = (AnimationDrawable) img.getDrawable();
         // 默认进入页面就开启动画
-        if (!mAnimationDrawable.isRunning())
-        {
+        if (!mAnimationDrawable.isRunning()) {
             mAnimationDrawable.start();
         }
         return loadingView;
     }
 
-    private View createEmptyView()
-    {
+    private View createEmptyView() {
         emptyView = LayoutInflater.from(mContext).inflate(R.layout.loadingpage_state_empty, null);
         return emptyView;
     }
 
 
-    private View createErrorView()
-    {
+    private View createErrorView() {
         errorView = LayoutInflater.from(mContext).inflate(R.layout.loadingpage_state_error, null);
         CardView cv_error_refresh = errorView.findViewById(R.id.cv_error_refresh);
-        cv_error_refresh.setOnClickListener(new OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                state = STATE_LOADING;
-                showPage();
-                retryRequestData();
-            }
+        cv_error_refresh.setOnClickListener(view -> {
+            state = STATE_LOADING;
+            showPage();
+            retryRequestData();
         });
         return errorView;
     }
 
 
-    private View creatContentView()
-    {
+    private View createContentView() {
         contentView = LayoutInflater.from(mContext).inflate(getContentLayoutId(), null);
         return contentView;
     }
 
 
-    private void startAnimation()
-    {
-        if (!mAnimationDrawable.isRunning())
-        {
+    private void startAnimation() {
+        if (!mAnimationDrawable.isRunning()) {
             mAnimationDrawable.start();
         }
     }
 
-    private void stopAnimation()
-    {
-        if (mAnimationDrawable != null && mAnimationDrawable.isRunning())
-        {
+    private void stopAnimation() {
+        if (mAnimationDrawable != null && mAnimationDrawable.isRunning()) {
             mAnimationDrawable.stop();
         }
     }
 
-    public void showPage()
-    {
-        if (loadingView != null)
-        {
-            if (state == STATE_UNKNOWN || state == STATE_LOADING)
-            {
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public void showPage(int state) {
+        this.state = state;
+        showPage();
+    }
+
+    private void showPage() {
+        if (loadingView != null) {
+            if (state == STATE_UNKNOWN || state == STATE_LOADING) {
                 loadingView.setVisibility(View.VISIBLE);
                 // 开始动画
                 startAnimation();
-            } else
-            {
+            } else {
                 // 关闭动画
                 stopAnimation();
                 loadingView.setVisibility(View.GONE);
             }
         }
-        if (state == STATE_EMPTY || state == STATE_ERROR || state == STATE_SUCCESS)
-        {
+        if (state == STATE_EMPTY || state == STATE_ERROR || state == STATE_SUCCESS) {
             // 关闭动画
             stopAnimation();
         }
 
 
-        if (emptyView != null)
-        {
+        if (emptyView != null) {
             emptyView.setVisibility(state == STATE_EMPTY ? View.VISIBLE : View.GONE);
         }
 
-        if (errorView != null)
-        {
+        if (errorView != null) {
             errorView.setVisibility(state == STATE_ERROR ? View.VISIBLE : View.GONE);
         }
 
-        if (contentView != null)
-        {
+        if (contentView != null) {
             contentView.setVisibility(state == STATE_SUCCESS ? View.VISIBLE : View.GONE);
         }
     }
