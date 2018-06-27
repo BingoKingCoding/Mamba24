@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.bingo.king.R;
 import com.bingo.king.app.base.BaseLazyFragment;
-import com.bingo.king.app.utils.GlideImageLoader;
+import com.bingo.king.app.utils.BannerImageLoader;
 import com.bingo.king.di.component.DaggerZhiHuComponent;
 import com.bingo.king.di.module.ZhiHuModule;
 import com.bingo.king.mvp.contract.ZhiHuContract;
@@ -168,7 +168,7 @@ public class ZhiHuFragment extends BaseLazyFragment<ZhiHuPresenter> implements Z
         for (DailyListBean.TopStoriesBean topStoriesBean : topStoriesList) {
             imageList.add(topStoriesBean.getImage());
         }
-        mBanner.setImages(imageList).setImageLoader(new GlideImageLoader()).start();
+        mBanner.setImages(imageList).setImageLoader(new BannerImageLoader()).start();
         mBanner.setOnBannerListener(position ->
         {
             int id = topStoriesList.get(position).getId();
