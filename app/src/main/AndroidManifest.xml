@@ -196,6 +196,8 @@
         </activity>
         <!-- 微信 end -->
 
+        <activity android:name=".mvp.ui.activity.ShoppingGoodsActivity">
+        </activity>
     </application>
 
 </manifest>
