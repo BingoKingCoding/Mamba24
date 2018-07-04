@@ -1,6 +1,7 @@
 package com.bingo.king.mvp.ui.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 
 import com.bingo.king.R;
 import com.bingo.king.app.base.BasePresenterActivity;
@@ -13,23 +14,23 @@ import com.bingo.king.mvp.ui.fragment.HomeFragment;
 import com.bingo.king.mvp.ui.fragment.MeFragment;
 import com.bingo.king.mvp.ui.fragment.WelfareFragment;
 import com.bingo.king.mvp.ui.widget.BottomNavigationView;
+import com.bingo.king.mvp.ui.widget.dialog.ADFragmentDialog;
 
 import butterknife.BindView;
 
-public class MainActivity extends BasePresenterActivity<MainPresenter> implements MainContract.View
-{
+public class MainActivity extends BasePresenterActivity<MainPresenter> implements MainContract.View {
     @BindView(R.id.bottomBar)
     BottomNavigationView mBottomBar;
 
+    private ADFragmentDialog mADFragmentDialog;
+
     @Override
-    public int onCreateContentView(Bundle savedInstanceState)
-    {
+    public int onCreateContentView(Bundle savedInstanceState) {
         return R.layout.activity_main;
     }
 
     @Override
-    public void setupActivityComponent()
-    {
+    public void setupActivityComponent() {
         DaggerMainComponent.builder()
                 .appComponent(getAppComponent())
                 .mainModule(new MainModule(this))
@@ -38,21 +39,32 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     }
 
     @Override
-    public void initData(Bundle savedInstanceState)
-    {
+    public void initData(Bundle savedInstanceState) {
 //        mIsExitApp = true;
         initTab();
+        showFragmentDialog();
     }
 
-    private void initTab()
-    {
-        mBottomBar.setCallback(new BottomNavigationView.Callback()
-        {
+
+    private void showFragmentDialog() {
+        if (mADFragmentDialog != null && mADFragmentDialog.isShowing()) {
+            return;
+        }
+        mADFragmentDialog = new ADFragmentDialog();
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onTabSelected(int index)
-            {
-                switch (index)
-                {
+            public void run() {
+                mADFragmentDialog.showDialog(MainActivity.this);
+            }
+        },1000);
+
+    }
+
+    private void initTab() {
+        mBottomBar.setCallback(new BottomNavigationView.Callback() {
+            @Override
+            public void onTabSelected(int index) {
+                switch (index) {
                     case BottomNavigationView.INDEX_HOME:
                         getSDFragmentManager().toggle(R.id.main_frame, null, HomeFragment.class);
                         break;
@@ -69,8 +81,7 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
             }
 
             @Override
-            public void onTabReselected(int index)
-            {
+            public void onTabReselected(int index) {
 
             }
         });
@@ -78,29 +89,25 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     }
 
     @Override
-    public void showMessage(String message)
-    {
+    public void showMessage(String message) {
         showSnackbar(message);
     }
 
 
     @Override
-    public void hidePullLoading()
-    {
+    public void hidePullLoading() {
 
     }
 
 
     @Override
-    protected void onSaveInstanceState(Bundle outState)
-    {
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
 
 
     @Override
-    public void setState(int state)
-    {
+    public void setState(int state) {
 
     }
 
