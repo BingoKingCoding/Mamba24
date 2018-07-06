@@ -130,8 +130,8 @@ dependencies {
     compile 'me.yuqirong:cardswipelayout:1.0.0'
     //仿探探
     //图片加载
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'jp.wasabeef:glide-transformations:2.0.2'
+    compile 'com.github.bumptech.glide:glide:4.6.1'
+    compile 'jp.wasabeef:glide-transformations:3.1.1'
 
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
     compile 'com.alibaba:arouter-api:1.2.2'

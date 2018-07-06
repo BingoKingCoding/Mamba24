@@ -21,28 +21,26 @@ import com.bingo.king.mvp.ui.widget.CircleImageView;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
 
 import butterknife.OnClick;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 /**
  * <个人中心页面>
  * Created by wwb on 2017/11/29 11:23.
  */
 
-public class MeFragment extends BaseLazyFragment<MePresenter> implements MeContract.View
-{
+public class MeFragment extends BaseLazyFragment<MePresenter> implements MeContract.View {
     private CircleImageView civ_head;
     private TextView tv_name;
     private TextView tv_id;
     private ImageView iv_personinfo_bg;
 
     @Override
-    protected int getContentLayoutId()
-    {
+    protected int getContentLayoutId() {
         return R.layout.fragment_me;
     }
 
     @Override
-    protected void initComponent()
-    {
+    protected void initComponent() {
         DaggerMeComponent.builder()
                 .appComponent(getAppComponent())
                 .meModule(new MeModule(this))
@@ -51,15 +49,13 @@ public class MeFragment extends BaseLazyFragment<MePresenter> implements MeContr
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState)
-    {
+    protected void initData(Bundle savedInstanceState) {
         setState(LoadingPage.STATE_SUCCESS);
         initView();
         initData();
     }
 
-    private void initView()
-    {
+    private void initView() {
         civ_head = getActivity().findViewById(R.id.civ_head);
         tv_name = getActivity().findViewById(R.id.tv_name);
         tv_id = getActivity().findViewById(R.id.tv_id);
@@ -67,22 +63,18 @@ public class MeFragment extends BaseLazyFragment<MePresenter> implements MeContr
 
     }
 
-    private void initData()
-    {
+    private void initData() {
         UserBean user = UserBeanDao.query();
         ViewBinder.setTextView(tv_name, user.getNick_name() + user.getUser_id());
         ViewBinder.setTextView(tv_id, "ID:" + user.getUser_id());
-        GlideUtils.getInstance().load(user.getHead_image()).into(civ_head);
+        GlideUtils.getInstance().loadImage(user.getHead_image(), civ_head);
 //        GlideUtils.getInstance().load(user.getHead_image()).asBitmap().transform(new BlurTransformation(getActivity())).into(iv_personinfo_bg);
     }
 
 
-
     @OnClick({R.id.iv_title_setting})
-    public void onClick(View view)
-    {
-        switch (view.getId())
-        {
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.iv_title_setting:
                 startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
@@ -90,15 +82,13 @@ public class MeFragment extends BaseLazyFragment<MePresenter> implements MeContr
     }
 
     @Override
-    public void hidePullLoading()
-    {
+    public void hidePullLoading() {
 
     }
 
 
     @Override
-    protected void retryRequestData()
-    {
+    protected void retryRequestData() {
 
     }
 
