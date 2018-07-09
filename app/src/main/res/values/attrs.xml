@@ -37,4 +37,19 @@
         <attr name="civ_circle_background_color" format="reference|color"/>
         <attr name="civ_fill_color" format="reference|color"/>
     </declare-styleable>
+
+
+    <declare-styleable name="ProgressWheel">
+            <attr name="mn_progressIndeterminate" format="boolean" />
+            <attr name="mn_barColor" format="color" />
+            <attr name="mn_rimColor" format="color" />
+            <attr name="mn_rimWidth" format="dimension" />
+            <attr name="mn_spinSpeed" format="float" />
+            <attr name="mn_barSpinCycleTime" format="integer" />
+            <attr name="mn_circleRadius" format="dimension" />
+            <attr name="mn_fillRadius" format="boolean" />
+            <attr name="mn_barWidth" format="dimension" />
+            <attr name="mn_linearProgress" format="boolean" />
+        </declare-styleable>
+
 </resources>

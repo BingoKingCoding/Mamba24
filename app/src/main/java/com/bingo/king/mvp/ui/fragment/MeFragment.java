@@ -1,7 +1,7 @@
 package com.bingo.king.mvp.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,12 +16,10 @@ import com.bingo.king.mvp.contract.MeContract;
 import com.bingo.king.mvp.model.entity.UserBean;
 import com.bingo.king.mvp.model.entity.dao.UserBeanDao;
 import com.bingo.king.mvp.presenter.MePresenter;
-import com.bingo.king.mvp.ui.activity.SettingActivity;
 import com.bingo.king.mvp.ui.widget.CircleImageView;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
 
 import butterknife.OnClick;
-import jp.wasabeef.glide.transformations.BlurTransformation;
 
 /**
  * <个人中心页面>
@@ -76,7 +74,17 @@ public class MeFragment extends BaseLazyFragment<MePresenter> implements MeContr
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_title_setting:
-                startActivity(new Intent(getActivity(), SettingActivity.class));
+//                startActivity(new Intent(getActivity(), SettingActivity.class));
+
+                showLoadingDialog("加载中");
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        closeLoadingDialog();
+                    }
+                }, 3000);
+
                 break;
         }
     }

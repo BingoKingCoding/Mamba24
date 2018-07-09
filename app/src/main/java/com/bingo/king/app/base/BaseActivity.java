@@ -6,18 +6,16 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.bingo.king.R;
 import com.bingo.king.app.App;
 import com.bingo.king.app.EventBusTags;
+import com.bingo.king.app.config.MDialogConfig;
 import com.bingo.king.app.utils.SDFragmentManager;
 import com.bingo.king.di.component.AppComponent;
-import com.bingo.king.mvp.model.http.rxerrorhandler.StatefulCallback;
 import com.bingo.king.mvp.ui.widget.ProgressDialog;
 import com.blankj.utilcode.util.ToastUtils;
 import com.jaeger.library.StatusBarUtil;
@@ -167,21 +165,41 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
     }
 
 
-    protected void showLoadingDialog(String msg) {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
+    private String defaultMsg = "请稍后...";
+
+    public void showLoadingDialog() {
+        showLoadingDialog(defaultMsg);
+    }
+
+    public void showLoadingDialog(String msg) {
+        showLoadingDialog(msg, null);
+    }
+
+    public void showLoadingDialog(MDialogConfig mDialogConfig) {
+        showLoadingDialog(defaultMsg, mDialogConfig);
+    }
+
+    public void showLoadingDialog(String msg, MDialogConfig mDialogConfig) {
+        //设置配置
+        if (mDialogConfig == null) {
+            mDialogConfig = new MDialogConfig.Builder().build();
         }
-        mProgressDialog.setTextMsg(msg);
-        mProgressDialog.setCancelable(false);
+
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this, mDialogConfig);
+        }
+
+        closeLoadingDialog();
+        mProgressDialog.setText(msg);
         mProgressDialog.show();
     }
 
-
-    protected void closeLoadingDialog() {
-        if (mProgressDialog != null) {
+    public void closeLoadingDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
         }
     }
+
 
     public Observable<Object> clicks(int viewId) {
         return clicks(findViewById(viewId));

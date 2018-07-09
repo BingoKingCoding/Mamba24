@@ -2,7 +2,6 @@ package com.bingo.king.app.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -158,6 +157,11 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     }
 
     protected abstract void initComponent();
+
+
+    public void showLoadingDialog() {
+        getBaseActivity().showLoadingDialog();
+    }
 
     public void showLoadingDialog(String msg) {
         getBaseActivity().showLoadingDialog(msg);
