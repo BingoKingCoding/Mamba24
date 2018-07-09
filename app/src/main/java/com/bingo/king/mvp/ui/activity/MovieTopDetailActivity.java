@@ -154,12 +154,6 @@ public class MovieTopDetailActivity extends LoadingBaseActivity<MovieTopDetailPr
 
     }
 
-    @Override
-    public void showMessage(String message) {
-        showSnackbar(message);
-    }
-
-
     private void initToolBar(Toolbar toolbarDoubanDetail, String title) {
         setSupportActionBar(toolbarDoubanDetail);
         toolbarDoubanDetail.setTitle(title);

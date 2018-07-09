@@ -7,6 +7,7 @@ import com.bingo.king.app.utils.CollectionUtil;
 import com.bingo.king.app.utils.OkHttpDownloader;
 import com.bingo.king.di.scope.ActivityScope;
 import com.bingo.king.mvp.contract.PhotoViewContract;
+import com.blankj.utilcode.util.ToastUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,13 +44,13 @@ public class PhotoViewPresenter extends BasePresenter<PhotoViewContract.Model, P
             @Override
             public void onSuccess()
             {
-                mRootView.showMessage("图片保存成功");
+                ToastUtils.showShort("图片保存成功");
             }
 
             @Override
             public void onFailure(IOException e)
             {
-                mRootView.showMessage("图片保存失败");
+                ToastUtils.showShort("图片保存失败");
             }
         });
     }

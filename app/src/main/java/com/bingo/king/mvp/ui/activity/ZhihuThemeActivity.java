@@ -137,12 +137,6 @@ public class ZhihuThemeActivity extends BaseZhihuThemeActivity<ZhihuThemePresent
 
     }
 
-    @Override
-    public void showMessage(String message) {
-        showSnackbar(message);
-    }
-
-
     private void startZhiHuDetailActivity(int id, View view) {
         Intent intent = new Intent();
         intent.setClass(this, ZhihuDetailActivity.class);

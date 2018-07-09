@@ -86,13 +86,6 @@ public class SettingActivity extends BaseTitleActivity<SettingPresenter> impleme
     }
 
     @Override
-    public void showMessage(String message)
-    {
-        showSnackbar(message);
-    }
-
-
-    @Override
     public void onClick(View v)
     {
         super.onClick(v);

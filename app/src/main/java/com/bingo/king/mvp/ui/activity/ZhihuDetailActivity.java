@@ -133,12 +133,6 @@ public class ZhihuDetailActivity extends BaseCoordinatorActivity<ZhihuDetailPres
 
     }
 
-    @Override
-    public void showMessage(String message)
-    {
-        showSnackbar(message);
-    }
-
     public static final String EXTRA_ID = "id";
 
     public static void start(Activity oldActivity, int id)

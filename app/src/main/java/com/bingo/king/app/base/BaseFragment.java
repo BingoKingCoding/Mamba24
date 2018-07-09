@@ -12,6 +12,7 @@ import com.bingo.king.app.App;
 import com.bingo.king.di.component.AppComponent;
 import com.bingo.king.mvp.model.http.rxerrorhandler.StatefulCallback;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
+import com.blankj.utilcode.util.ToastUtils;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import org.simple.eventbus.EventBus;
@@ -153,31 +154,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
 
 
     public void showMessage(String message) {
-        showSnackbar(message);
-    }
-
-
-    /**
-     * 用snackbar显示
-     */
-    protected void showSnackbar(String message) {
-        showSnackbar(message, false);
-    }
-
-    /**
-     * 用snackbar显示
-     */
-    protected void showSnackbarWithLong(String message) {
-        showSnackbar(message, true);
-    }
-
-
-    /**
-     * 使用snackbar显示内容
-     */
-    protected void showSnackbar(String message, boolean isLong) {
-        View view = getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
-        Snackbar.make(view, message, isLong ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
+        ToastUtils.showShort(message);
     }
 
     protected abstract void initComponent();

@@ -37,11 +37,4 @@ public interface IView
      */
     void hidePullLoading();
 
-
-    /**
-     * 显示信息
-     */
-    void showMessage(String message);
-
-
 }

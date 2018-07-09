@@ -7,6 +7,7 @@ import com.bingo.king.mvp.model.http.rxerrorhandler.HttpCallback;
 import com.bingo.king.mvp.model.http.rxerrorhandler.StatefulCallback;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.ToastUtils;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -32,7 +33,7 @@ public class HttpUtils {
         if (!NetworkUtils.isConnected()) {
 //            ToastUtils.showShort("网络连接已断开");
             if (mView != null) {
-                mView.showMessage("网络连接已断开");
+                ToastUtils.showShort("网络连接已断开");
                 mView.setState(LoadingPage.STATE_ERROR);
             }
             return;
@@ -56,7 +57,7 @@ public class HttpUtils {
     public static <T> void requestData(IView mView, String msg, Observable<T> observable, HttpCallback<T> httpCallback) {
         if (!NetworkUtils.isConnected()) {
             if (mView != null) {
-                mView.showMessage("网络连接已断开");
+                ToastUtils.showShort("网络连接已断开");
             }
             return;
         }

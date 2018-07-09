@@ -100,13 +100,6 @@ public class PhotoViewActivity extends BasePresenterActivity<PhotoViewPresenter>
     }
 
     @Override
-    public void showMessage(@NonNull String message)
-    {
-        showSnackbar(message);
-    }
-
-
-    @Override
     public void onClick(View v)
     {
         switch (v.getId())

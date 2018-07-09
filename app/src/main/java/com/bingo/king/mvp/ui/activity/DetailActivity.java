@@ -128,13 +128,6 @@ public class DetailActivity extends BaseCoordinatorActivity<DetailPresenter> imp
 
 
     @Override
-    public void showMessage(@NonNull String message)
-    {
-        showSnackbar(message);
-    }
-
-
-    @Override
     public void setData(String url)
     {
         loadImage(url);

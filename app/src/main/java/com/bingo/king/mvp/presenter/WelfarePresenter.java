@@ -10,6 +10,7 @@ import com.bingo.king.mvp.model.entity.DaoGankEntity;
 import com.bingo.king.mvp.model.entity.GankEntity;
 import com.bingo.king.mvp.model.http.rxerrorhandler.HttpCallback;
 import com.blankj.utilcode.util.TimeUtils;
+import com.blankj.utilcode.util.ToastUtils;
 
 import org.simple.eventbus.EventBus;
 
@@ -63,21 +64,21 @@ public class WelfarePresenter extends BasePresenter<WelfareContract.Model, Welfa
     {
         DaoGankEntity daoGankEntity = entityToDao(entity);
         Message message = mModel.addGankEntity(daoGankEntity);
-        String a = null;
+        String str = "";
         switch (message.what)
         {
             case 101:
-                a = "该图片已经收藏过了";
+                str = "该图片已经收藏过了";
                 break;
             case 102:
-                a = "收藏成功";
+                str = "收藏成功";
                 EventBus.getDefault().post(new Object(), "meizi");
                 break;
             case 103:
-                a = "收藏失败";
+                str = "收藏失败";
                 break;
         }
-        mRootView.showMessage(a);
+        ToastUtils.showShort(str);
     }
 
     private DaoGankEntity entityToDao(GankEntity.ResultsBean entity)

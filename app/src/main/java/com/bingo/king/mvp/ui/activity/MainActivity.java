@@ -89,12 +89,6 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
     }
 
     @Override
-    public void showMessage(String message) {
-        showSnackbar(message);
-    }
-
-
-    @Override
     public void hidePullLoading() {
 
     }

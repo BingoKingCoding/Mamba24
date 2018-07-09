@@ -19,6 +19,7 @@ import com.bingo.king.app.utils.SDFragmentManager;
 import com.bingo.king.di.component.AppComponent;
 import com.bingo.king.mvp.model.http.rxerrorhandler.StatefulCallback;
 import com.bingo.king.mvp.ui.widget.ProgressDialog;
+import com.blankj.utilcode.util.ToastUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -144,7 +145,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
 
     public void exitApp() {
         if (System.currentTimeMillis() - mExitTime > 2000) {
-            showSnackbar("再按一次返回桌面!");
+            ToastUtils.showShort("再按一次返回桌面!");
         } else {
             //发送事件,参考下面的方法onExitAppReceive
 //            EventBus.getDefault().post(new Message(), EventBusTags.EXITAPP_MESSAGE);
@@ -163,31 +164,6 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
     public void onExitAppReceive(Message message) {
         //可以在工具类或者其他类中做相应的退出逻辑
         Timber.d(TAG, "exit_app");
-    }
-
-
-    /**
-     * 用snackbar显示
-     */
-    protected void showSnackbar(String message) {
-        showSnackbar(message, false);
-    }
-
-    /**
-     * 用snackbar显示
-     */
-    protected void showSnackbarWithLong(String message) {
-        showSnackbar(message, true);
-    }
-
-
-    /**
-     * 使用snackbar显示内容
-     */
-    protected void showSnackbar(String message, boolean isLong) {
-        TextUtils.isEmpty(message);
-        View view = getWindow().getDecorView().findViewById(android.R.id.content);
-        Snackbar.make(view, message, isLong ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
     }
 
 

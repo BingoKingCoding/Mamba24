@@ -92,13 +92,6 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter> impleme
     }
 
     @Override
-    public void showMessage(String message)
-    {
-        showSnackbar(message);
-    }
-
-
-    @Override
     public void setState(int state)
     {
 
