@@ -15,35 +15,37 @@ import java.util.List;
 /**
  */
 
-public class ZhihuThemeAdapter extends BaseAdapter<ThemeChildListBean.StoriesBean,BaseViewHolder>
-{
+public class ZhihuThemeAdapter extends BaseAdapter<ThemeChildListBean.StoriesBean, BaseViewHolder> {
 
     public ZhihuThemeAdapter(List<ThemeChildListBean.StoriesBean> data) {
-        super(R.layout.item_zhihu_theme,data);
+        super(R.layout.item_zhihu_theme, data);
     }
 
     @Override
     protected void convert(final BaseViewHolder helper, final ThemeChildListBean.StoriesBean item) {
 
-        if (item.getImages()!=null&&item.getImages().size()>0){
-            GlideUtils.getInstance().load(mContext,item.getImages().get(0), (ImageView) helper.getView(R.id.iv_theme_item_image));
+        if (item.getImages() != null && item.getImages().size() > 0) {
+            GlideUtils.getInstance().loadImage(item.getImages().get(0), helper.getView(R.id.iv_theme_item_image));
         }
-        TextView tvThemeItemTitle= helper.getView(R.id.tv_theme_item_title);
+        TextView tvThemeItemTitle = helper.getView(R.id.tv_theme_item_title);
         tvThemeItemTitle.setText(item.getTitle());
 
         helper.itemView.setOnClickListener(v ->
         {
-            if (onItemClick!=null){
-                onItemClick.onItemClick(item.getId(),helper.getView(R.id.iv_theme_item_image));
+            if (onItemClick != null) {
+                onItemClick.onItemClick(item.getId(), helper.getView(R.id.iv_theme_item_image));
             }
         });
 
     }
-    private  OnItemClick onItemClick;
-    public interface OnItemClick{
+
+    private OnItemClick onItemClick;
+
+    public interface OnItemClick {
         void onItemClick(int id, View view);
     }
-    public void setOnZhihuThemeItemClick(OnItemClick onItemClick){
+
+    public void setOnZhihuThemeItemClick(OnItemClick onItemClick) {
         this.onItemClick = onItemClick;
     }
 }

@@ -26,14 +26,14 @@ import com.bingo.king.mvp.presenter.MovieTopDetailPresenter;
 import com.bingo.king.mvp.ui.widget.HorizontalScrollView;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 
-public class MovieTopDetailActivity extends LoadingBaseActivity<MovieTopDetailPresenter> implements MovieTopDetailContract.View
-{
+public class MovieTopDetailActivity extends LoadingBaseActivity<MovieTopDetailPresenter> implements MovieTopDetailContract.View {
     private ImageView iv_bg;
     private Toolbar mToolbar;
     private TextView tvOneRatingNumber;
@@ -52,19 +52,16 @@ public class MovieTopDetailActivity extends LoadingBaseActivity<MovieTopDetailPr
     private TextView tvFormerly;
 
     @Override
-    public int onCreateContentView(Bundle savedInstanceState)
-    {
+    public int onCreateContentView(Bundle savedInstanceState) {
         return R.layout.activity_movie_top_detail;
     }
 
     @Override
-    protected void setStatusBar()
-    {
+    protected void setStatusBar() {
     }
 
     @Override
-    public void setupActivityComponent()
-    {
+    public void setupActivityComponent() {
         DaggerMovieTopDetailComponent //如找不到该类,请编译一下项目
                 .builder()
                 .appComponent(getAppComponent())
@@ -74,27 +71,23 @@ public class MovieTopDetailActivity extends LoadingBaseActivity<MovieTopDetailPr
     }
 
     @Override
-    public int getContentLayoutId()
-    {
+    public int getContentLayoutId() {
         return R.layout.activity_movie_top;
     }
 
     @Override
-    public int getBaseFrameLayoutId()
-    {
+    public int getBaseFrameLayoutId() {
         return R.id.fl_douban_detail_content;
     }
 
     @Override
-    public void loadData(Bundle savedInstanceState)
-    {
+    public void loadData(Bundle savedInstanceState) {
         //setState(LoadingPage.STATE_SUCCESS);//如果不需要网络请求的话可以去掉注释 直接设置成功状态
         init();//可以在此进行初始化
         requestData();
     }
 
-    private void init()
-    {
+    private void init() {
         nsvMovieTopDetail = findViewById(R.id.nsv_movie_top_detail);
         hsFilm = findViewById(R.id.hs_film);
         tvMovieTopDetail = findViewById(R.id.tv_movie_top_detail);
@@ -112,23 +105,20 @@ public class MovieTopDetailActivity extends LoadingBaseActivity<MovieTopDetailPr
         initToolBar(mToolbar, "");
         appbarMovieTopChild.addOnOffsetChangedListener((appBarLayout, verticalOffset) ->
         {
-            if (appbarMovieTopChild.getBottom() > mToolbar.getBottom())
-            {
+            if (appbarMovieTopChild.getBottom() > mToolbar.getBottom()) {
                 mToolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
-            } else
-            {
+            } else {
                 mToolbar.setBackgroundResource(R.color.colorPrimary);
             }
         });
 
         HotMovieBean.SubjectsBean subjectsBean = (HotMovieBean.SubjectsBean) getIntent().getSerializableExtra("bean");
 
-        if (subjectsBean != null)
-        {
+        if (subjectsBean != null) {
             mToolbar.setTitle(subjectsBean.getTitle());
             mToolbar.setSubtitleTextColor(Color.WHITE);
             setImgHeaderBg(subjectsBean.getImages().getMedium());
-            GlideUtils.getInstance().loadMovieTopImg(iv_one_photo, subjectsBean.getImages().getLarge());
+            GlideUtils.getInstance().loadImage(4, subjectsBean.getImages().getLarge(), iv_one_photo);
             tvOneRatingRate.setText("评分：" + subjectsBean.getRating().getAverage());
             tvOneGenres.setText("类型：" + StringFormatUtil.formatGenres(subjectsBean.getGenres()));
             tvOneDay.setText("上映日期：" + subjectsBean.getYear());
@@ -138,15 +128,13 @@ public class MovieTopDetailActivity extends LoadingBaseActivity<MovieTopDetailPr
     }
 
 
-    private void requestData()
-    {
+    private void requestData() {
         if (!TextUtils.isEmpty(id))
             mPresenter.requestMovieDetail(id);
     }
 
     @Override
-    protected void retryRequestData()
-    {
+    protected void retryRequestData() {
         requestData();
     }
 
@@ -162,25 +150,21 @@ public class MovieTopDetailActivity extends LoadingBaseActivity<MovieTopDetailPr
     }
 
     @Override
-    public void hidePullLoading()
-    {
+    public void hidePullLoading() {
 
     }
 
     @Override
-    public void showMessage(String message)
-    {
+    public void showMessage(String message) {
         showSnackbar(message);
     }
 
 
-    private void initToolBar(Toolbar toolbarDoubanDetail, String title)
-    {
+    private void initToolBar(Toolbar toolbarDoubanDetail, String title) {
         setSupportActionBar(toolbarDoubanDetail);
         toolbarDoubanDetail.setTitle(title);
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
-        {
+        if (actionBar != null) {
             //去除默认Title显示
             actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -194,8 +178,7 @@ public class MovieTopDetailActivity extends LoadingBaseActivity<MovieTopDetailPr
         toolbarDoubanDetail.setOverflowIcon(getResources().getDrawable(R.mipmap.actionbar_more));
         toolbarDoubanDetail.setOnMenuItemClickListener(item ->
         {
-            switch (item.getItemId())
-            {
+            switch (item.getItemId()) {
                 case R.id.actionbar_more:// 更多信息
                     setTitleClickMore();
                     break;
@@ -204,14 +187,12 @@ public class MovieTopDetailActivity extends LoadingBaseActivity<MovieTopDetailPr
         });
     }
 
-    private void setTitleClickMore()
-    {
+    private void setTitleClickMore() {
         WebActivity.loadUrl(MovieTopDetailActivity.this, mMoreUrl, mMovieName);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.base_header_menu, menu);
         return true;
     }
@@ -219,21 +200,18 @@ public class MovieTopDetailActivity extends LoadingBaseActivity<MovieTopDetailPr
     /**
      * 加载titlebar背景
      */
-    private void setImgHeaderBg(String imgUrl)
-    {
-        if (!TextUtils.isEmpty(imgUrl))
-        {
+    private void setImgHeaderBg(String imgUrl) {
+        if (!TextUtils.isEmpty(imgUrl)) {
             // 高斯模糊背景  参数：12,5
             Glide.with(this).load(imgUrl)
-                    .error(R.mipmap.stackblur_default)
-                    .bitmapTransform(new BlurTransformation(this, 12, 5)).into(iv_bg);
+                    .apply(new RequestOptions().error(R.mipmap.stackblur_default).transform(new BlurTransformation(12, 5)))
+                    .into(iv_bg);
         }
     }
 
 
     @Override
-    public void refreshView(MovieDetailBean data)
-    {
+    public void refreshView(MovieDetailBean data) {
         mMoreUrl = data.getAlt();
         mMovieName = data.getTitle();
         tvFormerly.setText("原名：" + data.getOriginal_title());
@@ -241,12 +219,11 @@ public class MovieTopDetailActivity extends LoadingBaseActivity<MovieTopDetailPr
         tvOneCity.setText("制作国家/地区：" + data.getCountries() + "");
 
         List<PersonBean> castsList = data.getCasts();
-        for (final PersonBean personBean : castsList)
-        {
+        for (final PersonBean personBean : castsList) {
             ImageView imageView = new ImageView(this);
             imageView.setLayoutParams(new ViewGroup.LayoutParams(ConvertUtils.dp2px(120), ConvertUtils.dp2px(200)));
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            GlideUtils.getInstance().loadMovieTopImg(imageView, personBean.getAvatars().getLarge());
+            GlideUtils.getInstance().loadImage(4, personBean.getAvatars().getLarge(),imageView);
             hsFilm.addView(imageView);
             imageView.setOnClickListener(v -> WebActivity.loadUrl(MovieTopDetailActivity.this, personBean.getAlt(), "加载中。。。"));
         }

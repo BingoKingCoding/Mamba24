@@ -26,7 +26,7 @@ public class ZhihuSectionAdapter extends BaseAdapter<SectionChildListBean.Storie
     protected void convert(final BaseViewHolder helper, final SectionChildListBean.StoriesBean item) {
 
         if (item.getImages()!=null&&item.getImages().size()>0){
-            GlideUtils.getInstance().load(mContext,item.getImages().get(0), (ImageView) helper.getView(R.id.iv_theme_item_image));
+            GlideUtils.getInstance().loadImage(item.getImages().get(0),helper.getView(R.id.iv_theme_item_image));
         }
         TextView tvThemeItemTitle= helper.getView(R.id.tv_theme_item_title);
         tvThemeItemTitle.setText(item.getTitle());

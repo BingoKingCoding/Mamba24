@@ -20,6 +20,7 @@ import com.bingo.king.mvp.ui.adapter.ZhihuSectionAdapter;
 import com.bingo.king.mvp.ui.adapter.ZhihuThemeAdapter;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -27,8 +28,7 @@ import butterknife.BindView;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 
-public class ZhihuThemeActivity extends BaseZhihuThemeActivity<ZhihuThemePresenter> implements ZhihuThemeContract.View
-{
+public class ZhihuThemeActivity extends BaseZhihuThemeActivity<ZhihuThemePresenter> implements ZhihuThemeContract.View {
 
     @BindView(R.id.rv)
     RecyclerView mRecyclerView;
@@ -41,8 +41,7 @@ public class ZhihuThemeActivity extends BaseZhihuThemeActivity<ZhihuThemePresent
     private String isSection;
 
     @Override
-    public void setupActivityComponent()
-    {
+    public void setupActivityComponent() {
         DaggerZhihuThemeComponent //如找不到该类,请编译一下项目
                 .builder()
                 .appComponent(getAppComponent())
@@ -52,50 +51,41 @@ public class ZhihuThemeActivity extends BaseZhihuThemeActivity<ZhihuThemePresent
     }
 
     @Override
-    public int getContentLayoutId()
-    {
+    public int getContentLayoutId() {
         return R.layout.activity_zhihu_theme; //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
     }
 
     @Override
-    public void loadData(Bundle savedInstanceState)
-    {
+    public void loadData(Bundle savedInstanceState) {
         //setState(LoadingPage.STATE_SUCCESS);//如果不需要网络请求的话可以去掉注释 直接设置成功状态
         getIntentData();
         init();//可以在此进行初始化
         requestData();
     }
 
-    private void requestData()
-    {
-        if (sectionId > 0)
-        {
+    private void requestData() {
+        if (sectionId > 0) {
             mPresenter.requestSectionChildList(sectionId);
-        } else
-        {
+        } else {
             mPresenter.requestThemeChildList(id);
         }
     }
 
-    private void getIntentData()
-    {
+    private void getIntentData() {
         id = getIntent().getIntExtra("id", 0);
         sectionId = getIntent().getIntExtra("section_id", 0);
     }
 
-    private void init()
-    {
+    private void init() {
         swipeRefresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        if (sectionId > 0)
-        {
+        if (sectionId > 0) {
             zhihuSectionAdapter = new ZhihuSectionAdapter(storiesList);
             zhihuSectionAdapter.setOnZhihuThemeItemClick(this::startZhiHuDetailActivity);
             zhihuSectionAdapter.setDefaultEmptyView(mRecyclerView);
             mRecyclerView.setAdapter(zhihuSectionAdapter);
-        } else
-        {
+        } else {
             zhihuThemeAdapter = new ZhihuThemeAdapter(storiesList);
             zhihuThemeAdapter.setOnZhihuThemeItemClick(this::startZhiHuDetailActivity);
             zhihuThemeAdapter.setDefaultEmptyView(mRecyclerView);
@@ -104,11 +94,9 @@ public class ZhihuThemeActivity extends BaseZhihuThemeActivity<ZhihuThemePresent
 
         appbarThemeChild.addOnOffsetChangedListener((appBarLayout, verticalOffset) ->
         {
-            if (verticalOffset >= 0)
-            {
+            if (verticalOffset >= 0) {
                 swipeRefresh.setEnabled(true);
-            } else
-            {
+            } else {
                 swipeRefresh.setEnabled(false);
                 float rate = (float) (ConvertUtils.dp2px(256) + verticalOffset * 2) / ConvertUtils.dp2px(256);
                 if (rate >= 0)
@@ -118,11 +106,9 @@ public class ZhihuThemeActivity extends BaseZhihuThemeActivity<ZhihuThemePresent
 
         swipeRefresh.setOnRefreshListener(() ->
         {
-            if (sectionId > 0)
-            {
+            if (sectionId > 0) {
                 mPresenter.requestSectionChildList(sectionId);
-            } else
-            {
+            } else {
                 mPresenter.requestThemeChildList(id);
             }
         });
@@ -131,8 +117,7 @@ public class ZhihuThemeActivity extends BaseZhihuThemeActivity<ZhihuThemePresent
     }
 
     @Override
-    protected void retryRequestData()
-    {
+    protected void retryRequestData() {
         requestData();
     }
 
@@ -148,17 +133,14 @@ public class ZhihuThemeActivity extends BaseZhihuThemeActivity<ZhihuThemePresent
     }
 
     @Override
-    public void hidePullLoading()
-    {
+    public void hidePullLoading() {
 
     }
 
     @Override
-    public void showMessage(String message)
-    {
+    public void showMessage(String message) {
         showSnackbar(message);
     }
-
 
 
     private void startZhiHuDetailActivity(int id, View view) {
@@ -186,9 +168,9 @@ public class ZhihuThemeActivity extends BaseZhihuThemeActivity<ZhihuThemePresent
         if (swipeRefresh.isRefreshing()) {
             swipeRefresh.setRefreshing(false);
         }
-        initToolBar(toolbarThemeBase,true, data.getName());
-        GlideUtils.getInstance().load(this, data.getBackground(), ivThemeChildOrigin);
-        Glide.with(this).load(data.getBackground()).bitmapTransform(new BlurTransformation(this)).into(ivThemeChildBlur);
+        initToolBar(toolbarThemeBase, true, data.getName());
+        GlideUtils.getInstance().loadImage(data.getBackground(), ivThemeChildOrigin);
+        GlideUtils.getInstance().loadImage(data.getBackground(), ivThemeChildBlur, new RequestOptions().transform(new BlurTransformation()));
         tvThemeChildDes.setText(data.getDescription());
     }
 
@@ -199,11 +181,9 @@ public class ZhihuThemeActivity extends BaseZhihuThemeActivity<ZhihuThemePresent
         if (swipeRefresh.isRefreshing()) {
             swipeRefresh.setRefreshing(false);
         }
-        initToolBar(toolbarThemeBase, true,data.getName());
+        initToolBar(toolbarThemeBase, true, data.getName());
         tvThemeChildDes.setText(data.getName());
     }
-
-
 
 
 }

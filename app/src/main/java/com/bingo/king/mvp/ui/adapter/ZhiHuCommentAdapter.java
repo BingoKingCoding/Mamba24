@@ -45,7 +45,7 @@ public class ZhiHuCommentAdapter extends BaseAdapter<CommentBean.CommentsBean,Ba
     @Override
     protected void convert(BaseViewHolder helper, CommentBean.CommentsBean item)
     {
-        GlideUtils.getInstance().load(Utils.getApp(),item.getAvatar(), helper.getView(R.id.civ_comment_face));
+        GlideUtils.getInstance().loadImage(item.getAvatar(),helper.getView(R.id.civ_comment_face));
         helper.setText(R.id.tv_comment_name,item.getAuthor());
         helper.setText(R.id.tv_comment_content,item.getContent());
         helper.setText(R.id.tv_comment_time, TimeUtils.getFriendlyTimeSpanByNow(item.getTime()));
