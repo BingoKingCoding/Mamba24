@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.widget.TextView;
 
 import com.bingo.king.R;
+import com.bingo.king.app.base.BaseFragment;
 import com.bingo.king.app.base.BaseLazyFragment;
 import com.bingo.king.app.utils.CategoryType;
 import com.bingo.king.app.utils.ViewBinder;
@@ -24,8 +25,7 @@ import butterknife.BindView;
  * Created by adou on 2017/11/6:20:26.
  */
 
-public class HomeFragment extends BaseLazyFragment<HomePresenter> implements HomeContract.View
-{
+public class HomeFragment extends BaseFragment<HomePresenter> implements HomeContract.View {
     @BindView(R.id.toolbar_title)
     TextView toolbar_title;
     @BindView(R.id.tabs)
@@ -35,14 +35,12 @@ public class HomeFragment extends BaseLazyFragment<HomePresenter> implements Hom
 
 
     @Override
-    protected int getContentLayoutId()
-    {
+    protected int getContentLayoutId() {
         return R.layout.fragment_home;
     }
 
     @Override
-    public void initComponent()
-    {
+    public void initComponent() {
         DaggerHomeComponent.builder()
                 .appComponent(getAppComponent())
                 .homeModule(new HomeModule(this))
@@ -50,44 +48,33 @@ public class HomeFragment extends BaseLazyFragment<HomePresenter> implements Hom
                 .inject(this);
     }
 
-
     @Override
-    public void initData(Bundle savedInstanceState)
-    {
-        ViewBinder.setTextView(toolbar_title, "首页");
-        //初始化首页栏目顺序
-        SPUtils spUtils = SPUtils.getInstance();
-        if (!spUtils.getBoolean(ZhiHuFragment.ZH_LIST_IS_CHANGE))
-        {
-            spUtils.put(ZhiHuFragment.ZH_LIST, "知乎日报&&知乎热门&&知乎主题&&知乎专栏&&");
-            spUtils.put(ZhiHuFragment.ZH_LIST_IS_CHANGE, true);
-        }
-
-        mainPager.setOffscreenPageLimit(5);
-        mainPager.setAdapter(new MainViewPagerAdapter(getChildFragmentManager(),CategoryType.getFragments(), CategoryType.getPageTitleList()));
-        tabs.setupWithViewPager(mainPager);
-        setState(LoadingPage.STATE_SUCCESS);
-    }
-
-
-    @Override
-    public void hidePullLoading()
-    {
+    public void hidePullLoading() {
 
     }
 
     @Override
-    protected void retryRequestData()
-    {
-
-    }
-
-    @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
         mainPager = null;
         tabs = null;
     }
 
+
+    @Override
+    protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
+        ViewBinder.setTextView(toolbar_title, "首页");
+        //初始化首页栏目顺序
+        SPUtils spUtils = SPUtils.getInstance();
+        if (!spUtils.getBoolean(ZhiHuFragment.ZH_LIST_IS_CHANGE)) {
+            spUtils.put(ZhiHuFragment.ZH_LIST, "知乎日报&&知乎热门&&知乎主题&&知乎专栏&&");
+            spUtils.put(ZhiHuFragment.ZH_LIST_IS_CHANGE, true);
+        }
+
+        mainPager.setOffscreenPageLimit(5);
+        mainPager.setAdapter(new MainViewPagerAdapter(getChildFragmentManager(), CategoryType.getFragments(), CategoryType.getPageTitleList()));
+        tabs.setupWithViewPager(mainPager);
+        setState(LoadingPage.STATE_SUCCESS);
+    }
 }

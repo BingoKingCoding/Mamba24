@@ -15,6 +15,7 @@ import com.bingo.king.mvp.model.http.rxerrorhandler.StatefulCallback;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
 import com.bingo.king.mvp.ui.widget.ProgressDialog;
 import com.blankj.utilcode.util.ToastUtils;
+import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import org.simple.eventbus.EventBus;
@@ -33,8 +34,6 @@ import timber.log.Timber;
 
 public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements StatefulCallback {
 
-    protected final String TAG = this.getClass().getSimpleName();
-
     @Inject
     protected P mPresenter;
 
@@ -46,8 +45,8 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Timber.d(TAG, "onCreate");
-        if (useEventBus()) {//如果要使用eventbus请将此方法返回true
+        Logger.d("onCreate");
+        if (useEventBus()) {//如果要使用eventBus请将此方法返回true
             EventBus.getDefault().register(this);
         }//注册到事件主线
         initComponent();
@@ -64,6 +63,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
                 protected void initView() {
                     BaseFragment.this.contentView = this.contentView;
                     bind = ButterKnife.bind(BaseFragment.this, contentView);
+                    BaseFragment.this.initView(this.contentView);
                 }
 
                 @Override
@@ -87,8 +87,11 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         initData(savedInstanceState);
     }
 
+    protected void initView(View view) {
+    }
 
-    protected abstract void initData(Bundle savedInstanceState);
+    protected void initData(Bundle savedInstanceState) {
+    }
 
     private View addTitleView(View contentView) {
         View viewFinal = contentView;
@@ -120,7 +123,7 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         }
         this.mPresenter = null;
 
-        if (useEventBus())//如果要使用eventbus请将此方法返回true
+        if (useEventBus())//如果要使用eventBus请将此方法返回true
             EventBus.getDefault().unregister(this);//注册到事件主线
     }
 
@@ -172,22 +175,19 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         }
     }
 
-
     protected AppComponent getAppComponent() {
         return App.getApplication().getAppComponent();
     }
 
-    public void showMessage(String message) {
-        ToastUtils.showShort(message);
+    protected void initComponent() {
     }
-
-    protected abstract void initComponent();
 
     /**
      * 1
      * 根据网络获取的数据返回状态，每一个子类的获取网络返回的都不一样，所以要交给子类去完成
      */
-    protected abstract void retryRequestData();
+    protected void retryRequestData() {
+    }
 
     /**
      * 2

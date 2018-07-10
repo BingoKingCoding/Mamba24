@@ -89,22 +89,7 @@ public class ZhiHuFragment extends BaseLazyFragment<ZhiHuPresenter> implements Z
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        initView();
-        mPresenter.requestZhiHuData();
-        SPUtils spUtils = SPUtils.getInstance();
-        if (spUtils.getBoolean(ZH_LIST_IS_CHANGE)) {
-            if (mPresenter != null) {
-                mZhiHuList = mPresenter.getListZhiHu();
-            }
-            if (mAdapter != null) {
-                mAdapter.setNewData(mZhiHuList);
-                spUtils.put(ZH_LIST_IS_CHANGE, false);
-            }
-        }
-    }
-
-    private void initView() {
+    protected void initView(View view) {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         View footerView = getActivity().getLayoutInflater().inflate(R.layout.item_zhihu_footer, (ViewGroup) mRecyclerView.getParent(), false);
         View headerView = getActivity().getLayoutInflater().inflate(R.layout.item_zhihu_header, (ViewGroup) mRecyclerView.getParent(), false);
@@ -204,4 +189,18 @@ public class ZhiHuFragment extends BaseLazyFragment<ZhiHuPresenter> implements Z
     }
 
 
+    @Override
+    public void fetchData() {
+        mPresenter.requestZhiHuData();
+        SPUtils spUtils = SPUtils.getInstance();
+        if (spUtils.getBoolean(ZH_LIST_IS_CHANGE)) {
+            if (mPresenter != null) {
+                mZhiHuList = mPresenter.getListZhiHu();
+            }
+            if (mAdapter != null) {
+                mAdapter.setNewData(mZhiHuList);
+                spUtils.put(ZH_LIST_IS_CHANGE, false);
+            }
+        }
+    }
 }

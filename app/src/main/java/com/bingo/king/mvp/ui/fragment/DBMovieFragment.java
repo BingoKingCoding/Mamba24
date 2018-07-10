@@ -58,15 +58,6 @@ public class DBMovieFragment extends BaseLazyFragment<DBMoviePresenter> implemen
         return R.layout.fragment_dbmovie;
     }
 
-
-    @Override
-    public void initData(Bundle savedInstanceState)
-    {
-        //setState(LoadingPage.STATE_SUCCESS);//如果不需要网络请求的话可以去掉注释 直接设置成功状态
-        initUI();
-        mPresenter.requestHotMovie();
-    }
-
     private void initUI()
     {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -102,12 +93,6 @@ public class DBMovieFragment extends BaseLazyFragment<DBMoviePresenter> implemen
 
     }
 
-    @Override
-    protected void retryRequestData()
-    {
-
-    }
-
 
     @Override
     public void hidePullLoading()
@@ -134,4 +119,9 @@ public class DBMovieFragment extends BaseLazyFragment<DBMoviePresenter> implemen
         getActivity().startActivity(intent, options.toBundle());
     }
 
+    @Override
+    public void fetchData() {
+        initUI();
+        mPresenter.requestHotMovie();
+    }
 }

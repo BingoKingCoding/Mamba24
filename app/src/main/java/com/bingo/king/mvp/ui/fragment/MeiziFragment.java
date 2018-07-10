@@ -119,4 +119,8 @@ public class MeiziFragment extends BaseLazyFragment<MeiziPresenter> implements M
         mAdapter.setNewData(entity);
     }
 
+    @Override
+    public void fetchData() {
+
+    }
 }

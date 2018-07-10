@@ -29,8 +29,7 @@ import static com.bingo.king.app.EventBusTags.EXTRA_DETAIL;
  * Created by wwb on 2017/9/20 17:19.
  */
 
-public class CategoryFragment extends BaseLazyFragment<CategoryPresenter> implements CategoryContract.View,BaseQuickAdapter.RequestLoadMoreListener,OnRefreshListener
-{
+public class CategoryFragment extends BaseLazyFragment<CategoryPresenter> implements CategoryContract.View, BaseQuickAdapter.RequestLoadMoreListener, OnRefreshListener {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.refreshLayout)
@@ -48,8 +47,7 @@ public class CategoryFragment extends BaseLazyFragment<CategoryPresenter> implem
     }
 
     @Override
-    public void initComponent()
-    {
+    public void initComponent() {
         DaggerCategoryComponent.builder()
                 .appComponent(getAppComponent())
                 .categoryModule(new CategoryModule(this))
@@ -58,31 +56,18 @@ public class CategoryFragment extends BaseLazyFragment<CategoryPresenter> implem
     }
 
     @Override
-    public void initData(Bundle savedInstanceState)
-    {
-        type = getArguments().getString("type");
-        mRefreshLayout.setOnRefreshListener(this);
-        CommonUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
-        mPresenter.requestData(type,true);
-    }
-
-
-    @Override
-    protected int getContentLayoutId()
-    {
+    protected int getContentLayoutId() {
         return R.layout.layout_refresh_list;
     }
 
 
     @Override
-    protected void retryRequestData()
-    {
-        mPresenter.requestData(type,true);
+    protected void retryRequestData() {
+        mPresenter.requestData(type, true);
     }
 
     @Override
-    public void setAdapter(CategoryAdapter mAdapter)
-    {
+    public void setAdapter(CategoryAdapter mAdapter) {
         this.mAdapter = mAdapter;
         mAdapter.setDefaultEmptyView(mRecyclerView);
         mAdapter.setOnLoadMoreListener(this, mRecyclerView);
@@ -91,7 +76,7 @@ public class CategoryFragment extends BaseLazyFragment<CategoryPresenter> implem
         {
             GankEntity.ResultsBean bean = (GankEntity.ResultsBean) adapter.getItem(position);
             ARouter.getInstance().build(ARouterPaths.MAIN_DETAIL)
-                    .withSerializable(EXTRA_DETAIL,bean)
+                    .withSerializable(EXTRA_DETAIL, bean)
                     .navigation();
 //            WebActivity.loadUrl(getActivity(),bean.url,"加载中");
         });
@@ -99,21 +84,25 @@ public class CategoryFragment extends BaseLazyFragment<CategoryPresenter> implem
 
 
     @Override
-    public void hidePullLoading()
-    {
+    public void hidePullLoading() {
         mRefreshLayout.finishRefresh();
     }
 
-
     @Override
-    public void onLoadMoreRequested()
-    {
-        mPresenter.requestData(type,false);
+    public void onLoadMoreRequested() {
+        mPresenter.requestData(type, false);
     }
 
     @Override
-    public void onRefresh(RefreshLayout refreshlayout)
-    {
-        mPresenter.requestData(type,true);
+    public void onRefresh(RefreshLayout refreshlayout) {
+        mPresenter.requestData(type, true);
+    }
+
+    @Override
+    public void fetchData() {
+        type = getArguments().getString("type");
+        mRefreshLayout.setOnRefreshListener(this);
+        CommonUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
+        mPresenter.requestData(type, true);
     }
 }

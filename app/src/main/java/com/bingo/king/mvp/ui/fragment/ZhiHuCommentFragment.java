@@ -53,18 +53,6 @@ public class ZhiHuCommentFragment extends BaseLazyFragment<ZhiHuCommentPresenter
         return R.layout.fragment_zhi_hu_comment;
     }
 
-
-    @Override
-    public void initData(Bundle savedInstanceState)
-    {
-        //setState(LoadingPage.STATE_SUCCESS);//如果不需要网络请求的话可以去掉注释 直接设置成功状态
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new ZhiHuCommentAdapter(null);
-        mAdapter.setDefaultEmptyView(mRecyclerView);
-        mRecyclerView.setAdapter(mAdapter);
-        requestData();
-    }
-
     /**
      * 此方法是让外部调用使fragment做一些操作的,比如说外部的activity想让fragment对象执行一些方法,
      * 建议在有多个需要让外界调用的方法时,统一传Message,通过what字段,来区分不同的方法,在setData
@@ -112,5 +100,14 @@ public class ZhiHuCommentFragment extends BaseLazyFragment<ZhiHuCommentPresenter
     {
         mAdapter.setNewData(list);
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void fetchData() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mAdapter = new ZhiHuCommentAdapter(null);
+        mAdapter.setDefaultEmptyView(mRecyclerView);
+        mRecyclerView.setAdapter(mAdapter);
+        requestData();
     }
 }

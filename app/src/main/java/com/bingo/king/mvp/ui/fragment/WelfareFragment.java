@@ -11,6 +11,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 import com.bingo.king.R;
+import com.bingo.king.app.base.BaseFragment;
 import com.bingo.king.app.base.BaseLazyFragment;
 import com.bingo.king.app.utils.ViewBinder;
 import com.bingo.king.di.component.DaggerWelfareComponent;
@@ -35,7 +36,7 @@ import me.yuqirong.cardswipelayout.OnSwipeListener;
  * Created by wwb on 2017/9/20 16:13.
  */
 
-public class WelfareFragment extends BaseLazyFragment<WelfarePresenter> implements WelfareContract.View
+public class WelfareFragment extends BaseFragment<WelfarePresenter> implements WelfareContract.View
 {
     @BindView(R.id.toolbar_title)
     TextView toolbar_title;
@@ -60,12 +61,6 @@ public class WelfareFragment extends BaseLazyFragment<WelfarePresenter> implemen
         pagerSnapHelper.attachToRecyclerView(mRecyclerView);
         mWelfareAdapter = new WelfareAdapter(null);
         mRecyclerView.setAdapter(mWelfareAdapter);
-    }
-
-    @Override
-    protected void onFragmentFirstVisible()
-    {
-        super.onFragmentFirstVisible();
         mPresenter.requestData(true);
     }
 
@@ -176,6 +171,5 @@ public class WelfareFragment extends BaseLazyFragment<WelfarePresenter> implemen
     {
         mPresenter.requestData(true);
     }
-
 
 }

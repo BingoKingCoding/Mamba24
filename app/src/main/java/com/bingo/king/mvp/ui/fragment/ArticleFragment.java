@@ -55,39 +55,6 @@ public class ArticleFragment extends BaseLazyFragment<ArticlePresenter> implemen
 
 
     @Override
-    public void initData(Bundle savedInstanceState)
-    {
-        setState(LoadingPage.STATE_SUCCESS);
-        mRefreshLayout.setOnRefreshListener(this);
-        CommonUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
-
-        mAdapter = new ArticleAdapter(null);
-        mAdapter.setDefaultEmptyView(mRecyclerView);
-        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
-        mAdapter.setOnItemClickListener((adapter, view, position) ->
-        {
-            DaoGankEntity bean = (DaoGankEntity) adapter.getItem(position);
-            if (intentArticle == null)
-                intentArticle = new GankEntity.ResultsBean();
-            intentArticle._id = bean._id;
-            intentArticle.createdAt = bean.createdAt;
-            intentArticle.desc = bean.desc;
-            intentArticle.images = bean.images;
-            intentArticle.publishedAt = bean.publishedAt;
-            intentArticle.source = bean.source;
-            intentArticle.type = bean.type;
-            intentArticle.url = bean.url;
-            intentArticle.used = bean.used;
-            intentArticle.who = bean.who;
-            ARouter.getInstance().build(ARouterPaths.MAIN_DETAIL)
-                    .withSerializable(EventBusTags.EXTRA_DETAIL, intentArticle)
-                    .navigation();
-        });
-        mRecyclerView.setAdapter(mAdapter);
-        mPresenter.requestData(true);
-    }
-
-    @Override
     protected void retryRequestData()
     {
         mPresenter.requestData(true);
@@ -121,4 +88,35 @@ public class ArticleFragment extends BaseLazyFragment<ArticlePresenter> implemen
     }
 
 
+    @Override
+    public void fetchData() {
+        setState(LoadingPage.STATE_SUCCESS);
+        mRefreshLayout.setOnRefreshListener(this);
+        CommonUtils.configRecycleView(mRecyclerView, new LinearLayoutManager(getActivity()));
+
+        mAdapter = new ArticleAdapter(null);
+        mAdapter.setDefaultEmptyView(mRecyclerView);
+        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
+        mAdapter.setOnItemClickListener((adapter, view, position) ->
+        {
+            DaoGankEntity bean = (DaoGankEntity) adapter.getItem(position);
+            if (intentArticle == null)
+                intentArticle = new GankEntity.ResultsBean();
+            intentArticle._id = bean._id;
+            intentArticle.createdAt = bean.createdAt;
+            intentArticle.desc = bean.desc;
+            intentArticle.images = bean.images;
+            intentArticle.publishedAt = bean.publishedAt;
+            intentArticle.source = bean.source;
+            intentArticle.type = bean.type;
+            intentArticle.url = bean.url;
+            intentArticle.used = bean.used;
+            intentArticle.who = bean.who;
+            ARouter.getInstance().build(ARouterPaths.MAIN_DETAIL)
+                    .withSerializable(EventBusTags.EXTRA_DETAIL, intentArticle)
+                    .navigation();
+        });
+        mRecyclerView.setAdapter(mAdapter);
+        mPresenter.requestData(true);
+    }
 }

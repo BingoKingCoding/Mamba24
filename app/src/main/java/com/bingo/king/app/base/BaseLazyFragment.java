@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.bingo.king.mvp.model.http.rxerrorhandler.StatefulCallback;
+import com.orhanobut.logger.Logger;
 
 import timber.log.Timber;
 
@@ -16,94 +17,55 @@ import timber.log.Timber;
 
 public abstract class BaseLazyFragment<P extends IPresenter> extends BaseFragment<P> implements StatefulCallback {
 
-
-    private boolean isFragmentVisible = false;     // fragment是否显示了
-
-    private boolean isFirstVisible = true; //只加载一次界面
-
+    /**
+     * 是否初始化过布局
+     */
+    protected boolean isViewInitiated;
+    /**
+     * 当前界面是否可见
+     */
+    protected boolean isVisibleToUser;
+    /**
+     * 是否加载过数据
+     */
+    protected boolean isDataInitiated;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initVariable();
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        isViewInitiated = true;
+        prepareFetchData();
     }
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Timber.d(TAG, "onStart");
-        if (getUserVisibleHint()) {
-            if (isFirstVisible) {
-                onFragmentFirstVisible();
-                isFirstVisible = false;
-            }
-            onFragmentVisibleChange(true);
-            isFragmentVisible = true;
-        }
-    }
-
-
-    private void initVariable() {
-        isFirstVisible = true;
-        isFragmentVisible = false;
-    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        Timber.d(TAG, "setUserVisibleHint");
-        //setUserVisibleHint()有可能在fragment的生命周期外被调用
-        if (isFirstVisible && isVisibleToUser) {
-            onFragmentFirstVisible();
-            isFirstVisible = false;
-        }
+        this.isVisibleToUser = isVisibleToUser;
         if (isVisibleToUser) {
-            onFragmentVisibleChange(true);
-            isFragmentVisible = true;
-            return;
+            prepareFetchData();
         }
-        if (isFragmentVisible) {
-            isFragmentVisible = false;
-            onFragmentVisibleChange(false);
-        }
-
     }
 
+    public void prepareFetchData() {
+        prepareFetchData(false);
+    }
 
     /**
-     * 去除setUserVisibleHint()多余的回调场景，保证只有当fragment可见状态发生变化时才回调
-     * 回调时机在view创建完后，所以支持ui操作，解决在setUserVisibleHint()里进行ui操作有可能报null异常的问题
-     * <p>
-     * 可在该回调方法里进行一些ui显示与隐藏，比如加载框的显示和隐藏
+     * 判断懒加载条件
      *
-     * @param isVisible true  不可见 -> 可见
-     *                  false 可见  -> 不可见
+     * @param forceUpdate 强制更新，好像没什么用？
      */
-    protected void onFragmentVisibleChange(boolean isVisible) {
-        Timber.d(TAG, "onFragmentVisibleChange");
+    public void prepareFetchData(boolean forceUpdate) {
+        if (isVisibleToUser && isViewInitiated && (!isDataInitiated || forceUpdate)) {
+            fetchData();
+            isDataInitiated = true;
+        }
     }
-
 
     /**
-     * 在fragment首次可见时回调，可在这里进行加载数据，保证只在第一次打开Fragment时才会加载数据，
+     * 懒加载
      */
-    protected void onFragmentFirstVisible() {
-        Timber.d(TAG, "onFragmentFirstVisible");
-    }
-
-
-    protected boolean isFragmentVisible() {
-        return isFragmentVisible;
-    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Timber.d(TAG, "onDestroy");
-        initVariable();
-    }
-
+    public abstract void fetchData();
 
 }

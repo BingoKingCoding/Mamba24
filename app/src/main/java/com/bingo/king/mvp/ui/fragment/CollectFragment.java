@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.widget.TextView;
 
 import com.bingo.king.R;
+import com.bingo.king.app.base.BaseFragment;
 import com.bingo.king.app.base.BaseLazyFragment;
 import com.bingo.king.app.utils.ViewBinder;
 import com.bingo.king.di.component.DaggerCollectComponent;
@@ -27,8 +28,7 @@ import butterknife.BindView;
  * Created by wwb on 2017/9/20 16:13.
  */
 
-public class CollectFragment extends BaseLazyFragment<CollectPresenter> implements CollectContract.View
-{
+public class CollectFragment extends BaseFragment<CollectPresenter> implements CollectContract.View {
     @BindView(R.id.toolbar_title)
     TextView toolbar_title;
     @BindView(R.id.tabs)
@@ -38,8 +38,7 @@ public class CollectFragment extends BaseLazyFragment<CollectPresenter> implemen
     private List<Fragment> mFragments;
 
     @Override
-    public void initComponent()
-    {
+    public void initComponent() {
         DaggerCollectComponent.builder()
                 .appComponent(getAppComponent())
                 .collectModule(new CollectModule(this))
@@ -48,48 +47,37 @@ public class CollectFragment extends BaseLazyFragment<CollectPresenter> implemen
     }
 
     @Override
-    protected int getContentLayoutId()
-    {
+    protected int getContentLayoutId() {
         return R.layout.fragment_collect;
     }
 
 
     @Override
-    public void initData(Bundle savedInstanceState)
-    {
-        ViewBinder.setTextView(toolbar_title,"收藏");
-        if (mFragments == null) {
-            mFragments = new ArrayList<>();
-            mFragments.add(new MeiziFragment());
-            mFragments.add(new ArticleFragment());
-        }
-        mainPager.setOffscreenPageLimit(mFragments.size());
-        mainPager.setAdapter(new CollectViewPagerAdapter(getChildFragmentManager(),mFragments));
-        tabs.setupWithViewPager(mainPager);
-
-        setState(LoadingPage.STATE_SUCCESS);
-    }
-
-
-    @Override
-    public void hidePullLoading()
-    {
+    public void hidePullLoading() {
 
     }
 
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
         mainPager = null;
         tabs = null;
     }
 
     @Override
-    protected void retryRequestData()
-    {
+    protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
+        ViewBinder.setTextView(toolbar_title, "收藏");
+        if (mFragments == null) {
+            mFragments = new ArrayList<>();
+            mFragments.add(new MeiziFragment());
+            mFragments.add(new ArticleFragment());
+        }
+        mainPager.setOffscreenPageLimit(mFragments.size());
+        mainPager.setAdapter(new CollectViewPagerAdapter(getChildFragmentManager(), mFragments));
+        tabs.setupWithViewPager(mainPager);
 
+        setState(LoadingPage.STATE_SUCCESS);
     }
-
 }
