@@ -14,5 +14,5 @@ public class Constants
     public static final int HTTP_CACHE_SIZE = 20 * 1024 * 1024;
     public static final int HTTP_CONNECT_TIMEOUT = 10;
     public static final int HTTP_READ_TIMEOUT = 20;
-    public static final String APPID_BUGLY = "0b1b34086f";//"bugly注册时申请的APPID"
+    public static final String APP_ID_BUGLY = "0b1b34086f";//"bugly注册时申请的APPID"
 }
