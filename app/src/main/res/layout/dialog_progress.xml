@@ -25,7 +25,7 @@
         <!--android:indeterminateOnly="true"/>-->
 
 
-        <com.bingo.king.mvp.ui.widget.ProgressWheel
+        <com.bingo.king.mvp.ui.widget.dialog.ProgressWheel
             android:id="@+id/progress_wheel"
             android:layout_width="37dp"
             android:layout_height="37dp"

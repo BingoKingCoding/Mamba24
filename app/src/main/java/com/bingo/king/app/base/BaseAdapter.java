@@ -40,7 +40,7 @@ public abstract class BaseAdapter<T, K extends BaseViewHolder> extends BaseQuick
     {
         EasyLoadMoreView easyLoadMoreView = new EasyLoadMoreView();
         this.setLoadMoreView(easyLoadMoreView);
-        this.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        this.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         this.isFirstOnly(false);
     }
 

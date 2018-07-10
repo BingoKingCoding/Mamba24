@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import com.bingo.king.app.App;
 import com.bingo.king.di.component.AppComponent;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
-import com.bingo.king.mvp.ui.widget.ProgressDialog;
+import com.bingo.king.mvp.ui.widget.dialog.ProgressDialog;
 import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 

@@ -1,22 +1,13 @@
-package com.bingo.king.mvp.ui.widget;
+package com.bingo.king.mvp.ui.widget.dialog;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
-import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.bingo.king.R;
-import com.bingo.king.app.config.MDialogConfig;
-import com.blankj.utilcode.util.SizeUtils;
-import com.zhy.autolayout.AutoRelativeLayout;
 
 
 /**

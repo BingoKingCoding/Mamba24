@@ -32,15 +32,16 @@ public class CategoryAdapter extends BaseAdapter<GankEntity.ResultsBean, BaseVie
         helper.setText(R.id.tvDate,item.publishedAt);
         helper.setText(R.id.tvAuthor,item.who);
         ImageView ivImage = helper.getView(R.id.ivImage);
-        if (item.type.equals(CategoryType.ANDROID_STR))
-        {
-            ivImage.setImageResource(R.mipmap.ic_android);
-        } else if (item.type.equals(CategoryType.IOS_STR))
-        {
-            ivImage.setImageResource(R.mipmap.ic_apple);
-        } else if (item.type.equals(CategoryType.QIAN_STR))
-        {
-            ivImage.setImageResource(R.mipmap.ic_html);
+        switch (item.type) {
+            case CategoryType.ANDROID_STR:
+                ivImage.setImageResource(R.mipmap.ic_android);
+                break;
+            case CategoryType.IOS_STR:
+                ivImage.setImageResource(R.mipmap.ic_apple);
+                break;
+            case CategoryType.QIAN_STR:
+                ivImage.setImageResource(R.mipmap.ic_html);
+                break;
         }
     }
 

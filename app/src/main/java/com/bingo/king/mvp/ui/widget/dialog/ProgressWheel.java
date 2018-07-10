@@ -1,4 +1,4 @@
-package com.bingo.king.mvp.ui.widget;
+package com.bingo.king.mvp.ui.widget.dialog;
 
 import android.annotation.TargetApi;
 import android.content.Context;

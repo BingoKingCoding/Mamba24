@@ -17,7 +17,7 @@ import com.bingo.king.app.App;
 import com.bingo.king.app.EventBusTags;
 import com.bingo.king.app.utils.SDFragmentManager;
 import com.bingo.king.di.component.AppComponent;
-import com.bingo.king.mvp.ui.widget.ProgressDialog;
+import com.bingo.king.mvp.ui.widget.dialog.ProgressDialog;
 import com.blankj.utilcode.util.ToastUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.jakewharton.rxbinding2.view.RxView;
