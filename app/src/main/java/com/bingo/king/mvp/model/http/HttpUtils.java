@@ -31,7 +31,6 @@ public class HttpUtils {
          * 最后采取的方法是判断网络是否连接放在外面，网络是否可用放在回掉。
          */
         if (!NetworkUtils.isConnected()) {
-//            ToastUtils.showShort("网络连接已断开");
             if (mView != null) {
                 ToastUtils.showShort("网络连接已断开");
                 mView.setState(LoadingPage.STATE_ERROR);
@@ -40,14 +39,6 @@ public class HttpUtils {
         }
 
         observable.subscribeOn(Schedulers.io())
-                .doOnSubscribe(disposable ->
-                {
-//                    if (mView instanceof StatefulCallback)
-//                    {
-//                        ((StatefulCallback) mView).setState(LoadingPage.STATE_LOADING);
-//                    }
-                })
-                .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxUtils.bindToLifecycle(mView))
                 .subscribe(httpCallback);
@@ -58,16 +49,13 @@ public class HttpUtils {
         if (!NetworkUtils.isConnected()) {
             if (mView != null) {
                 ToastUtils.showShort("网络连接已断开");
+                mView.closeLoadingDialog();
             }
             return;
         }
-        observable.subscribeOn(Schedulers.io())
-                .doOnSubscribe(disposable ->
-                        mView.showLoadingDialog(msg))
-                .subscribeOn(AndroidSchedulers.mainThread())
+        observable.subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doAfterTerminate(() ->
-                        mView.closeLoadingDialog())
+                .doAfterTerminate(mView::closeLoadingDialog)
                 .compose(RxUtils.bindToLifecycle(mView))
                 .subscribe(httpCallback);
     }

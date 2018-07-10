@@ -46,6 +46,7 @@
         </activity>
         <activity
             android:name=".mvp.ui.activity.MainActivity"
+            android:launchMode="singleTask"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait">
         </activity>

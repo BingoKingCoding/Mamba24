@@ -177,7 +177,7 @@ public class App extends Application
         UserBeanDao.delete();
 
         Intent intent = new Intent(this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
         ActivityUtils.getTopActivity().startActivity(intent);
 
         if (post)
