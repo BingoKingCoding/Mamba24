@@ -2,14 +2,12 @@ package com.bingo.king.mvp.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bingo.king.R;
 import com.bingo.king.app.base.BaseFragment;
-import com.bingo.king.app.base.BaseLazyFragment;
 import com.bingo.king.app.utils.GlideUtils;
 import com.bingo.king.app.utils.ViewBinder;
 import com.bingo.king.di.component.DaggerMeComponent;
@@ -21,11 +19,9 @@ import com.bingo.king.mvp.presenter.MePresenter;
 import com.bingo.king.mvp.ui.activity.SettingActivity;
 import com.bingo.king.mvp.ui.widget.CircleImageView;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
-import com.bumptech.glide.request.RequestOptions;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import jp.wasabeef.glide.transformations.BlurTransformation;
 
 /**
  * <个人中心页面>
@@ -63,11 +59,6 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
                 startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
         }
-    }
-
-    @Override
-    public void hidePullLoading() {
-
     }
 
     @Override

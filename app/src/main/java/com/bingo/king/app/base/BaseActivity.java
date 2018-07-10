@@ -15,7 +15,6 @@ import android.view.View;
 import com.bingo.king.R;
 import com.bingo.king.app.App;
 import com.bingo.king.app.EventBusTags;
-import com.bingo.king.app.config.MDialogConfig;
 import com.bingo.king.app.utils.SDFragmentManager;
 import com.bingo.king.di.component.AppComponent;
 import com.bingo.king.mvp.ui.widget.ProgressDialog;
@@ -41,7 +40,7 @@ import static com.bingo.king.app.utils.ThirdViewUtil.convertAutoView;
  * Created by wang on 2017/11/1 16:55.
  */
 
-public abstract class BaseActivity extends RxAppCompatActivity implements View.OnClickListener {
+public abstract class BaseActivity extends RxAppCompatActivity implements IView,View.OnClickListener {
     protected final String TAG = this.getClass().getSimpleName();
     protected Unbinder mUnbinder;
 
@@ -169,6 +168,11 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
 
     protected static final String MESSAGE_LOADING = "请稍候...";
 
+    @Override
+    public void setState(int state) {
+
+    }
+
     public void showLoadingDialog() {
         showLoadingDialog(this, MESSAGE_LOADING, true);
     }
@@ -199,6 +203,11 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
         }
+    }
+
+    @Override
+    public void hidePullLoading() {
+
     }
 
 

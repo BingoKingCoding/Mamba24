@@ -79,12 +79,6 @@ public class SplashActivity extends BasePresenterActivity<SplashPresenter> imple
     }
 
 
-    @Override
-    public void hidePullLoading()
-    {
-
-    }
-
 
     @Override
     protected void onStart()
@@ -215,22 +209,6 @@ public class SplashActivity extends BasePresenterActivity<SplashPresenter> imple
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
-    }
-
-    @Override
-    public void setState(int state)
-    {
-
-    }
-
-    @Override
-    public void showLoadingDialog(String msg) {
-
-    }
-
-    @Override
-    public void closeLoadingDialog() {
-
     }
 
 

@@ -85,28 +85,6 @@ public class LoginActivity extends BasePresenterActivity<LoginPresenter> impleme
     {
     }
 
-    @Override
-    public void hidePullLoading()
-    {
-
-    }
-
-    @Override
-    public void setState(int state)
-    {
-
-    }
-
-    @Override
-    public void showLoadingDialog(String msg) {
-
-    }
-
-    @Override
-    public void closeLoadingDialog() {
-
-    }
-
     private void initView()
     {
         ll_weixin = findViewById(R.id.ll_weixin);

@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.bingo.king.R;
 import com.bingo.king.app.base.BaseFragment;
-import com.bingo.king.app.base.BaseLazyFragment;
 import com.bingo.king.app.utils.CategoryType;
 import com.bingo.king.app.utils.ViewBinder;
 import com.bingo.king.di.component.DaggerHomeComponent;
@@ -46,11 +45,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
                 .homeModule(new HomeModule(this))
                 .build()
                 .inject(this);
-    }
-
-    @Override
-    public void hidePullLoading() {
-
     }
 
     @Override

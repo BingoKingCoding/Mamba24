@@ -2,7 +2,6 @@ package com.bingo.king.mvp.ui.fragment;
 
 import android.animation.Animator;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -89,13 +88,6 @@ public class DBMovieFragment extends BaseLazyFragment<DBMoviePresenter> implemen
      */
 
     public void setData(Object data)
-    {
-
-    }
-
-
-    @Override
-    public void hidePullLoading()
     {
 
     }

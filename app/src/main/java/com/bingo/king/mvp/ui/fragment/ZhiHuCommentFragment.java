@@ -1,6 +1,5 @@
 package com.bingo.king.mvp.ui.fragment;
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -87,12 +86,6 @@ public class ZhiHuCommentFragment extends BaseLazyFragment<ZhiHuCommentPresenter
         requestData();
     }
 
-
-    @Override
-    public void hidePullLoading()
-    {
-
-    }
 
 
     @Override

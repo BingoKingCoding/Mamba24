@@ -68,23 +68,6 @@ public class SettingActivity extends BaseTitleActivity<SettingPresenter> impleme
 
     }
 
-
-    @Override
-    public void showLoadingDialog(String msg) {
-
-    }
-
-    @Override
-    public void closeLoadingDialog() {
-
-    }
-
-    @Override
-    public void hidePullLoading()
-    {
-
-    }
-
     @Override
     public void onClick(View v)
     {

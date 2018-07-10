@@ -139,21 +139,6 @@ public class MovieTopDetailActivity extends LoadingBaseActivity<MovieTopDetailPr
     }
 
 
-    @Override
-    public void showLoadingDialog(String msg) {
-
-    }
-
-    @Override
-    public void closeLoadingDialog() {
-
-    }
-
-    @Override
-    public void hidePullLoading() {
-
-    }
-
     private void initToolBar(Toolbar toolbarDoubanDetail, String title) {
         setSupportActionBar(toolbarDoubanDetail);
         toolbarDoubanDetail.setTitle(title);

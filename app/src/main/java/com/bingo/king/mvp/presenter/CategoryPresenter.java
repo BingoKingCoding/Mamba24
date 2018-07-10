@@ -7,7 +7,6 @@ import com.bingo.king.di.scope.ActivityScope;
 import com.bingo.king.mvp.contract.CategoryContract;
 import com.bingo.king.mvp.model.entity.GankEntity;
 import com.bingo.king.mvp.model.http.rxerrorhandler.HttpCallback;
-import com.bingo.king.mvp.model.http.rxerrorhandler.StatefulCallback;
 import com.bingo.king.mvp.ui.adapter.CategoryAdapter;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
 import com.blankj.utilcode.util.NetworkUtils;

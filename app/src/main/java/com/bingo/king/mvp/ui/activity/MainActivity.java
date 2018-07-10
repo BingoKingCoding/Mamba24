@@ -88,30 +88,5 @@ public class MainActivity extends BasePresenterActivity<MainPresenter> implement
         mBottomBar.selectTab(BottomNavigationView.INDEX_HOME);
     }
 
-    @Override
-    public void hidePullLoading() {
 
-    }
-
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-
-    @Override
-    public void setState(int state) {
-
-    }
-
-    @Override
-    public void showLoadingDialog(String msg) {
-
-    }
-
-    @Override
-    public void closeLoadingDialog() {
-
-    }
 }

@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.bingo.king.R;
 import com.bingo.king.app.base.BaseFragment;
-import com.bingo.king.app.base.BaseLazyFragment;
 import com.bingo.king.app.utils.ViewBinder;
 import com.bingo.king.di.component.DaggerCollectComponent;
 import com.bingo.king.di.module.CollectModule;
@@ -49,12 +48,6 @@ public class CollectFragment extends BaseFragment<CollectPresenter> implements C
     @Override
     protected int getContentLayoutId() {
         return R.layout.fragment_collect;
-    }
-
-
-    @Override
-    public void hidePullLoading() {
-
     }
 
 

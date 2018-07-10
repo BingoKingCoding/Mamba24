@@ -3,11 +3,6 @@ package com.bingo.king.app.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.bingo.king.mvp.model.http.rxerrorhandler.StatefulCallback;
-import com.orhanobut.logger.Logger;
-
-import timber.log.Timber;
-
 /**
  * <请描述这个类是干什么的>
  * Created by adou on 2017/11/2:20:22.
@@ -15,7 +10,7 @@ import timber.log.Timber;
  * Email:634051075@qq.com
  */
 
-public abstract class BaseLazyFragment<P extends IPresenter> extends BaseFragment<P> implements StatefulCallback {
+public abstract class BaseLazyFragment<P extends IPresenter> extends BaseFragment<P>{
 
     /**
      * 是否初始化过布局

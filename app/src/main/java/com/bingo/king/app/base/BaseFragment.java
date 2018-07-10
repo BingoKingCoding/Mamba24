@@ -11,10 +11,8 @@ import android.widget.LinearLayout;
 
 import com.bingo.king.app.App;
 import com.bingo.king.di.component.AppComponent;
-import com.bingo.king.mvp.model.http.rxerrorhandler.StatefulCallback;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
 import com.bingo.king.mvp.ui.widget.ProgressDialog;
-import com.blankj.utilcode.util.ToastUtils;
 import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
@@ -24,7 +22,6 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import timber.log.Timber;
 
 /**
  * <请描述这个类是干什么的>
@@ -32,7 +29,7 @@ import timber.log.Timber;
  * Email:634051075@qq.com
  */
 
-public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements StatefulCallback {
+public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements IView{
 
     @Inject
     protected P mPresenter;
@@ -173,6 +170,11 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
         }
+    }
+
+    @Override
+    public void hidePullLoading() {
+
     }
 
     protected AppComponent getAppComponent() {

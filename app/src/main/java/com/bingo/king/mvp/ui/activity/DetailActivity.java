@@ -2,7 +2,6 @@ package com.bingo.king.mvp.ui.activity;
 
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -107,23 +106,6 @@ public class DetailActivity extends BaseCoordinatorActivity<DetailPresenter> imp
             }
         });
         mWebView.loadUrl(entity.url);
-    }
-
-
-    @Override
-    public void showLoadingDialog(String msg) {
-
-    }
-
-    @Override
-    public void closeLoadingDialog() {
-
-    }
-
-    @Override
-    public void hidePullLoading()
-    {
-
     }
 
 

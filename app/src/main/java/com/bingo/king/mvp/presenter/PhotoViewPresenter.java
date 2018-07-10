@@ -38,18 +38,21 @@ public class PhotoViewPresenter extends BasePresenter<PhotoViewContract.Model, P
 
     public void savePic(ArrayList<String> listImageUrl, int selectPosition)
     {
+        mRootView.showLoadingDialog();
         String url = CollectionUtil.get(listImageUrl, selectPosition);
         mModel.savePic(url, new OkHttpDownloader.DownloadListener()
         {
             @Override
             public void onSuccess()
             {
+                mRootView.closeLoadingDialog();
                 ToastUtils.showShort("图片保存成功");
             }
 
             @Override
             public void onFailure(IOException e)
             {
+                mRootView.closeLoadingDialog();
                 ToastUtils.showShort("图片保存失败");
             }
         });

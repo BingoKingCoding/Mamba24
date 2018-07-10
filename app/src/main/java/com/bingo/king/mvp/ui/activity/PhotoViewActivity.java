@@ -1,7 +1,6 @@
 package com.bingo.king.mvp.ui.activity;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
@@ -94,12 +93,6 @@ public class PhotoViewActivity extends BasePresenterActivity<PhotoViewPresenter>
 
 
     @Override
-    public void hidePullLoading()
-    {
-
-    }
-
-    @Override
     public void onClick(View v)
     {
         switch (v.getId())
@@ -135,19 +128,4 @@ public class PhotoViewActivity extends BasePresenterActivity<PhotoViewPresenter>
         tv_page.setText((selectPosition + 1) + "/" + listImageUrl.size());
     }
 
-    @Override
-    public void setState(int state)
-    {
-
-    }
-
-    @Override
-    public void showLoadingDialog(String msg) {
-
-    }
-
-    @Override
-    public void closeLoadingDialog() {
-
-    }
 }

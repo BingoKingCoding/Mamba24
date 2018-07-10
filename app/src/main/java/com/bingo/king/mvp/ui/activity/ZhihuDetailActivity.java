@@ -116,23 +116,6 @@ public class ZhihuDetailActivity extends BaseCoordinatorActivity<ZhihuDetailPres
         mPresenter.requestDetailInfo(id);
     }
 
-
-    @Override
-    public void showLoadingDialog(String msg) {
-
-    }
-
-    @Override
-    public void closeLoadingDialog() {
-
-    }
-
-    @Override
-    public void hidePullLoading()
-    {
-
-    }
-
     public static final String EXTRA_ID = "id";
 
     public static void start(Activity oldActivity, int id)

@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.bingo.king.R;
 import com.bingo.king.app.base.BaseFragment;
-import com.bingo.king.app.base.BaseLazyFragment;
 import com.bingo.king.app.utils.ViewBinder;
 import com.bingo.king.di.component.DaggerWelfareComponent;
 import com.bingo.king.di.module.WelfareModule;
@@ -147,12 +146,6 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
     {
         mWelfareAdapter.addData(results);
     }
-
-    @Override
-    public void hidePullLoading()
-    {
-    }
-
 
 
     @Override

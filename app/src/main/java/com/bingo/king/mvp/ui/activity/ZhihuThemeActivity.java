@@ -19,7 +19,6 @@ import com.bingo.king.mvp.presenter.ZhihuThemePresenter;
 import com.bingo.king.mvp.ui.adapter.ZhihuSectionAdapter;
 import com.bingo.king.mvp.ui.adapter.ZhihuThemeAdapter;
 import com.blankj.utilcode.util.ConvertUtils;
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
@@ -121,21 +120,6 @@ public class ZhihuThemeActivity extends BaseZhihuThemeActivity<ZhihuThemePresent
         requestData();
     }
 
-
-    @Override
-    public void showLoadingDialog(String msg) {
-
-    }
-
-    @Override
-    public void closeLoadingDialog() {
-
-    }
-
-    @Override
-    public void hidePullLoading() {
-
-    }
 
     private void startZhiHuDetailActivity(int id, View view) {
         Intent intent = new Intent();
