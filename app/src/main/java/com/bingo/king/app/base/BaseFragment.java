@@ -1,7 +1,9 @@
 package com.bingo.king.app.base;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import com.bingo.king.app.App;
 import com.bingo.king.di.component.AppComponent;
 import com.bingo.king.mvp.model.http.rxerrorhandler.StatefulCallback;
 import com.bingo.king.mvp.ui.widget.LoadingPage;
+import com.bingo.king.mvp.ui.widget.ProgressDialog;
 import com.blankj.utilcode.util.ToastUtils;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
@@ -36,10 +39,9 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     protected P mPresenter;
 
     public LoadingPage mLoadingPage;
+    protected ProgressDialog mProgressDialog;
     protected View contentView;
     private Unbinder bind;
-    private BaseActivity mActivity;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -131,45 +133,55 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         return true;
     }
 
-
     public void setState(int state) {
         mLoadingPage.showPage(state);
     }
 
 
-    /**
-     * 获取Activity
-     */
-    protected BaseActivity getBaseActivity() {
-        if (mActivity == null) {
-            mActivity = (BaseActivity) getActivity();
-        }
-        return mActivity;
+    protected static final String MESSAGE_LOADING = "请稍候...";
+
+    public void showLoadingDialog() {
+        showLoadingDialog(getActivity(), MESSAGE_LOADING, true);
     }
+
+    public void showLoadingDialog(String msg) {
+        showLoadingDialog(getActivity(), msg, true);
+    }
+
+    public void showLoadingDialog(boolean cancelable) {
+        showLoadingDialog(getActivity(), MESSAGE_LOADING, cancelable);
+    }
+
+    public void showLoadingDialog(String msg, boolean cancelable) {
+        showLoadingDialog(getActivity(), msg, cancelable);
+    }
+
+    public void showLoadingDialog(Activity activity, String msg, boolean cancelable) {
+        closeLoadingDialog();
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(activity);
+        }
+        mProgressDialog.setCancelable(cancelable);
+        mProgressDialog.setText(TextUtils.isEmpty(msg) ? MESSAGE_LOADING : msg);
+        mProgressDialog.show();
+    }
+
+    public void closeLoadingDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
+
 
     protected AppComponent getAppComponent() {
         return App.getApplication().getAppComponent();
     }
-
 
     public void showMessage(String message) {
         ToastUtils.showShort(message);
     }
 
     protected abstract void initComponent();
-
-
-    public void showLoadingDialog() {
-        getBaseActivity().showLoadingDialog();
-    }
-
-    public void showLoadingDialog(String msg) {
-        getBaseActivity().showLoadingDialog(msg);
-    }
-
-    public void closeLoadingDialog() {
-        getBaseActivity().closeLoadingDialog();
-    }
 
     /**
      * 1

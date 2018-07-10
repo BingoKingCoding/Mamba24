@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.autolayout.AutoRelativeLayout
-    android:id="@+id/dialog_window_background"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialog_window_background"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <com.bingo.king.mvp.ui.widget.RatioRelativeLayout
         android:id="@+id/dialog_view_bg"
-        android:layout_width="200px"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:background="@drawable/mn_dialog_view_bg"
@@ -27,14 +27,14 @@
 
         <com.bingo.king.mvp.ui.widget.ProgressWheel
             android:id="@+id/progress_wheel"
-            android:layout_width="74px"
-            android:layout_height="74px"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40px"
+            android:layout_marginTop="20dp"
             app:mn_barColor="@color/colorAccent"
             app:mn_barWidth="2dp"
             app:mn_fillRadius="true"
-            app:mn_progressIndeterminate="true"/>
+            app:mn_progressIndeterminate="true" />
 
 
         <TextView
@@ -43,11 +43,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/progress_wheel"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20px"
-            android:layout_marginTop="25px"
-            android:text="请稍候..."
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="12dp"
             android:textColor="@color/white"
-            android:textSize="24px"/>
+            android:textSize="12sp"
+            tools:text="请稍候..." />
     </com.bingo.king.mvp.ui.widget.RatioRelativeLayout>
 
 

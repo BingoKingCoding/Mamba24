@@ -1,5 +1,6 @@
 package com.bingo.king.app.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.os.Message;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -165,32 +167,31 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
     }
 
 
-    private String defaultMsg = "请稍后...";
+    protected static final String MESSAGE_LOADING = "请稍候...";
 
     public void showLoadingDialog() {
-        showLoadingDialog(defaultMsg);
+        showLoadingDialog(this, MESSAGE_LOADING, true);
     }
 
     public void showLoadingDialog(String msg) {
-        showLoadingDialog(msg, null);
+        showLoadingDialog(this, msg, true);
     }
 
-    public void showLoadingDialog(MDialogConfig mDialogConfig) {
-        showLoadingDialog(defaultMsg, mDialogConfig);
+    public void showLoadingDialog(boolean cancelable) {
+        showLoadingDialog(this, MESSAGE_LOADING, cancelable);
     }
 
-    public void showLoadingDialog(String msg, MDialogConfig mDialogConfig) {
-        //设置配置
-        if (mDialogConfig == null) {
-            mDialogConfig = new MDialogConfig.Builder().build();
-        }
+    public void showLoadingDialog(String msg, boolean cancelable) {
+        showLoadingDialog(this, msg, cancelable);
+    }
 
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this, mDialogConfig);
-        }
-
+    public void showLoadingDialog(Activity activity, String msg, boolean cancelable) {
         closeLoadingDialog();
-        mProgressDialog.setText(msg);
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(activity);
+        }
+        mProgressDialog.setCancelable(cancelable);
+        mProgressDialog.setText(TextUtils.isEmpty(msg) ? MESSAGE_LOADING : msg);
         mProgressDialog.show();
     }
 

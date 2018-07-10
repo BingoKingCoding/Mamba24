@@ -76,7 +76,7 @@ public class MeFragment extends BaseLazyFragment<MePresenter> implements MeContr
             case R.id.iv_title_setting:
 //                startActivity(new Intent(getActivity(), SettingActivity.class));
 
-                showLoadingDialog("加载中");
+                showLoadingDialog();
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
