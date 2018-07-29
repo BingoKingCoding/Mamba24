@@ -59,17 +59,17 @@ public class BottomNavigationView extends FrameLayout
 
     private void initTabs()
     {
-        changeBottomNavigtion(mTabHome, R.drawable.icon_main_find_normal,
+        changeBottomNavigation(mTabHome, R.drawable.icon_main_find_normal,
                 R.drawable.icon_main_find_selected, "首页");
-        changeBottomNavigtion(mTabDashboard, R.drawable.icon_main_channel_normal,
+        changeBottomNavigation(mTabDashboard, R.drawable.icon_main_channel_normal,
                 R.drawable.icon_main_channel_selected, "福利");
-        changeBottomNavigtion(mTabFavourite, R.drawable.icon_main_make_normal,
+        changeBottomNavigation(mTabFavourite, R.drawable.icon_main_make_normal,
                 R.drawable.icon_main_make_selected, "收藏");
-        changeBottomNavigtion(mTabMe, R.drawable.icon_main_mine_normal,
+        changeBottomNavigation(mTabMe, R.drawable.icon_main_mine_normal,
                 R.drawable.icon_main_mine_selected, "我的");
     }
 
-    public void changeBottomNavigtion(TabMainMenuView tabMainMenuView, int drawableNormal, int drawableSelect, String textName)
+    public void changeBottomNavigation(TabMainMenuView tabMainMenuView, int drawableNormal, int drawableSelect, String textName)
     {
         tabMainMenuView.configImage()
                 .setImageResIdNormal(drawableNormal)
