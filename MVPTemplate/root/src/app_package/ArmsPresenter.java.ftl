@@ -1,12 +1,10 @@
 package ${presenterPackageName};
 
-import ${applicationPackage}.app.http.IRepository;
-import ${applicationPackage}.app.base.BasePresenter;
 import javax.inject.Inject;
 
 
 
-public class ${pageName}Presenter extends BasePresenter<${pageName}Contract.View> {
+public class ${pageName}Presenter extends BasePresenter<${pageName}Contract.View> implements ${pageName}Contract.Presenter{
  
 
     @Inject

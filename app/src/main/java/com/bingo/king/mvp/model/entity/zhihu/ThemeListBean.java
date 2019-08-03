@@ -1,5 +1,6 @@
 package com.bingo.king.mvp.model.entity.zhihu;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,6 +44,9 @@ public class ThemeListBean
     }
 
     public List<OthersBean> getOthers() {
+        if (others == null) {
+            return new ArrayList<>();
+        }
         return others;
     }
 

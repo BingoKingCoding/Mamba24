@@ -1,5 +1,6 @@
 package com.bingo.king.app.base;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -66,7 +67,7 @@ public abstract class BaseFragmentDialog extends DialogFragment {
 
     protected abstract View initView(LayoutInflater inflater);
 
-    public void initDialog(){
+    public void initDialog() {
 
     }
 
@@ -132,4 +133,12 @@ public abstract class BaseFragmentDialog extends DialogFragment {
         mActivity = null;
     }
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        final Activity activity = getActivity();
+        if (activity instanceof DialogInterface.OnDismissListener) {
+            ((DialogInterface.OnDismissListener) activity).onDismiss(dialog);
+        }
+    }
 }

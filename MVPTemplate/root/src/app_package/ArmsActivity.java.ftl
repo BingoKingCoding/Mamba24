@@ -1,8 +1,6 @@
 package ${ativityPackageName};
 
 
-import ${applicationPackage}.app.base.BaseActivity;
-import ${applicationPackage}.R;
 
 
 public class ${pageName}Activity extends BaseActivity<${pageName}Presenter> implements ${pageName}Contract.View {

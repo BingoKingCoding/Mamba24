@@ -1,7 +1,5 @@
 package ${contractPackageName};
 
-import ${applicationPackage}.app.base.IBaseView;
-import ${applicationPackage}.app.base.IBasePresenter;
 
 
 public interface ${pageName}Contract {

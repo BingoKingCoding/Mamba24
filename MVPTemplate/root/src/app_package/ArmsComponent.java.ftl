@@ -1,7 +1,6 @@
 package ${componentPackageName};
 
 import dagger.Component;
-import ${applicationPackage}.app.di.AppComponent;
 
 <#if needActivity && needFragment>
 import ${ativityPackageName}.${pageName}Activity;

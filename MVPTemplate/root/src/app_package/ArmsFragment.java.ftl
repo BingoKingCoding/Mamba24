@@ -1,8 +1,6 @@
 package ${fragmentPackageName};
 
 
-import ${applicationPackage}.app.base.BaseFragment;
-import ${applicationPackage}.R;
 
 
 public class ${pageName}Fragment extends BaseFragment<${pageName}Presenter> implements ${pageName}Contract.View{
