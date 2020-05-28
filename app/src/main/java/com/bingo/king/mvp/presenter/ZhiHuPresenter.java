@@ -184,10 +184,10 @@ public class ZhiHuPresenter extends BasePresenter<ZhiHuContract.Model, ZhiHuCont
             @Override
             public void onSuccess(ThemeListBean data)
             {
-//                List<ThemeListBean.OthersBean> others = data.getOthers();
-//                settitle("知乎主题");
-//                List<ThemeListBean.OthersBean> themeList = new ArrayList<>();
-//                List<ThemeListBean.OthersBean> themeList2 = new ArrayList<>();
+                List<ThemeListBean.OthersBean> others = data.getOthers();
+                settitle("知乎主题");
+                List<ThemeListBean.OthersBean> themeList = new ArrayList<>();
+                List<ThemeListBean.OthersBean> themeList2 = new ArrayList<>();
 //                int random = new Random().nextInt(4);
 //                for (int i = random; i < random + 4; i++)
 //                {
@@ -199,12 +199,12 @@ public class ZhiHuPresenter extends BasePresenter<ZhiHuContract.Model, ZhiHuCont
 //                        themeList2.add(others.get(i));
 //                    }
 //                }
-//                ZhiHuListBean homeListBean = settype(3);
-//                homeListBean.setThemeList(themeList);
-//                homeList.add(homeListBean);
-//                ZhiHuListBean homeListBean2 = settype(3);
-//                homeListBean2.setThemeList(themeList2);
-//                homeList.add(homeListBean2);
+                ZhiHuListBean homeListBean = settype(3);
+                homeListBean.setThemeList(themeList);
+                homeList.add(homeListBean);
+                ZhiHuListBean homeListBean2 = settype(3);
+                homeListBean2.setThemeList(themeList2);
+                homeList.add(homeListBean2);
                 fetchSectionList();
             }
         });

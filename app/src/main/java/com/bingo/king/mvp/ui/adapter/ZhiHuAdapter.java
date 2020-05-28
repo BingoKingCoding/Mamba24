@@ -59,12 +59,14 @@ public class ZhiHuAdapter extends BaseMultiItemQuickAdapter<ZhiHuListBean, BaseV
                 onItemClick(helper, iv_three_one_three, item.getHotList().get(2).getNews_id());
                 break;
             case ZhiHuListBean.THEME:
-                helper.setText(R.id.tv_two_one_one_title, item.getThemeList().get(0).getDescription());
-                helper.setText(R.id.tv_two_one_two_title, item.getThemeList().get(1).getDescription());
-                GlideUtils.getInstance().loadImage(3, item.getThemeList().get(0).getThumbnail(), helper.getView(R.id.iv_two_one_one));
-                GlideUtils.getInstance().loadImage(3, item.getThemeList().get(1).getThumbnail(), helper.getView(R.id.iv_two_one_two));
-                OnItemThemeClick(helper, R.id.iv_two_one_one, item.getThemeList().get(0).getId());
-                OnItemThemeClick(helper, R.id.iv_two_one_two, item.getThemeList().get(1).getId());
+                if (item.getThemeList().size()>0) {
+                    helper.setText(R.id.tv_two_one_one_title, item.getThemeList().get(0).getDescription());
+                    helper.setText(R.id.tv_two_one_two_title, item.getThemeList().get(1).getDescription());
+                    GlideUtils.getInstance().loadImage(3, item.getThemeList().get(0).getThumbnail(), helper.getView(R.id.iv_two_one_one));
+                    GlideUtils.getInstance().loadImage(3, item.getThemeList().get(1).getThumbnail(), helper.getView(R.id.iv_two_one_two));
+                    OnItemThemeClick(helper, R.id.iv_two_one_one, item.getThemeList().get(0).getId());
+                    OnItemThemeClick(helper, R.id.iv_two_one_two, item.getThemeList().get(1).getId());
+                }
                 break;
             case ZhiHuListBean.SECTION:
                 helper.setText(R.id.tv_one_photo_title, item.getSectionList().get(0).getName());

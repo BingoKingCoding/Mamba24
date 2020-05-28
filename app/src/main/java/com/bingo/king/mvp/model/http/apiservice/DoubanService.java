@@ -17,7 +17,7 @@ public interface DoubanService
     /**
      * 豆瓣热映电影，每日更新
      */
-    @GET("v2/movie/in_theaters")
+    @GET("v2/movie/in_theaters?apikey=0df993c66c0c636e29ecbb5344252a4a")
     Observable<HotMovieBean> requestHotMovie();
 
     /**
