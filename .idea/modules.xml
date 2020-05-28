@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MVPLearn.iml" filepath="$PROJECT_DIR$/MVPLearn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Mamba24.iml" filepath="$PROJECT_DIR$/Mamba24.iml" group="Mamba24" />
+      <module fileurl="file://$PROJECT_DIR$/app/Mamba24-app.iml" filepath="$PROJECT_DIR$/app/Mamba24-app.iml" group="Mamba24/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
