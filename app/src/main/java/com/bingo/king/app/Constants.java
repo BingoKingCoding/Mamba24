@@ -5,8 +5,7 @@ package com.bingo.king.app;
  * Created by wang on 2017/11/3 10:56.
  */
 
-public class Constants
-{
+public class Constants {
     public static final String BASE_API_URL_GANKIO = "http://gank.io/";
     public static final String BASE_API_URL_ZHIHU = "http://news-at.zhihu.com/api/4/";
     public static final String BASE_API_URL_TEST = "http://ws.audioscrobbler.com/2.0/";
@@ -15,4 +14,6 @@ public class Constants
     public static final int HTTP_CONNECT_TIMEOUT = 10;
     public static final int HTTP_READ_TIMEOUT = 20;
     public static final String APP_ID_BUGLY = "0b1b34086f";//"bugly注册时申请的APPID"
+
+    public static final String EXTRA_TITLE = "title";
 }

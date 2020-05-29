@@ -212,7 +212,7 @@ public class SplashActivity extends BasePresenterActivity<SplashPresenter> imple
 
     private void startMainActivity()
     {
-        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
         startActivity(intent);
         finish();
     }
